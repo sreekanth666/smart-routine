@@ -1,6 +1,7 @@
 import { NavLink } from "@mantine/core";
 import { IconHome2, IconUsers, IconChartHistogram } from "@tabler/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { isCurrentPage } from "../utils/helpers";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -14,10 +15,6 @@ function Navbar() {
 
   function navlinkClickHandler(to: string) {
     navigate(to);
-  }
-
-  function isCurrentPage(pathName: string, conditionString: string): boolean {
-    return pathName.endsWith(conditionString);
   }
 
   return (

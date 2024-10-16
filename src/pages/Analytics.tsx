@@ -1,5 +1,7 @@
+import { Text } from "@mantine/core";
+
 function Analytics() {
-  return <div>Analytics</div>;
+  return <Text>Analytics</Text>;
 }
 
 export default Analytics;

@@ -1,5 +1,7 @@
+import { Text } from "@mantine/core";
+
 function Users() {
-  return <h1>Users</h1>;
+  return <Text>Users</Text>;
 }
 
 export default Users;
