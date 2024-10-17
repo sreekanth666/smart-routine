@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import DashboardLayout from "./components/DashboardLayout";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

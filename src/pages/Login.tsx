@@ -13,6 +13,7 @@ import {
 import { useForm } from "@mantine/form";
 import classes from "./Authentication.module.css";
 import { Link } from "react-router-dom";
+import { checkPassword } from "../utils/helpers";
 
 function Login() {
   const form = useForm({
@@ -22,13 +23,22 @@ function Login() {
       remember: false,
     },
     validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
-      password: (val) =>
-        val.length <= 6
-          ? "Password should include at least 6 characters"
-          : null,
+      email: (val) => (/^\S+@\S+\.\S{2,}$/.test(val) ? null : "Invalid email"),
+      password: (val) => checkPassword(val),
     },
   });
+
+  const loginFormSubmitHandler = () => {
+    if (Object.keys(form.errors).length == 0) {
+      console.log("Logged in");
+      console.log(form.values);
+      form.reset();
+    } else {
+      console.log("error");
+      console.log(form.errors);
+    }
+  };
+
   return (
     <Container size={420} my={40}>
       <Title ta="center" className={classes.title}>
@@ -42,7 +52,11 @@ function Login() {
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={() => {}}>
+        <form
+          onSubmit={form.onSubmit(() => {
+            loginFormSubmitHandler();
+          })}
+        >
           <TextInput
             label="Email"
             placeholder="you@mantine.dev"
@@ -50,7 +64,7 @@ function Login() {
             onChange={(event) =>
               form.setFieldValue("email", event.currentTarget.value)
             }
-            error={form.errors.email && "Invalid email"}
+            error={form.errors.email}
             required
           />
           <PasswordInput
@@ -60,10 +74,7 @@ function Login() {
             onChange={(event) =>
               form.setFieldValue("password", event.currentTarget.value)
             }
-            error={
-              form.errors.password &&
-              "Password should include at least 6 characters"
-            }
+            error={form.errors.password}
             required
             mt="md"
           />
@@ -79,7 +90,7 @@ function Login() {
               Forgot password?
             </Anchor> */}
           </Group>
-          <Button fullWidth mt="xl">
+          <Button type="submit" fullWidth mt="xl">
             Sign in
           </Button>
         </form>

@@ -1,7 +1,9 @@
 import { NavLink } from "@mantine/core";
-import { IconHome2, IconUsers, IconChartHistogram } from "@tabler/icons-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { isCurrentPage } from "../utils/helpers";
+import IconHome2 from "./icons/IconHome2";
+import IconUsers from "./icons/IconUsers";
+import IconChartHistogram from "./icons/IconChartHistogram";
 
 function Navbar() {
   const navigate = useNavigate();
