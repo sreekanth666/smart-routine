@@ -1,7 +1,6 @@
 import {
   TextInput,
   PasswordInput,
-  Checkbox,
   Anchor,
   Paper,
   Title,
@@ -11,16 +10,25 @@ import {
   Button,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./Authentication.module.css";
 import { checkPassword } from "../utils/helpers";
+import { AccountType } from "./enums/AccountType";
+
+type RegisterData = {
+  fullName: string;
+  email: string;
+  phone: string;
+  password: string;
+  accountType: AccountType;
+};
 
 const REGISTER_FORM_INIT_VALUES = {
   fullName: "",
   email: "",
+  phone: "",
   password: "",
   reenterPassword: "",
-  terms: false,
 };
 
 function Register() {
@@ -28,18 +36,33 @@ function Register() {
     initialValues: REGISTER_FORM_INIT_VALUES,
     validate: {
       email: (val) => (/^\S+@\S+\.\S{2,}$/.test(val) ? null : "Invalid email"),
+      phone: (val) =>
+        /^(0)?(0)?(\+91|91|0)?[- ]?(\d{3}[- ]?\d{3}[- ]?\d{4}|\d{5}[- ]?\d{5})$/.test(
+          val
+        )
+          ? null
+          : "Invalid mobile number",
       password: (val) => checkPassword(val),
       reenterPassword: (val, values) =>
         val !== values.password ? "Passwords do not match" : null,
-      terms: (val) => (val ? null : "You must agree terms & conditions"),
     },
   });
+
+  const navigate = useNavigate();
 
   const registerFormSubmitHandler = () => {
     if (Object.keys(form.errors).length == 0) {
       console.log("Registered");
-      console.log(form.values);
+      const registerData: RegisterData = {
+        fullName: form.values.fullName,
+        email: form.values.email,
+        phone: form.values.phone,
+        password: form.values.password,
+        accountType: AccountType.CLIENT,
+      };
+      console.log(registerData);
       form.reset();
+      navigate("/login");
     } else {
       console.log("error");
       console.log(form.errors);
@@ -47,16 +70,10 @@ function Register() {
   };
 
   return (
-    <Container size={420} my={40}>
+    <Container size={420} my={30}>
       <Title ta="center" className={classes.title}>
         Welcome
       </Title>
-      <Text c="dimmed" size="sm" ta="center" mt={5}>
-        Already have an account?{" "}
-        <Anchor size="sm" component="button">
-          <Link to="/login">Login</Link>
-        </Anchor>
-      </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form
@@ -65,7 +82,7 @@ function Register() {
           })}
         >
           <TextInput
-            label="Name"
+            label="Full Name"
             placeholder="Your full name"
             value={form.values.fullName}
             onChange={(event) =>
@@ -75,12 +92,22 @@ function Register() {
           />
           <TextInput
             label="Email"
-            placeholder="you@mantine.dev"
+            placeholder="Your email address"
             value={form.values.email}
             onChange={(event) =>
               form.setFieldValue("email", event.currentTarget.value)
             }
             error={form.errors.email}
+            required
+          />
+          <TextInput
+            label="Phone Number"
+            placeholder="Your phone number"
+            value={form.values.phone}
+            onChange={(event) =>
+              form.setFieldValue("phone", event.currentTarget.value)
+            }
+            error={form.errors.phone}
             required
           />
           <PasswordInput
@@ -105,19 +132,17 @@ function Register() {
             required
             mt="md"
           />
-          <Group justify="space-between" mt="lg">
-            <Checkbox
-              label="I accept terms and conditions"
-              checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue("terms", event.currentTarget.checked)
-              }
-              error={form.errors.terms}
-            />
-          </Group>
           <Button type="submit" fullWidth mt="xl">
             Sign in
           </Button>
+          <Group justify="center" mt="lg">
+            <Text c="dimmed" size="xs" ta="center" mt={5}>
+              Already have an account?{" "}
+              <Anchor size="xs" component="button">
+                <Link to="/login">Login</Link>
+              </Anchor>
+            </Text>
+          </Group>
         </form>
       </Paper>
     </Container>

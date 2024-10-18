@@ -1,7 +1,6 @@
 import {
   TextInput,
   PasswordInput,
-  Checkbox,
   Anchor,
   Paper,
   Title,
@@ -12,15 +11,21 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import classes from "./Authentication.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { checkPassword } from "../utils/helpers";
+import { AccountType } from "./enums/AccountType";
+
+type LoginData = {
+  email: string;
+  password: string;
+  accountType: AccountType;
+};
 
 function Login() {
   const form = useForm({
     initialValues: {
       email: "",
       password: "",
-      remember: false,
     },
     validate: {
       email: (val) => (/^\S+@\S+\.\S{2,}$/.test(val) ? null : "Invalid email"),
@@ -28,10 +33,23 @@ function Login() {
     },
   });
 
+  const navigate = useNavigate();
+
   const loginFormSubmitHandler = () => {
     if (Object.keys(form.errors).length == 0) {
       console.log("Logged in");
-      console.log(form.values);
+      const loginData: LoginData = {
+        email: form.values.email,
+        password: form.values.password,
+        accountType: AccountType.ADMIN,
+      };
+      console.log(loginData);
+      if (loginData.accountType === AccountType.ADMIN) {
+        navigate("/app");
+      } else {
+        console.log("Go to client page");
+        // navigate("/")
+      }
       form.reset();
     } else {
       console.log("error");
@@ -40,16 +58,10 @@ function Login() {
   };
 
   return (
-    <Container size={420} my={40}>
+    <Container size={420} my={30}>
       <Title ta="center" className={classes.title}>
         Welcome back!
       </Title>
-      <Text c="dimmed" size="sm" ta="center" mt={5}>
-        Do not have an account yet?{" "}
-        <Anchor size="sm" component="button">
-          <Link to="/register">Create account</Link>
-        </Anchor>
-      </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form
@@ -59,7 +71,7 @@ function Login() {
         >
           <TextInput
             label="Email"
-            placeholder="you@mantine.dev"
+            placeholder="Your email address"
             value={form.values.email}
             onChange={(event) =>
               form.setFieldValue("email", event.currentTarget.value)
@@ -78,21 +90,17 @@ function Login() {
             required
             mt="md"
           />
-          <Group justify="space-between" mt="lg">
-            <Checkbox
-              label="Remember me"
-              checked={form.values.remember}
-              onChange={(event) =>
-                form.setFieldValue("remember", event.currentTarget.checked)
-              }
-            />
-            {/* <Anchor component="button" size="sm">
-              Forgot password?
-            </Anchor> */}
-          </Group>
           <Button type="submit" fullWidth mt="xl">
             Sign in
           </Button>
+          <Group justify="center" mt="lg">
+            <Text c="dimmed" size="xs" ta="center" mt={5}>
+              Do not have an account yet?{" "}
+              <Anchor size="xs" component="button">
+                <Link to="/register">Create account</Link>
+              </Anchor>
+            </Text>
+          </Group>
         </form>
       </Paper>
     </Container>
