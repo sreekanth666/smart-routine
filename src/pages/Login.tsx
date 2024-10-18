@@ -13,9 +13,9 @@ import { useForm } from "@mantine/form";
 import classes from "./Authentication.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { checkPassword } from "../utils/helpers";
-import { AccountType } from "./enums/AccountType";
+import { AccountType } from "../enums/AccountType";
 
-type LoginData = {
+type LoginDataType = {
   email: string;
   password: string;
   accountType: AccountType;
@@ -38,7 +38,7 @@ function Login() {
   const loginFormSubmitHandler = () => {
     if (Object.keys(form.errors).length == 0) {
       console.log("Logged in");
-      const loginData: LoginData = {
+      const loginData: LoginDataType = {
         email: form.values.email,
         password: form.values.password,
         accountType: AccountType.ADMIN,

@@ -13,9 +13,9 @@ import { useForm } from "@mantine/form";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./Authentication.module.css";
 import { checkPassword } from "../utils/helpers";
-import { AccountType } from "./enums/AccountType";
+import { AccountType } from "../enums/AccountType";
 
-type RegisterData = {
+type RegisterDataType = {
   fullName: string;
   email: string;
   phone: string;
@@ -53,7 +53,7 @@ function Register() {
   const registerFormSubmitHandler = () => {
     if (Object.keys(form.errors).length == 0) {
       console.log("Registered");
-      const registerData: RegisterData = {
+      const registerData: RegisterDataType = {
         fullName: form.values.fullName,
         email: form.values.email,
         phone: form.values.phone,
