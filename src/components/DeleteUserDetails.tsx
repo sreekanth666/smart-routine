@@ -1,23 +1,24 @@
 import { Button, Grid, Title } from "@mantine/core";
+import { UserType } from "../types/UserType";
 
 type DeleteUserDetailsParams = {
-  userId: string;
+  user: Pick<UserType, "id" | "fullName">;
   onCloseModal: () => void;
   deleteUser: (userId: string) => void;
 };
 
 function DeleteUserDetails({
-  userId,
+  user,
   onCloseModal,
   deleteUser,
 }: DeleteUserDetailsParams) {
   const handleDelete = () => {
-    deleteUser(userId);
+    deleteUser(user.id);
   };
 
   return (
     <>
-      <Title order={4}>Do you really wanted to delete user data?</Title>
+      <Title order={4}>Do you really wanted to delete {user.fullName}?</Title>
       <Grid>
         <Grid.Col span={6}>
           <Button onClick={onCloseModal} fullWidth mt="xl" color="green">

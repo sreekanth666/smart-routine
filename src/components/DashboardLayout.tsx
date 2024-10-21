@@ -3,6 +3,7 @@ import { AppShell, Burger, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { MantineLogo } from "@mantinex/mantine-logo";
 import Navbar from "../components/Navbar";
+import LogoutSection from "./LogoutSection";
 
 function DashboardLayout() {
   const [opened, { toggle }] = useDisclosure();
@@ -24,7 +25,13 @@ function DashboardLayout() {
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        <Navbar />
+        <AppShell.Section>Smart Routine</AppShell.Section>
+        <AppShell.Section grow my="md">
+          <Navbar />
+        </AppShell.Section>
+        <AppShell.Section>
+          <LogoutSection />
+        </AppShell.Section>
       </AppShell.Navbar>
       <AppShell.Main>
         <Outlet />
