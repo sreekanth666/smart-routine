@@ -14,6 +14,8 @@ import classes from "./Authentication.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { checkPassword } from "../utils/helpers";
 import { AccountType } from "../enums/AccountType";
+import { SAMPLE_JWT_TOKEN } from "../utils/constants";
+import { useAuth } from "../context/AuthContext";
 
 type LoginDataType = {
   email: string;
@@ -32,8 +34,10 @@ function Login() {
       password: (val) => checkPassword(val),
     },
   });
+  const { login } = useAuth();
 
   const navigate = useNavigate();
+  // const
 
   const loginFormSubmitHandler = () => {
     if (Object.keys(form.errors).length == 0) {
@@ -43,8 +47,11 @@ function Login() {
         password: form.values.password,
         accountType: AccountType.ADMIN,
       };
-      console.log(loginData);
+      // console.log(loginData);
+      login(SAMPLE_JWT_TOKEN, loginData.accountType === AccountType.ADMIN);
+
       if (loginData.accountType === AccountType.ADMIN) {
+        console.log("Logged in as admin");
         navigate("/app");
       } else {
         console.log("Go to client page");
