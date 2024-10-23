@@ -1,5 +1,5 @@
 export type LoginServerDataType = {
-  accountToken: string;
+  accessToken: string;
   isAdmin: boolean;
 };
 

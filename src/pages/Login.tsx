@@ -10,18 +10,11 @@ import {
   Button,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import classes from "./Authentication.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import classes from "./Authentication.module.css";
 import { checkPassword } from "../utils/helpers";
-import { AccountType } from "../enums/AccountType";
-import { SAMPLE_JWT_TOKEN } from "../utils/constants";
 import { useAuth } from "../context/AuthContext";
-
-type LoginDataType = {
-  email: string;
-  password: string;
-  accountType: AccountType;
-};
+import { login as userLogin } from "../services/apiAuth";
 
 function Login() {
   const form = useForm({
@@ -39,18 +32,17 @@ function Login() {
   const navigate = useNavigate();
   // const
 
-  const loginFormSubmitHandler = () => {
+  const loginFormSubmitHandler = async () => {
     if (Object.keys(form.errors).length == 0) {
       console.log("Logged in");
-      const loginData: LoginDataType = {
+      const { accessToken, isAdmin } = await userLogin({
         email: form.values.email,
         password: form.values.password,
-        accountType: AccountType.ADMIN,
-      };
-      // console.log(loginData);
-      login(SAMPLE_JWT_TOKEN, loginData.accountType === AccountType.ADMIN);
+      });
 
-      if (loginData.accountType === AccountType.ADMIN) {
+      login(accessToken, isAdmin);
+
+      if (isAdmin) {
         console.log("Logged in as admin");
         navigate("/app");
       } else {

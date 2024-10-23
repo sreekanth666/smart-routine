@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 function LogoutSection() {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, isAdmin } = useAuth();
 
   const logoutHandler = () => {
     logout();
@@ -14,7 +14,9 @@ function LogoutSection() {
   return (
     <Flex direction="column" gap="md">
       <Text>Hello USER</Text>
-      <Button onClick={logoutHandler}>Logout</Button>
+      <Button onClick={logoutHandler} color={isAdmin ? "blue" : "green"}>
+        Logout
+      </Button>
     </Flex>
   );
 }

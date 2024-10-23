@@ -1,5 +1,6 @@
 import { readLocalStorageValue, useLocalStorage } from "@mantine/hooks";
 import { createContext, ReactElement, useContext } from "react";
+import { LoginServerDataType } from "../types/LoginServerDataType";
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -20,10 +21,13 @@ function AuthProvider({ children }: AuthProviderProps) {
     defaultValue: null,
   });
   const isLoggedIn = value !== null;
-  const authValue: AuthContextType = readLocalStorageValue({
+  const authStorageValue: string | undefined = readLocalStorageValue({
     key: "loginData",
   });
-  const isAdmin = isLoggedIn && authValue["isAdmin"];
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+  const isAdmin = isLoggedIn && authValue !== null && authValue?.isAdmin;
 
   const login = (accessToken: string, isAdmin: boolean) => {
     setValue(JSON.stringify({ accessToken, isAdmin }));

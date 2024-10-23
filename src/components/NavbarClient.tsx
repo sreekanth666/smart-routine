@@ -1,15 +1,15 @@
 import { NavLink } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
 import { isCurrentPage } from "../utils/helpers";
-import IconHome2 from "./icons/IconHome2";
-import IconUsers from "./icons/IconUsers";
-import IconChartHistogram from "./icons/IconChartHistogram";
+import IconHomeFilled from "./icons/IconHomeFilled";
+import IconListNumbers from "./icons/IconListNumbers";
+import IconReportAnalytics from "./icons/IconReportAnalytics";
 
 type NavbarParams = {
   isAdmin: boolean;
 };
 
-function Navbar({ isAdmin }: NavbarParams) {
+function NavbarClient({ isAdmin }: NavbarParams) {
   const navigate = useNavigate();
   const location = useLocation();
   // console.log(isAdmin);
@@ -29,26 +29,26 @@ function Navbar({ isAdmin }: NavbarParams) {
       <NavLink
         active={dashboardActive}
         onClick={() => navlinkClickHandler("/app")}
-        label="Dashboard"
-        leftSection={<IconHome2 size="1rem" stroke={1.5} />}
+        label="Home"
+        leftSection={<IconHomeFilled size="1rem" />}
         color={dashboardActive && !isAdmin ? "green" : "blue"}
       />
       <NavLink
         active={usersActive}
         onClick={() => navlinkClickHandler("/app/users")}
-        label="Users"
-        leftSection={<IconUsers size="1rem" stroke={1.5} />}
+        label="Routines"
+        leftSection={<IconListNumbers size="1rem" stroke={1.5} />}
         color={usersActive && !isAdmin ? "green" : "blue"}
       />
       <NavLink
         active={analyticsActive}
         onClick={() => navlinkClickHandler("/app/analytics")}
-        label="Analytics"
-        leftSection={<IconChartHistogram size="1rem" stroke={1.5} />}
+        label="Analysis"
+        leftSection={<IconReportAnalytics size="1rem" stroke={1.5} />}
         color={analyticsActive && !isAdmin ? "green" : "blue"}
       />
     </>
   );
 }
 
-export default Navbar;
+export default NavbarClient;

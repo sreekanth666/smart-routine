@@ -4,9 +4,11 @@ import { useDisclosure } from "@mantine/hooks";
 import { MantineLogo } from "@mantinex/mantine-logo";
 import Navbar from "../components/Navbar";
 import LogoutSection from "./LogoutSection";
+import { useAuth } from "../context/AuthContext";
 
 function DashboardLayout() {
   const [opened, { toggle }] = useDisclosure();
+  const { isAdmin } = useAuth();
 
   return (
     <AppShell
@@ -27,7 +29,7 @@ function DashboardLayout() {
       <AppShell.Navbar p="md">
         <AppShell.Section>Smart Routine</AppShell.Section>
         <AppShell.Section grow my="md">
-          <Navbar />
+          <Navbar isAdmin={isAdmin} />
         </AppShell.Section>
         <AppShell.Section>
           <LogoutSection />

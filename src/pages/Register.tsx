@@ -13,15 +13,7 @@ import { useForm } from "@mantine/form";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./Authentication.module.css";
 import { checkPassword } from "../utils/helpers";
-import { AccountType } from "../enums/AccountType";
-
-type RegisterDataType = {
-  fullName: string;
-  email: string;
-  phone: string;
-  password: string;
-  accountType: AccountType;
-};
+import { register } from "../services/apiAuth";
 
 const REGISTER_FORM_INIT_VALUES = {
   fullName: "",
@@ -50,17 +42,24 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const registerFormSubmitHandler = () => {
+  const registerFormSubmitHandler = async () => {
     if (Object.keys(form.errors).length == 0) {
       console.log("Registered");
-      const registerData: RegisterDataType = {
+      // const registerData: RegisterDataType = {
+      //   fullName: form.values.fullName,
+      //   email: form.values.email,
+      //   phone: form.values.phone,
+      //   password: form.values.password,
+      //   accountType: AccountType.CLIENT,
+      // };
+      // console.log(registerData);
+      const { accessToken, isAdmin } = await register({
         fullName: form.values.fullName,
         email: form.values.email,
         phone: form.values.phone,
         password: form.values.password,
-        accountType: AccountType.CLIENT,
-      };
-      console.log(registerData);
+      });
+      console.log(accessToken, isAdmin);
       form.reset();
       navigate("/login");
     } else {
