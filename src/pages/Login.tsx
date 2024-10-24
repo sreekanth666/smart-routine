@@ -47,7 +47,7 @@ function Login() {
         navigate("/app");
       } else {
         console.log("Go to client page");
-        // navigate("/")
+        navigate("/");
       }
       form.reset();
     } else {

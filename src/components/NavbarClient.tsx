@@ -3,21 +3,31 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { isCurrentPage } from "../utils/helpers";
 import IconHomeFilled from "./icons/IconHomeFilled";
 import IconListNumbers from "./icons/IconListNumbers";
-import IconReportAnalytics from "./icons/IconReportAnalytics";
+import IconWalk from "./icons/IconWalk";
+import IconToolsKitchen2 from "./icons/IconToolsKitchen2";
+import IconUsersGroup from "./icons/IconUsersGroup";
 
-type NavbarParams = {
+type NavbarClientParams = {
   isAdmin: boolean;
 };
 
-function NavbarClient({ isAdmin }: NavbarParams) {
+function NavbarClient({ isAdmin }: NavbarClientParams) {
   const navigate = useNavigate();
   const location = useLocation();
   // console.log(isAdmin);
 
-  const [dashboardActive, usersActive, analyticsActive] = [
-    isCurrentPage(location.pathname, "/app"),
-    isCurrentPage(location.pathname, "/app/users"),
-    isCurrentPage(location.pathname, "/app/analytics"),
+  const [
+    homeActive,
+    routinesActive,
+    activityActive,
+    dietActive,
+    communityActive,
+  ] = [
+    isCurrentPage(location.pathname, "/"),
+    isCurrentPage(location.pathname, "/routines"),
+    isCurrentPage(location.pathname, "/activity"),
+    isCurrentPage(location.pathname, "/diet"),
+    isCurrentPage(location.pathname, "/community"),
   ];
 
   function navlinkClickHandler(to: string) {
@@ -27,25 +37,39 @@ function NavbarClient({ isAdmin }: NavbarParams) {
   return (
     <>
       <NavLink
-        active={dashboardActive}
-        onClick={() => navlinkClickHandler("/app")}
+        active={homeActive}
+        onClick={() => navlinkClickHandler("/")}
         label="Home"
         leftSection={<IconHomeFilled size="1rem" />}
-        color={dashboardActive && !isAdmin ? "green" : "blue"}
+        color={homeActive && !isAdmin ? "green" : "blue"}
       />
       <NavLink
-        active={usersActive}
-        onClick={() => navlinkClickHandler("/app/users")}
+        active={routinesActive}
+        onClick={() => navlinkClickHandler("/routines")}
         label="Routines"
         leftSection={<IconListNumbers size="1rem" stroke={1.5} />}
-        color={usersActive && !isAdmin ? "green" : "blue"}
+        color={routinesActive && !isAdmin ? "green" : "blue"}
       />
       <NavLink
-        active={analyticsActive}
-        onClick={() => navlinkClickHandler("/app/analytics")}
-        label="Analysis"
-        leftSection={<IconReportAnalytics size="1rem" stroke={1.5} />}
-        color={analyticsActive && !isAdmin ? "green" : "blue"}
+        active={activityActive}
+        onClick={() => navlinkClickHandler("/activity")}
+        label="Activity"
+        leftSection={<IconWalk size="1rem" stroke={1.5} />}
+        color={activityActive && !isAdmin ? "green" : "blue"}
+      />
+      <NavLink
+        active={dietActive}
+        onClick={() => navlinkClickHandler("/diet")}
+        label="Diet"
+        leftSection={<IconToolsKitchen2 size="1rem" stroke={1.5} />}
+        color={dietActive && !isAdmin ? "green" : "blue"}
+      />
+      <NavLink
+        active={communityActive}
+        onClick={() => navlinkClickHandler("/community")}
+        label="Community"
+        leftSection={<IconUsersGroup size="1rem" stroke={1.5} />}
+        color={communityActive && !isAdmin ? "green" : "blue"}
       />
     </>
   );

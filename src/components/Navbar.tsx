@@ -12,7 +12,6 @@ type NavbarParams = {
 function Navbar({ isAdmin }: NavbarParams) {
   const navigate = useNavigate();
   const location = useLocation();
-  // console.log(isAdmin);
 
   const [dashboardActive, usersActive, analyticsActive] = [
     isCurrentPage(location.pathname, "/app"),

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
@@ -6,6 +6,11 @@ import DashboardLayout from "./components/DashboardLayout";
 import NotFoundPage from "./pages/NotFoundPage";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NormalClient from "./pages/NormalClient";
+import Routines from "./pages/Routines";
+import Activity from "./pages/Activity";
+import Diet from "./pages/Diet";
+import Community from "./pages/Community";
 
 function App() {
   return (
@@ -18,7 +23,11 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Navigate replace to="app" />} />
+          <Route path="/" element={<NormalClient />} />
+          <Route path="routines" element={<Routines />} />
+          <Route path="activity" element={<Activity />} />
+          <Route path="diet" element={<Diet />} />
+          <Route path="community" element={<Community />} />
           <Route path="app/*" element={<Dashboard />} />
         </Route>
         <Route path="login" element={<Login />} />
