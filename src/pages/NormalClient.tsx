@@ -1,7 +1,8 @@
-import { Text } from "@mantine/core";
+// import { Tabs, Text } from "@mantine/core";
+import PersonalisedSuggestions from "../components/PersonalisedSuggestions";
 
 function NormalClient() {
-  return <Text>NormalClient</Text>;
+  return <PersonalisedSuggestions />;
 }
 
 export default NormalClient;
