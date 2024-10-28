@@ -40,7 +40,7 @@ function DashboardLayout() {
           <LogoutSection />
         </AppShell.Section>
       </AppShell.Navbar>
-      <AppShell.Main>
+      <AppShell.Main bg="var(--mantine-color-gray-3)">
         <Outlet />
       </AppShell.Main>
     </AppShell>

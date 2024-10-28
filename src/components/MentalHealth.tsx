@@ -1,23 +1,22 @@
-import { SAMPLE_PERSONALISED_SUGGESTIONS } from "./SampleData";
 import { Accordion, Title } from "@mantine/core";
+import { SAMPLE_MENTAL_HEALTH_SUGGESTIONS } from "./SampleData";
 import SuggestionItem from "./SuggestionItem";
 import SuggestionContainer from "./SuggestionContainer";
 
-function PersonalisedSuggestions() {
-  const suggestions = SAMPLE_PERSONALISED_SUGGESTIONS.map((suggestion) => (
+function MentalHealth() {
+  const insights = SAMPLE_MENTAL_HEALTH_SUGGESTIONS.map((suggestion) => (
     <SuggestionItem key={suggestion.title} item={suggestion} />
   ));
-
   return (
     <SuggestionContainer>
       <>
         <Title order={3} mb="xs">
-          Personalized Suggestions
+          Mental Health Suggestions
         </Title>
-        <Accordion variant="separated">{suggestions}</Accordion>
+        <Accordion variant="separated">{insights}</Accordion>
       </>
     </SuggestionContainer>
   );
 }
 
-export default PersonalisedSuggestions;
+export default MentalHealth;

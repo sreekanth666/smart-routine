@@ -25,35 +25,94 @@ export const SAMPLE_PERSONALISED_SUGGESTIONS: SuggestionType[] = [
 
 export const SAMPLE_MENTAL_HEALTH_SUGGESTIONS: SuggestionType[] = [
   {
-    title: "Take care of your physical health",
-    description: "Exercise, eat a healthy diet, and get enough sleep.",
-  },
-  {
-    title: "Practice gratitude",
+    title: "Practice Gratitude",
     description:
-      "Try to recognize positive emotions, even when you're stressed.",
+      "Start a daily gratitude journal to shift focus toward positive aspects of life.",
   },
   {
-    title: "Practice positive self-talk",
-    description: "Be gentle with yourself and avoid negative self-talk.",
-  },
-  {
-    title: "Reduce stress",
+    title: "Prioritize Sleep",
     description:
-      "Learn time-management techniques, try breathing exercises, or use cognitive behavioral therapy (CBT) techniques.",
+      "Aim for a regular sleep schedule to boost mood and cognitive function.",
   },
   {
-    title: "Stay connected",
+    title: "Stay Physically Active",
     description:
-      "Surround yourself with positive people and build close, quality relationships.",
+      "Engage in physical exercise, as it releases endorphins and reduces stress.",
   },
   {
-    title: "Protect yourself online",
+    title: "Mindful Breathing",
     description:
-      "Be careful about what you share online, and check your privacy settings.",
+      "Incorporate deep breathing exercises to manage stress levels.",
   },
   {
-    title: "Seek professional help",
-    description: "If self-help isn't working, you can get professional help.",
+    title: "Connect with Others",
+    description:
+      "Build supportive relationships to improve emotional resilience.",
+  },
+];
+
+export const SAMPLE_SUSTAINABILITY_INSIGHTS: SuggestionType[] = [
+  {
+    title: "Self-Care",
+    description:
+      "Switch to reusable cotton pads. Replace single-use cotton pads with washable ones to reduce waste.",
+  },
+  {
+    title: "Home Care",
+    description:
+      "Use wooden hangers. Wooden hangers last longer and are eco-friendly compared to plastic options.",
+  },
+  {
+    title: "Kitchen Tips",
+    description:
+      "Opt for beeswax wraps instead of plastic. Beeswax wraps are reusable, helping cut down on plastic waste.",
+  },
+  {
+    title: "Shopping",
+    description:
+      "Choose refillable products. Reduce plastic waste by opting for refillable containers for household items.",
+  },
+];
+
+export const SAMPLE_GOALS: SuggestionType[] = [
+  {
+    title: "Improve Health",
+    description:
+      "Focus on regular exercise and balanced nutrition for a healthier lifestyle.",
+  },
+  {
+    title: "Build Financial Security",
+    description:
+      "Set a budget and save consistently to achieve financial stability.",
+  },
+  {
+    title: "Learn a New Skill",
+    description:
+      "Challenge yourself with a new language, instrument, or technical skill to expand your abilities.",
+  },
+  {
+    title: "Strengthen Relationships",
+    description:
+      "Spend quality time with loved ones to build deeper connections.",
+  },
+  {
+    title: "Advance Your Career",
+    description:
+      "Pursue training or networking opportunities to grow professionally.",
+  },
+  {
+    title: "Practice Mindfulness",
+    description:
+      "Integrate meditation or journaling into your day for mental clarity.",
+  },
+  {
+    title: "Organize Your Space",
+    description:
+      "Declutter and arrange your environment for a more efficient, peaceful life.",
+  },
+  {
+    title: "Give Back",
+    description:
+      "Volunteer or support causes that align with your values to make a positive impact.",
   },
 ];
