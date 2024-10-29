@@ -17,10 +17,6 @@ export const SAMPLE_PERSONALISED_SUGGESTIONS: SuggestionType[] = [
     title: "Build in Flexibility",
     description: "Leave some room for adjustments or unexpected tasks.",
   },
-  {
-    title: "Test & Adjust",
-    description: "Regularly tweak the routine for optimal productivity.",
-  },
 ];
 
 export const SAMPLE_MENTAL_HEALTH_SUGGESTIONS: SuggestionType[] = [
@@ -43,11 +39,6 @@ export const SAMPLE_MENTAL_HEALTH_SUGGESTIONS: SuggestionType[] = [
     title: "Mindful Breathing",
     description:
       "Incorporate deep breathing exercises to manage stress levels.",
-  },
-  {
-    title: "Connect with Others",
-    description:
-      "Build supportive relationships to improve emotional resilience.",
   },
 ];
 
