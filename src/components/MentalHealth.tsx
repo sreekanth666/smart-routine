@@ -1,4 +1,4 @@
-import { Accordion } from "@mantine/core";
+import { Accordion, ScrollArea } from "@mantine/core";
 import { SAMPLE_MENTAL_HEALTH_SUGGESTIONS } from "./SampleData";
 import SuggestionItem from "./SuggestionItem";
 import SuggestionContainerCard from "./SuggestionContainerCard";
@@ -9,7 +9,9 @@ function MentalHealth() {
   ));
   return (
     <SuggestionContainerCard title="Mental Health Suggestions">
-      <Accordion variant="separated">{insights}</Accordion>
+      <ScrollArea h={330} scrollbarSize={2} scrollHideDelay={0}>
+        <Accordion variant="separated">{insights}</Accordion>
+      </ScrollArea>
     </SuggestionContainerCard>
   );
 }

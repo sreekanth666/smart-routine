@@ -9,7 +9,8 @@ function TravelEstimation() {
       radius="md"
       withBorder
       mx="sm"
-      h="100dvh"
+      w="98%"
+      h="35dvh"
     >
       <Card.Section p="md">
         <Title order={4}>Travel Estimation</Title>

@@ -1,4 +1,4 @@
-import { Accordion } from "@mantine/core";
+import { Accordion, ScrollArea } from "@mantine/core";
 import { SAMPLE_SUSTAINABILITY_INSIGHTS } from "./SampleData";
 import SuggestionItem from "./SuggestionItem";
 import SuggestionContainerCard from "./SuggestionContainerCard";
@@ -9,7 +9,9 @@ function SustainableInsights() {
   ));
   return (
     <SuggestionContainerCard title="Sustainable Insights & Reports">
-      <Accordion variant="separated">{insights}</Accordion>
+      <ScrollArea h={380} scrollbarSize={2} scrollHideDelay={0}>
+        <Accordion variant="separated">{insights}</Accordion>
+      </ScrollArea>
     </SuggestionContainerCard>
   );
 }

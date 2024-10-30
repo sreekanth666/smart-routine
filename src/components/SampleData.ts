@@ -1,4 +1,4 @@
-import { SuggestionType } from "../types/SuggestionType";
+import { RoutineType, SuggestionType } from "../types/SuggestionType";
 
 export const SAMPLE_PERSONALISED_SUGGESTIONS: SuggestionType[] = [
   {
@@ -105,5 +105,78 @@ export const SAMPLE_GOALS: SuggestionType[] = [
     title: "Give Back",
     description:
       "Volunteer or support causes that align with your values to make a positive impact.",
+  },
+];
+
+export const SAMPLE_ROUTINES: RoutineType[] = [
+  {
+    title: "Morning Mindfulness",
+    description:
+      "Start the day with 10 minutes of meditation and deep breathing.",
+    image: "/images/meditation.webp",
+    altDescription: "Meditation",
+  },
+  {
+    title: "Daily Exercise",
+    description:
+      "Dedicate 30 minutes to a workout or outdoor activity to stay fit.",
+    image: "/images/exercise.webp",
+    altDescription: "Exercise",
+  },
+  {
+    title: "Learning Hour",
+    description:
+      "Spend one hour reading, studying, or watching educational content.",
+    image: "/images/learning.webp",
+    altDescription: "Learning",
+  },
+  {
+    title: "Healthy Meal Prep",
+    description:
+      "Prepare balanced meals for the day with wholesome ingredients.",
+    image: "/images/cooking.webp",
+    altDescription: "Cooking",
+  },
+  {
+    title: "Evening Journal",
+    description:
+      "Reflect on the day by writing down thoughts, goals, and gratitude.",
+    image: "/images/journal.webp",
+    altDescription: "Writing Journal",
+  },
+  {
+    title: "Creative Session",
+    description:
+      "Set aside 20 minutes to explore a hobby or work on a creative project.",
+    image: "/images/hobby.webp",
+    altDescription: "Hobby",
+  },
+  {
+    title: "Tech-Free Time",
+    description:
+      "Take a break from screens for 30 minutes to unwind and recharge.",
+    image: "/images/reading.webp",
+    altDescription: "Reading",
+  },
+  {
+    title: "Weekly Goal Setting",
+    description:
+      "Every Sunday, outline goals for the upcoming week to stay focused.",
+    image: "/images/todo.webp",
+    altDescription: "Weekly Goals ToDo List",
+  },
+  {
+    title: "Nightly Cleanup",
+    description:
+      "Spend 10 minutes tidying up to ensure a fresh start for the next day.",
+    image: "/images/cleaning.webp",
+    altDescription: "Cleaning",
+  },
+  {
+    title: "Social Check-In",
+    description:
+      "Connect with friends or family daily for 10-15 minutes to nurture relationships.",
+    image: "/images/friends.webp",
+    altDescription: "Connect With Friends",
   },
 ];
