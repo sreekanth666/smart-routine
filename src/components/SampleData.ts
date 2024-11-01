@@ -113,70 +113,118 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
     title: "Morning Mindfulness",
     description:
       "Start the day with 10 minutes of meditation and deep breathing.",
-    image: "/images/meditation.webp",
-    altDescription: "Meditation",
+    images: [
+      { image: "/images/meditation1.webp", altDescription: "Meditation1" },
+      { image: "/images/meditation2.webp", altDescription: "Meditation2" },
+      { image: "/images/meditation3.webp", altDescription: "Meditation3" },
+    ],
   },
   {
     title: "Daily Exercise",
     description:
       "Dedicate 30 minutes to a workout or outdoor activity to stay fit.",
-    image: "/images/exercise.webp",
-    altDescription: "Exercise",
+    images: [
+      { image: "/images/exercise1.webp", altDescription: "Exercise1" },
+      { image: "/images/exercise2.webp", altDescription: "Exercise2" },
+      { image: "/images/exercise3.webp", altDescription: "Exercise3" },
+    ],
   },
   {
     title: "Learning Hour",
     description:
       "Spend one hour reading, studying, or watching educational content.",
-    image: "/images/learning.webp",
-    altDescription: "Learning",
+    images: [
+      { image: "/images/learning1.webp", altDescription: "Learning1" },
+      { image: "/images/learning2.webp", altDescription: "Learning2" },
+      { image: "/images/learning3.webp", altDescription: "Learning3" },
+    ],
   },
   {
     title: "Healthy Meal Prep",
     description:
       "Prepare balanced meals for the day with wholesome ingredients.",
-    image: "/images/cooking.webp",
-    altDescription: "Cooking",
+    images: [
+      { image: "/images/cooking1.webp", altDescription: "Cooking1" },
+      { image: "/images/cooking2.webp", altDescription: "Cooking2" },
+      { image: "/images/cooking3.webp", altDescription: "Cooking3" },
+    ],
   },
   {
     title: "Evening Journal",
     description:
       "Reflect on the day by writing down thoughts, goals, and gratitude.",
-    image: "/images/journal.webp",
-    altDescription: "Writing Journal",
+    images: [
+      { image: "/images/journal1.webp", altDescription: "Writing Journal1" },
+      { image: "/images/journal2.webp", altDescription: "Writing Journal2" },
+      { image: "/images/journal3.webp", altDescription: "Writing Journal3" },
+    ],
   },
   {
     title: "Creative Session",
     description:
       "Set aside 20 minutes to explore a hobby or work on a creative project.",
-    image: "/images/hobby.webp",
-    altDescription: "Hobby",
+    images: [
+      { image: "/images/hobby1.webp", altDescription: "Hobby1" },
+      { image: "/images/hobby2.webp", altDescription: "Hobby2" },
+      { image: "/images/hobby3.webp", altDescription: "Hobby3" },
+    ],
   },
   {
     title: "Tech-Free Time",
     description:
       "Take a break from screens for 30 minutes to unwind and recharge.",
-    image: "/images/reading.webp",
-    altDescription: "Reading",
+    images: [
+      { image: "/images/reading1.webp", altDescription: "Reading1" },
+      { image: "/images/reading2.webp", altDescription: "Reading2" },
+      { image: "/images/reading3.webp", altDescription: "Reading3" },
+    ],
   },
   {
     title: "Weekly Goal Setting",
     description:
       "Every Sunday, outline goals for the upcoming week to stay focused.",
-    image: "/images/todo.webp",
-    altDescription: "Weekly Goals ToDo List",
+    images: [
+      {
+        image: "/images/todo1.webp",
+        altDescription: "Weekly Goals ToDo List1",
+      },
+      {
+        image: "/images/todo2.webp",
+        altDescription: "Weekly Goals ToDo List2",
+      },
+      {
+        image: "/images/todo3.webp",
+        altDescription: "Weekly Goals ToDo List3",
+      },
+    ],
   },
   {
     title: "Nightly Cleanup",
     description:
       "Spend 10 minutes tidying up to ensure a fresh start for the next day.",
-    image: "/images/cleaning.webp",
-    altDescription: "Cleaning",
+    images: [
+      { image: "/images/cleaning1.webp", altDescription: "Cleaning1" },
+      { image: "/images/cleaning2.webp", altDescription: "Cleaning2" },
+      { image: "/images/cleaning3.webp", altDescription: "Cleaning3" },
+    ],
   },
   {
     title: "Social Check-In",
     description:
       "Connect with friends or family daily for 10-15 minutes to nurture relationships.",
-    image: "/images/friends.webp",
-    altDescription: "Connect With Friends",
+    images: [
+      {
+        image: "/images/friends1.webp",
+        altDescription: "Connect With Friends1",
+      },
+      {
+        image: "/images/friends2.webp",
+        altDescription: "Connect With Friends2",
+      },
+      {
+        image: "/images/friends3.webp",
+        altDescription: "Connect With Friends3",
+      },
+    ],
   },
 ];

@@ -8,11 +8,17 @@ import { BrowserRouter } from "react-router-dom";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 
-import { MantineProvider } from "@mantine/core";
+import { createTheme, MantineProvider } from "@mantine/core";
+
+const theme = createTheme({
+  fontFamily: '"Lato", sans-serif',
+  fontFamilyMonospace: "Monaco, Courier, monospace",
+  headings: { fontFamily: '"Lato", sans-serif' },
+});
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <MantineProvider>
+    <MantineProvider theme={theme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

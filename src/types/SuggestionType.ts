@@ -4,6 +4,8 @@ export type SuggestionType = {
 };
 
 export type RoutineType = SuggestionType & {
-  image: string;
-  altDescription: string;
+  images: {
+    image: string;
+    altDescription: string;
+  }[];
 };
