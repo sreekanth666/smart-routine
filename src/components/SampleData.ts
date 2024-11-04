@@ -110,6 +110,7 @@ export const SAMPLE_GOALS: SuggestionType[] = [
 
 export const SAMPLE_ROUTINES: RoutineType[] = [
   {
+    id: 1,
     title: "Morning Mindfulness",
     description:
       "Start the day with 10 minutes of meditation and deep breathing.",
@@ -117,9 +118,11 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
       { image: "/images/meditation1.webp", altDescription: "Meditation1" },
       { image: "/images/meditation2.webp", altDescription: "Meditation2" },
       { image: "/images/meditation3.webp", altDescription: "Meditation3" },
+      { image: "/images/meditation4.webp", altDescription: "Meditation4" },
     ],
   },
   {
+    id: 2,
     title: "Daily Exercise",
     description:
       "Dedicate 30 minutes to a workout or outdoor activity to stay fit.",
@@ -127,9 +130,11 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
       { image: "/images/exercise1.webp", altDescription: "Exercise1" },
       { image: "/images/exercise2.webp", altDescription: "Exercise2" },
       { image: "/images/exercise3.webp", altDescription: "Exercise3" },
+      { image: "/images/exercise4.webp", altDescription: "Exercise4" },
     ],
   },
   {
+    id: 3,
     title: "Learning Hour",
     description:
       "Spend one hour reading, studying, or watching educational content.",
@@ -137,9 +142,11 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
       { image: "/images/learning1.webp", altDescription: "Learning1" },
       { image: "/images/learning2.webp", altDescription: "Learning2" },
       { image: "/images/learning3.webp", altDescription: "Learning3" },
+      { image: "/images/learning4.webp", altDescription: "Learning4" },
     ],
   },
   {
+    id: 4,
     title: "Healthy Meal Prep",
     description:
       "Prepare balanced meals for the day with wholesome ingredients.",
@@ -147,9 +154,11 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
       { image: "/images/cooking1.webp", altDescription: "Cooking1" },
       { image: "/images/cooking2.webp", altDescription: "Cooking2" },
       { image: "/images/cooking3.webp", altDescription: "Cooking3" },
+      { image: "/images/cooking4.webp", altDescription: "Cooking4" },
     ],
   },
   {
+    id: 5,
     title: "Evening Journal",
     description:
       "Reflect on the day by writing down thoughts, goals, and gratitude.",
@@ -157,9 +166,11 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
       { image: "/images/journal1.webp", altDescription: "Writing Journal1" },
       { image: "/images/journal2.webp", altDescription: "Writing Journal2" },
       { image: "/images/journal3.webp", altDescription: "Writing Journal3" },
+      { image: "/images/journal4.webp", altDescription: "Writing Journal4" },
     ],
   },
   {
+    id: 6,
     title: "Creative Session",
     description:
       "Set aside 20 minutes to explore a hobby or work on a creative project.",
@@ -167,9 +178,11 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
       { image: "/images/hobby1.webp", altDescription: "Hobby1" },
       { image: "/images/hobby2.webp", altDescription: "Hobby2" },
       { image: "/images/hobby3.webp", altDescription: "Hobby3" },
+      { image: "/images/hobby4.webp", altDescription: "Hobby4" },
     ],
   },
   {
+    id: 7,
     title: "Tech-Free Time",
     description:
       "Take a break from screens for 30 minutes to unwind and recharge.",
@@ -177,9 +190,11 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
       { image: "/images/reading1.webp", altDescription: "Reading1" },
       { image: "/images/reading2.webp", altDescription: "Reading2" },
       { image: "/images/reading3.webp", altDescription: "Reading3" },
+      { image: "/images/reading4.webp", altDescription: "Reading4" },
     ],
   },
   {
+    id: 8,
     title: "Weekly Goal Setting",
     description:
       "Every Sunday, outline goals for the upcoming week to stay focused.",
@@ -196,9 +211,14 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
         image: "/images/todo3.webp",
         altDescription: "Weekly Goals ToDo List3",
       },
+      {
+        image: "/images/todo4.webp",
+        altDescription: "Weekly Goals ToDo List4",
+      },
     ],
   },
   {
+    id: 9,
     title: "Nightly Cleanup",
     description:
       "Spend 10 minutes tidying up to ensure a fresh start for the next day.",
@@ -206,9 +226,11 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
       { image: "/images/cleaning1.webp", altDescription: "Cleaning1" },
       { image: "/images/cleaning2.webp", altDescription: "Cleaning2" },
       { image: "/images/cleaning3.webp", altDescription: "Cleaning3" },
+      { image: "/images/cleaning4.webp", altDescription: "Cleaning4" },
     ],
   },
   {
+    id: 10,
     title: "Social Check-In",
     description:
       "Connect with friends or family daily for 10-15 minutes to nurture relationships.",
@@ -224,6 +246,10 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
       {
         image: "/images/friends3.webp",
         altDescription: "Connect With Friends3",
+      },
+      {
+        image: "/images/friends4.webp",
+        altDescription: "Connect With Friends4",
       },
     ],
   },
