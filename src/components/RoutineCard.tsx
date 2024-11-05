@@ -1,15 +1,4 @@
-import {
-  ActionIcon,
-  AspectRatio,
-  Card,
-  Container,
-  Flex,
-  Grid,
-  Image,
-  Menu,
-  Text,
-  Title,
-} from "@mantine/core";
+import { ActionIcon, Card, Grid, Menu, Text, Title } from "@mantine/core";
 import { RoutineType } from "../types/SuggestionType";
 import IconMenu2 from "./icons/IconMenu2";
 import IconEye from "./icons/IconEye";
@@ -18,55 +7,29 @@ import IconTrash from "./icons/IconTrash";
 import IconAnalyze from "./icons/IconAnalyze";
 import IconZoomScan from "./icons/IconZoomScan";
 
+import ImageGrid from "./ImageGrid";
+
 type RoutineCardProps = {
   routine: RoutineType;
   viewRoutine: (id: number) => void;
+  editRoutine: (id: number) => void;
+  deleteRoutine: (id: number, title: string) => void;
 };
 
-function RoutineCard({ routine, viewRoutine }: RoutineCardProps) {
+function RoutineCard({
+  routine,
+  viewRoutine,
+  editRoutine,
+  deleteRoutine,
+}: RoutineCardProps) {
   return (
-    <Card mb="md" key={routine.id}>
+    <Card mb="md">
       <Card.Section>
-        <Grid grow gutter="lg">
-          <Grid.Col span={6}>
-            <AspectRatio ratio={1}>
-              <Image
-                src={routine.images[0].image}
-                height={200}
-                alt={routine.images[0].altDescription}
-              />
-            </AspectRatio>
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <AspectRatio ratio={1}>
-              <Image
-                src={routine.images[1].image}
-                height={200}
-                alt={routine.images[1].altDescription}
-              />
-            </AspectRatio>
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <AspectRatio ratio={1}>
-              <Image
-                src={routine.images[2].image}
-                height={200}
-                alt={routine.images[2].altDescription}
-              />
-            </AspectRatio>
-          </Grid.Col>
-          <Grid.Col span={6} ta="center">
-            <Container bg="rgb(222, 226, 230, 0.6)" h="100%" ta="center">
-              <Flex h="100%" justify="center" align="center">
-                <Title order={1}>+3</Title>
-              </Flex>
-            </Container>
-          </Grid.Col>
-        </Grid>
+        <ImageGrid images={routine.images} />
       </Card.Section>
       <Card.Section mt="xs" mb="xs" ml="xs">
         <Grid>
-          <Grid.Col span={9}>
+          <Grid.Col span={{ base: 6, md: 9 }}>
             <Title mt="md" mb="xs" fw={500}>
               {routine.title}
             </Title>
@@ -74,7 +37,7 @@ function RoutineCard({ routine, viewRoutine }: RoutineCardProps) {
               {routine.description}
             </Text>
           </Grid.Col>
-          <Grid.Col span={3}>
+          <Grid.Col span={{ base: 6, md: 3 }}>
             <Menu shadow="md" width={200}>
               <Menu.Target>
                 <ActionIcon variant="default" aria-label="Settings">
@@ -93,12 +56,14 @@ function RoutineCard({ routine, viewRoutine }: RoutineCardProps) {
                 <Menu.Item
                   color="green"
                   leftSection={<IconEdit size="1rem" stroke={1.5} />}
+                  onClick={() => editRoutine(routine.id)}
                 >
                   Edit Routine
                 </Menu.Item>
                 <Menu.Item
                   color="red"
                   leftSection={<IconTrash size="1rem" stroke={1.5} />}
+                  onClick={() => deleteRoutine(routine.id, routine.title)}
                 >
                   Delete Routine
                 </Menu.Item>

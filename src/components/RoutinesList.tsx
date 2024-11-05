@@ -2,9 +2,15 @@ import { Modal, ScrollArea } from "@mantine/core";
 import { SAMPLE_ROUTINES } from "./SampleData";
 import { ReactElement, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
-import { RoutineType, RoutineTypeWithoutId } from "../types/SuggestionType";
+import {
+  RoutineType,
+  RoutineTypeWithoutId,
+  RoutineTypeWithoutIdAndImages,
+} from "../types/SuggestionType";
 import ViewRoutineDetails from "./ViewRoutineDetails";
 import RoutineCard from "./RoutineCard";
+import EditRoutine from "./EditRoutine";
+import DeleteRoutine from "./DeleteRoutine";
 
 function RoutinesList() {
   const [routineList, setRoutineList] = useState(SAMPLE_ROUTINES);
@@ -23,7 +29,6 @@ function RoutinesList() {
   };
 
   const handleViewButtonClick = (id: number) => {
-    console.log(id);
     const selectedRoutine: RoutineType[] = routineList.filter(
       (routine) => routine.id === id
     );
@@ -38,9 +43,64 @@ function RoutinesList() {
     openModal();
   };
 
+  const handleEditButtonClick = (id: number) => {
+    const selectedRoutine: RoutineType[] = routineList.filter(
+      (routine) => routine.id === id
+    );
+
+    setModalContent(
+      <EditRoutine editRoutine={editRoutine} routine={selectedRoutine[0]} />
+    );
+    setModalTitle(`Edit routine`);
+    openModal();
+  };
+
+  const editRoutine = (
+    id: number,
+    newRoutine: RoutineTypeWithoutIdAndImages
+  ) => {
+    setRoutineList((prevRoutines) =>
+      prevRoutines.map((routine) =>
+        routine.id === id
+          ? {
+              ...routine,
+              ...newRoutine,
+            }
+          : routine
+      )
+    );
+    closeModal();
+  };
+
+  const handleDeleteButtonClick = (id: number, title: string) => {
+    setModalContent(
+      <DeleteRoutine
+        routine={{ id, title }}
+        onCloseModal={close}
+        deleteRoutine={deleteUser}
+      />
+    );
+    setModalTitle(`Delete Routine`);
+    openModal();
+  };
+
+  const deleteUser = (id: number) => {
+    setRoutineList((prevRoutines) =>
+      prevRoutines.filter((routine) => routine.id !== id)
+    );
+    closeModal();
+  };
+
   const routines = routineList.map((routine) => (
-    <RoutineCard routine={routine} viewRoutine={handleViewButtonClick} />
+    <RoutineCard
+      key={routine.id}
+      routine={routine}
+      viewRoutine={handleViewButtonClick}
+      editRoutine={handleEditButtonClick}
+      deleteRoutine={handleDeleteButtonClick}
+    />
   ));
+
   return (
     <>
       <Modal.Root opened={opened} onClose={closeModal}>
