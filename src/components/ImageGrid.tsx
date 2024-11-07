@@ -14,12 +14,7 @@ function ImageGrid({ images }: ImageGridProps) {
       <ImageGridCell image={images[1]} />
       <ImageGridCell image={images[2]} />
       <Grid.Col span={{ base: 12, md: 6 }} ta="center">
-        <AspectRatio
-          ratio={1}
-          maw={200}
-          mx="auto"
-          className={classes["parent"]}
-        >
+        <AspectRatio ratio={16 / 15} maw={200} mx="auto" pos="relative">
           <Image
             src={images[3].image}
             height={200}
@@ -29,7 +24,8 @@ function ImageGrid({ images }: ImageGridProps) {
             color="#000"
             backgroundOpacity={0.35}
             blur={15}
-            className={classes["child-overlay"]}
+            h={200}
+            zIndex={5}
           />
           <Flex
             h="100%"
@@ -37,7 +33,7 @@ function ImageGrid({ images }: ImageGridProps) {
             align="center"
             className={classes["child-flex-box"]}
           >
-            <Title order={1} c="white" className={classes["child-text"]}>
+            <Title order={1} c="white">
               +{images.length - 3}
             </Title>
           </Flex>

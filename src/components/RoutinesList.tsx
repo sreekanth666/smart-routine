@@ -122,9 +122,7 @@ function RoutinesList() {
         </Modal.Content>
       </Modal.Root>
 
-      <ScrollArea h={500} type="scroll" scrollbarSize={5} scrollHideDelay={0}>
-        {routines}
-      </ScrollArea>
+      <ScrollArea h={500}>{routines}</ScrollArea>
     </>
   );
 }

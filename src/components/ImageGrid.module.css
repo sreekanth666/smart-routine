@@ -1,20 +1,6 @@
-.parent {
-    position: relative;
-}
-
-.child-overlay {
-    position: absolute;
-    /* z-index: 5; */
-}
-
 .child-flex-box {
     position: absolute;
-    bottom: 1px;
-    /* z-index: var(--overlay-z-index) + 1; */
-}
-
-.child-text {
-    position: absolute;
-    bottom: 80px;
-    /* z-index: var(--overlay-z-index) + 2; */
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 10;
 }

@@ -16,8 +16,13 @@ import { checkPassword } from "../utils/helpers";
 import { useAuth } from "../context/AuthContext";
 import { login as userLogin } from "../services/apiAuth";
 
+type LoginForm = {
+  email: string;
+  password: string;
+};
+
 function Login() {
-  const form = useForm({
+  const form = useForm<LoginForm>({
     initialValues: {
       email: "",
       password: "",

@@ -15,6 +15,14 @@ import classes from "./Authentication.module.css";
 import { checkPassword } from "../utils/helpers";
 import { register } from "../services/apiAuth";
 
+type RegisterForm = {
+  fullName: string;
+  email: string;
+  phone: string;
+  password: string;
+  reenterPassword: string;
+};
+
 const REGISTER_FORM_INIT_VALUES = {
   fullName: "",
   email: "",
@@ -24,7 +32,7 @@ const REGISTER_FORM_INIT_VALUES = {
 };
 
 function Register() {
-  const form = useForm({
+  const form = useForm<RegisterForm>({
     initialValues: REGISTER_FORM_INIT_VALUES,
     validate: {
       email: (val) => (/^\S+@\S+\.\S{2,}$/.test(val) ? null : "Invalid email"),
