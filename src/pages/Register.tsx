@@ -53,14 +53,7 @@ function Register() {
   const registerFormSubmitHandler = async () => {
     if (Object.keys(form.errors).length == 0) {
       console.log("Registered");
-      // const registerData: RegisterDataType = {
-      //   fullName: form.values.fullName,
-      //   email: form.values.email,
-      //   phone: form.values.phone,
-      //   password: form.values.password,
-      //   accountType: AccountType.CLIENT,
-      // };
-      // console.log(registerData);
+
       const { accessToken, isAdmin } = await register({
         fullName: form.values.fullName,
         email: form.values.email,

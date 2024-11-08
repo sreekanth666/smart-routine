@@ -29,7 +29,7 @@ function App() {
           <Route path="activity" element={<Activity />} />
           <Route path="diet" element={<Diet />} />
           <Route path="community" element={<Community />} />
-          <Route path="addRoutine" element={<AddRoutine />} />
+          <Route path="routine/:action/:id" element={<AddRoutine />} />
           <Route path="app/*" element={<Dashboard />} />
         </Route>
         <Route path="login" element={<Login />} />

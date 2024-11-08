@@ -7,7 +7,7 @@ function Routines() {
   const navigate = useNavigate();
 
   const handleAddRoutineButtonClick = () => {
-    navigate("/addRoutine");
+    navigate(`/routine/add/${null}`);
   };
 
   return (

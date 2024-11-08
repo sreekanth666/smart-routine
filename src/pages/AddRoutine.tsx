@@ -1,151 +1,143 @@
 import {
-  ActionIcon,
   Button,
-  Card,
   FileInput,
-  FileInputProps,
-  Flex,
   Grid,
-  Image,
   Paper,
-  Pill,
   Stack,
   Textarea,
   TextInput,
   Title,
 } from "@mantine/core";
 import IconFile from "../components/icons/IconFile";
-import IconX from "../components/icons/IconX";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import ValueComponent from "../components/ValueComponent";
+import PreviewComponent from "../components/PreviewComponent";
+import { useForm } from "@mantine/form";
 
-interface PreviewComponentProps {
-  files: File[];
-  onRemove: (index: number) => void;
-}
-
-const ValueComponent: FileInputProps["valueComponent"] = ({ value }) => {
-  if (value === null) {
-    return null;
-  }
-
-  if (Array.isArray(value)) {
-    return (
-      <Pill.Group>
-        {value.map((file, index) => (
-          <Pill key={index}>{file.name}</Pill>
-        ))}
-      </Pill.Group>
-    );
-  }
-
-  return <Pill>{value.name}</Pill>;
-};
-
-const PreviewComponent: React.FC<PreviewComponentProps> = ({
-  files,
-  onRemove,
-}) => {
-  if (files.length === 0) return null;
-
-  return (
-    <Flex gap="xs" wrap="wrap">
-      {files.map((file, index) => (
-        <Card
-          key={index}
-          w="100px"
-          h="100px"
-          bd="1px solid #e0e0e0"
-          radius="xs"
-          style={{ overflow: "hidden" }}
-          pos="relative"
-          p={0}
-        >
-          <Image
-            w="100%"
-            h="100%"
-            src={URL.createObjectURL(file)}
-            alt={file.name}
-          />
-
-          <ActionIcon
-            variant="default"
-            pos="absolute"
-            top="4px"
-            right="4px"
-            radius="50%"
-            color="white"
-            style={{ cursor: "pointer" }}
-            onClick={() => onRemove(index)}
-          >
-            <IconX size="1.4rem" stroke={1.5} />
-          </ActionIcon>
-        </Card>
-      ))}
-    </Flex>
-  );
+type AddRoutineForm = {
+  title: string;
+  description: string;
+  images: File[];
 };
 
 function AddRoutine() {
-  const [files, setFiles] = useState<File[]>([]);
+  const params = useParams();
   const navigate = useNavigate();
+  const form = useForm<AddRoutineForm>({
+    validateInputOnChange: true,
+    clearInputErrorOnChange: true,
+    validateInputOnBlur: false,
+    initialValues: {
+      title: "",
+      description: "",
+      images: [],
+    },
+    validate: {
+      title: (value) => (value ? null : "Title required"),
+      description: (value) => (value ? null : "Description required"),
+      images: (value) => {
+        if (value.length === 0) {
+          return "Routine images are mandatory";
+        } else if (value.length > 7) {
+          return "You can upload up to 7 images only";
+        } else {
+          let status = false,
+            index = 0;
+          while (index < value.length) {
+            if (value[index].size > 512000) {
+              status = true;
+              break;
+            }
+            index++;
+          }
+          if (status) {
+            return "Only images upto 500kb are allowed.";
+          } else {
+            return null;
+          }
+        }
+      },
+    },
+  });
 
-  const handleFileChange = (newFiles: File[] | null) => {
-    if (newFiles) {
-      setFiles(newFiles);
+  const removeFileHandler = (index: number) => {
+    const updatedFiles = form.getValues().images;
+    updatedFiles.splice(index, 1);
+    form.setFieldValue("images", updatedFiles);
+
+    if (updatedFiles.length > 7) {
+      form.setFieldError("images", "You can upload up to 7 images only");
+    } else {
+      form.clearFieldError("images");
     }
   };
 
-  const handleRemoveFile = (index: number) => {
-    const updatedFiles = [...files];
-    updatedFiles.splice(index, 1);
-    setFiles(updatedFiles);
-  };
-
-  const handleCancel = () => {
+  const cancelHandler = () => {
     navigate(-1);
   };
+
+  const routineSubmitHandler = () => {};
 
   return (
     <Paper withBorder shadow="md" p={30} mt={30} radius="md">
       <Title order={2} ta="center">
-        Add Routine
+        {params["action"] === "add" && "Add Routine"}
+        {params["action"] === "edit" && "Edit Routine"}
+        {params["action"] === "view" && "View Routine"}
       </Title>
-      <form action="">
+      <form
+        onSubmit={form.onSubmit(() => {
+          routineSubmitHandler();
+        })}
+      >
         <Stack>
           <TextInput
-            label="Routine Name"
-            placeholder="Name of the routine"
-            required
+            label="Routine Title"
+            placeholder="Title of the routine"
+            value={form.values.title}
+            {...form.getInputProps("title")}
+            error={form.errors.title}
           />
+
           <Textarea
             label="Routine Description"
             placeholder="Description of the routine"
-            required
+            value={form.values.description}
+            {...form.getInputProps("description")}
+            error={form.errors.description}
           />
+
           <FileInput
             label="Routine Images"
             placeholder="Upload routine images"
             multiple
             accept="image/png,image/jpeg"
             clearable
-            value={files}
-            onChange={handleFileChange}
+            value={form.values.images}
+            {...form.getInputProps("images")}
+            error={form.errors.images}
             valueComponent={ValueComponent}
             leftSection={<IconFile size="1.4rem" stroke={1.5} />}
             leftSectionPointerEvents="none"
+            // disabled={isEdit}
             required
           />
-          <PreviewComponent files={files} onRemove={handleRemoveFile} />
+          <PreviewComponent
+            files={form.values.images}
+            onRemove={removeFileHandler}
+          />
+
           <Grid>
             <Grid.Col span={6}>
-              <Button fullWidth mt="xl" color="red" onClick={handleCancel}>
+              <Button fullWidth mt="xl" color="red" onClick={cancelHandler}>
                 Cancel
               </Button>
             </Grid.Col>
             <Grid.Col span={6}>
-              <Button fullWidth mt="xl" color="green">
-                Add Routine
+              <Button type="submit" fullWidth mt="xl" color="green">
+                {params["action"] === "add" && "Add Routine"}
+                {params["action"] === "edit" && "Edit Routine"}
+                {params["action"] === "view" && "View Routine"}
               </Button>
             </Grid.Col>
           </Grid>

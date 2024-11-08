@@ -20,7 +20,9 @@ function AuthProvider({ children }: AuthProviderProps) {
     key: "loginData",
     defaultValue: null,
   });
+  console.log(value);
   const isLoggedIn = value !== null;
+  console.log(isLoggedIn);
   const authStorageValue: string | undefined = readLocalStorageValue({
     key: "loginData",
   });
