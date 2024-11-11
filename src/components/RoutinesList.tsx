@@ -1,4 +1,4 @@
-import { Modal, ScrollArea } from "@mantine/core";
+import { Modal } from "@mantine/core";
 import { SAMPLE_ROUTINES } from "./SampleData";
 import { ReactElement, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
@@ -11,6 +11,7 @@ import ViewRoutineDetails from "./ViewRoutineDetails";
 import RoutineCard from "./RoutineCard";
 import EditRoutine from "./EditRoutine";
 import DeleteRoutine from "./DeleteRoutine";
+import ScrollableContainer from "./UI/ScrollableContainer";
 
 function RoutinesList() {
   const [routineList, setRoutineList] = useState(SAMPLE_ROUTINES);
@@ -122,7 +123,7 @@ function RoutinesList() {
         </Modal.Content>
       </Modal.Root>
 
-      <ScrollArea h={500}>{routines}</ScrollArea>
+      <ScrollableContainer height={600}>{routines}</ScrollableContainer>
     </>
   );
 }

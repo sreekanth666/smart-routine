@@ -2,9 +2,9 @@ import { Outlet } from "react-router-dom";
 import { AppShell, Burger, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { MantineLogo } from "@mantinex/mantine-logo";
-import Navbar from "../components/Navbar";
-import LogoutSection from "./LogoutSection";
-import { useAuth } from "../context/AuthContext";
+import Navbar from "./Navbar";
+import LogoutSection from "../LogoutSection";
+import { useAuth } from "../../context/AuthContext";
 import NavbarClient from "./NavbarClient";
 
 function DashboardLayout() {

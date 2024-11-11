@@ -1,5 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 import { readLocalStorageValue, useLocalStorage } from "@mantine/hooks";
-import { createContext, ReactElement, useContext } from "react";
+import { createContext, ReactElement, useContext, useState } from "react";
 import { LoginServerDataType } from "../types/LoginServerDataType";
 
 interface AuthContextType {
@@ -19,24 +20,29 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [value, setValue, removeValue] = useLocalStorage<string | null>({
     key: "loginData",
     defaultValue: null,
+    getInitialValueInEffect: false,
   });
-  console.log(value);
-  const isLoggedIn = value !== null;
-  console.log(isLoggedIn);
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => value !== null);
+
   const authStorageValue: string | undefined = readLocalStorageValue({
     key: "loginData",
   });
+
   const authValue: LoginServerDataType | null = authStorageValue
     ? JSON.parse(authStorageValue)
     : null;
+
   const isAdmin = isLoggedIn && authValue !== null && authValue?.isAdmin;
 
   const login = (accessToken: string, isAdmin: boolean) => {
     setValue(JSON.stringify({ accessToken, isAdmin }));
+    setIsLoggedIn(true);
   };
 
   const logout = () => {
     removeValue();
+    setIsLoggedIn(false);
   };
 
   return (
@@ -56,5 +62,4 @@ function useAuth() {
   return context;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export { AuthProvider, useAuth };

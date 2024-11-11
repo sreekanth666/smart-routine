@@ -1,9 +1,9 @@
 import { NavLink } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
-import { isCurrentPage } from "../utils/helpers";
-import IconHome2 from "./icons/IconHome2";
-import IconUsers from "./icons/IconUsers";
-import IconChartHistogram from "./icons/IconChartHistogram";
+import { isCurrentPage } from "../../utils/helpers";
+import IconHome2 from "../icons/IconHome2";
+import IconUsers from "../icons/IconUsers";
+import IconChartHistogram from "../icons/IconChartHistogram";
 
 type NavbarParams = {
   isAdmin: boolean;
