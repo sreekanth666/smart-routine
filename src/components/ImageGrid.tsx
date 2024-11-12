@@ -14,7 +14,7 @@ function ImageGrid({ images }: ImageGridProps) {
       <ImageGridCell image={images[1]} />
       <ImageGridCell image={images[2]} />
       <Grid.Col span={{ base: 12, md: 6 }} ta="center">
-        <AspectRatio ratio={16 / 15} maw={200} mx="auto" pos="relative">
+        <AspectRatio ratio={1} maw={200} mx="auto" pos="relative">
           <Image
             src={images[3].image}
             height={200}
@@ -24,7 +24,8 @@ function ImageGrid({ images }: ImageGridProps) {
             color="#000"
             backgroundOpacity={0.35}
             blur={15}
-            h={200}
+            h={270}
+            w={270}
             zIndex={5}
           />
           <Flex

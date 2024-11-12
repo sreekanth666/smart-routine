@@ -1,7 +1,10 @@
-import { Modal } from "@mantine/core";
-import { SAMPLE_ROUTINES } from "./SampleData";
 import { ReactElement, useState } from "react";
+import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { FixedSizeList as List, ListChildComponentProps } from "react-window";
+
+import { SAMPLE_ROUTINES } from "./SampleData";
+
 import {
   RoutineType,
   RoutineTypeWithoutId,
@@ -11,7 +14,7 @@ import ViewRoutineDetails from "./ViewRoutineDetails";
 import RoutineCard from "./RoutineCard";
 import EditRoutine from "./EditRoutine";
 import DeleteRoutine from "./DeleteRoutine";
-import ScrollableContainer from "./UI/ScrollableContainer";
+// import ScrollableContainer from "./UI/ScrollableContainer";
 
 function RoutinesList() {
   const [routineList, setRoutineList] = useState(SAMPLE_ROUTINES);
@@ -92,15 +95,29 @@ function RoutinesList() {
     closeModal();
   };
 
-  const routines = routineList.map((routine) => (
-    <RoutineCard
-      key={routine.id}
-      routine={routine}
-      viewRoutine={handleViewButtonClick}
-      editRoutine={handleEditButtonClick}
-      deleteRoutine={handleDeleteButtonClick}
-    />
-  ));
+  const Row = ({ index, style }: ListChildComponentProps) => {
+    console.log(style);
+    // const routine = routineList[index];
+    return (
+      <div
+        style={{
+          ...style,
+          height: 600,
+          backgroundColor: "white",
+          margin: 10,
+        }}
+      >
+        Card {index}
+        {/* <RoutineCard
+          key={routine.id}
+          routine={routine}
+          viewRoutine={handleViewButtonClick}
+          editRoutine={handleEditButtonClick}
+          deleteRoutine={handleDeleteButtonClick}
+        /> */}
+      </div>
+    );
+  };
 
   return (
     <>
@@ -123,7 +140,18 @@ function RoutinesList() {
         </Modal.Content>
       </Modal.Root>
 
-      <ScrollableContainer height={600}>{routines}</ScrollableContainer>
+      {/* <ScrollableContainer height={600}> */}
+      <List
+        height={700}
+        itemCount={routineList.length}
+        itemSize={100} // Adjust the item size as needed
+        width="100%"
+        layout="vertical"
+        direction="ltr"
+      >
+        {Row}
+      </List>
+      {/* </ScrollableContainer> */}
     </>
   );
 }

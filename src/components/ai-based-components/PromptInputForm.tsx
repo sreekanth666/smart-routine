@@ -1,8 +1,24 @@
+import { FormEvent, useState } from "react";
 import IconMike from "../icons/ai-based-icons/IconMike";
 
-function PromptInputForm() {
+type PromptInputFormProps = {
+  onSendMessage: (message: string) => void;
+};
+
+function PromptInputForm({ onSendMessage }: PromptInputFormProps) {
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (inputValue.trim() !== "") {
+      onSendMessage(inputValue);
+      setInputValue("");
+    }
+  };
+
   return (
-    <form className="mt-2 pb-1 px-1">
+    <form onSubmit={handleSubmit} className="mt-2 pb-1 px-1">
       <label htmlFor="chat-input" className="sr-only">
         Enter your prompt
       </label>
@@ -18,6 +34,8 @@ function PromptInputForm() {
           id="chat-input"
           className="block w-full mb-2 resize-none rounded-xl border-none bg-slate-200 p-4 pl-10 pr-20 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-base"
           placeholder="Enter your prompt"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           rows={1}
           required
         ></textarea>
