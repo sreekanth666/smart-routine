@@ -97,7 +97,7 @@ function RoutinesList() {
 
   const Row = ({ index, style }: ListChildComponentProps) => {
     console.log(style);
-    // const routine = routineList[index];
+    const routine = routineList[index];
     return (
       <div
         style={{
@@ -105,16 +105,17 @@ function RoutinesList() {
           height: 600,
           backgroundColor: "white",
           margin: 10,
+          gap: 10,
         }}
       >
-        Card {index}
-        {/* <RoutineCard
+        {/* Card {index} */}
+        <RoutineCard
           key={routine.id}
           routine={routine}
           viewRoutine={handleViewButtonClick}
           editRoutine={handleEditButtonClick}
           deleteRoutine={handleDeleteButtonClick}
-        /> */}
+        />
       </div>
     );
   };
@@ -144,7 +145,7 @@ function RoutinesList() {
       <List
         height={700}
         itemCount={routineList.length}
-        itemSize={100} // Adjust the item size as needed
+        itemSize={700} // Adjust the item size as needed
         width="100%"
         layout="vertical"
         direction="ltr"

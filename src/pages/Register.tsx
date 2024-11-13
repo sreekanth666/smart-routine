@@ -37,9 +37,7 @@ function Register() {
     validate: {
       email: (val) => (/^\S+@\S+\.\S{2,}$/.test(val) ? null : "Invalid email"),
       phone: (val) =>
-        /^(0)?(0)?(\+91|91|0)?[- ]?(\d{3}[- ]?\d{3}[- ]?\d{4}|\d{5}[- ]?\d{5})$/.test(
-          val
-        )
+        /^(\+91|91|0)?[-\s]?[6-9]\d{2}[-\s]?\d{3}[-\s]?\d{4}$/.test(val)
           ? null
           : "Invalid mobile number",
       password: (val) => checkPassword(val),

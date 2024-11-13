@@ -193,7 +193,7 @@ function Users() {
         </Modal.Content>
       </Modal.Root>
 
-      <Table>
+      <Table bg="white">
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Full Name</Table.Th>

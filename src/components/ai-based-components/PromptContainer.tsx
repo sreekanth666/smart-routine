@@ -1,5 +1,4 @@
-import { useState } from "react";
-import ScrollableContainer from "../UI/ScrollableContainer";
+import { useEffect, useRef, useState } from "react";
 import PromptInputForm from "./PromptInputForm";
 import UserQuery from "./UserQuery";
 import AiReply from "./AiReply";
@@ -53,6 +52,20 @@ const SAMPLE_MESSAGES: AIMessageType[] = [
 function PromptContainer() {
   const [messages, setMessages] = useState<AIMessageType[]>(SAMPLE_MESSAGES);
 
+  // Ref to track the last message element
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  // Function to scroll to the latest message
+  const scrollToLatestMessage = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToLatestMessage();
+  }, [messages]);
+
   // Function to handle sending user message
   const handleSendMessage = (userMessage: string) => {
     const newUserMessage: AIMessageType = {
@@ -97,17 +110,19 @@ function PromptContainer() {
   });
 
   return (
-    <ScrollableContainer height={525}>
+    <div className="h-">
       {/* Prompt Messages Container - Modify the height according to your need */}
-      <div className="flex h-[100dvh] w-full flex-col">
+      <div className="flex h-[85dvh] w-full flex-col">
         {/* Prompt Messages */}
-        <div className="flex-1 rounded-xl bg-slate-200 p-4 text-sm leading-6 text-slate-900 sm:text-base sm:leading-7">
+        <div className=" flex-1 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-corner-rounded-full scrollbar-thumb-slate-400 scrollbar-track-slate-300 rounded-xl bg-slate-200 p-4 text-sm leading-6 text-slate-900 sm:text-base sm:leading-7 hover:scrollbar-thumb-slate-500 active:scrollbar-thumb-slate-600">
           {chat}
+          {/* Dummy div to scroll into view */}
+          <div ref={messagesEndRef}></div>
         </div>
         {/* Prompt message input */}
         <PromptInputForm onSendMessage={handleSendMessage} />
       </div>
-    </ScrollableContainer>
+    </div>
   );
 }
 
