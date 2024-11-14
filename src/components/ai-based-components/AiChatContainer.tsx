@@ -49,7 +49,7 @@ const SAMPLE_MESSAGES: AIMessageType[] = [
   },
 ];
 
-function PromptContainer() {
+function AiChatContainer() {
   const [messages, setMessages] = useState<AIMessageType[]>(SAMPLE_MESSAGES);
 
   // Ref to track the last message element
@@ -110,13 +110,12 @@ function PromptContainer() {
   });
 
   return (
-    <div className="h-">
+    <div className="h-8">
       {/* Prompt Messages Container - Modify the height according to your need */}
-      <div className="flex h-[85dvh] w-full flex-col">
+      <div className="flex h-[97vh] w-full flex-col">
         {/* Prompt Messages */}
-        <div className=" flex-1 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-corner-rounded-full scrollbar-thumb-slate-400 scrollbar-track-slate-300 rounded-xl bg-slate-200 p-4 text-sm leading-6 text-slate-900 sm:text-base sm:leading-7 hover:scrollbar-thumb-slate-500 active:scrollbar-thumb-slate-600">
+        <div className="flex-1 space-y-6 overflow-y-scroll  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-corner-rounded-full scrollbar-thumb-slate-400 scrollbar-track-slate-300 hover:scrollbar-thumb-slate-500 active:scrollbar-thumb-slate-600 rounded-xl bg-slate-200 p-4 text-sm leading-6 text-slate-900 shadow-sm sm:text-base sm:leading-7">
           {chat}
-          {/* Dummy div to scroll into view */}
           <div ref={messagesEndRef}></div>
         </div>
         {/* Prompt message input */}
@@ -126,4 +125,4 @@ function PromptContainer() {
   );
 }
 
-export default PromptContainer;
+export default AiChatContainer;

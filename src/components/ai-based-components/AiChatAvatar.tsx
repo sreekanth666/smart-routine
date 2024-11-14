@@ -1,10 +1,14 @@
 type AiChatAvatarProps = {
   imageUrl: string;
+  isUser: boolean;
 };
 
-function AiChatAvatar({ imageUrl }: AiChatAvatarProps) {
+function AiChatAvatar({ imageUrl, isUser }: AiChatAvatarProps) {
   return (
-    <img className="mr-2 flex h-8 w-8 rounded-full sm:mr-4" src={imageUrl} />
+    <img
+      className={`${isUser ? "mr-2" : "ml-2"} h-8 w-8 rounded-full sm:mr-4`}
+      src={imageUrl}
+    />
   );
 }
 

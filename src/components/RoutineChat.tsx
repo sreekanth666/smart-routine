@@ -1,5 +1,5 @@
 import { Card, Title } from "@mantine/core";
-import PromptContainer from "./ai-based-components/PromptContainer";
+import AiChatContainer from "./ai-based-components/AiChatContainer";
 
 function RoutineChat() {
   return (
@@ -8,7 +8,7 @@ function RoutineChat() {
         <Title ta="center">Routine Chat</Title>
       </Card.Section>
       <Card.Section p="xs">
-        <PromptContainer />
+        <AiChatContainer />
       </Card.Section>
     </Card>
   );

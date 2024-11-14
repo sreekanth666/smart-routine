@@ -32,7 +32,7 @@ function PromptInputForm({ onSendMessage }: PromptInputFormProps) {
         </button>
         <textarea
           id="chat-input"
-          className="block w-full mb-2 resize-none rounded-xl border-none bg-slate-200 p-4 pl-10 pr-20 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-base"
+          className="block w-full mb-2 resize-none rounded-xl border-none bg-slate-200 py-4 pl-10 pr-20 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 sm:text-base"
           placeholder="Enter your prompt"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}

@@ -1,4 +1,5 @@
 import { RoutineType, SuggestionType } from "../types/SuggestionType";
+import { TravelRoutineType } from "../types/TravelRotineType";
 
 export const SAMPLE_PERSONALISED_SUGGESTIONS: SuggestionType[] = [
   {
@@ -145,7 +146,7 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
       { image: "/images/learning4.webp", altDescription: "Learning4" },
     ],
   },
-  {
+  /*{
     id: 4,
     title: "Healthy Meal Prep",
     description:
@@ -252,5 +253,27 @@ export const SAMPLE_ROUTINES: RoutineType[] = [
         altDescription: "Connect With Friends4",
       },
     ],
-  },
+  },*/
 ];
+
+export const SAMPLE_TRAVEL_ROUTINE: TravelRoutineType = {
+  totalDistance: 100,
+  distanceCoveredByEachCategory: [
+    {
+      method: "bike",
+      distance: 50,
+    },
+    {
+      method: "car",
+      distance: 15,
+    },
+    {
+      method: "public transport",
+      distance: 30,
+    },
+    {
+      method: "walking",
+      distance: 5,
+    },
+  ],
+};

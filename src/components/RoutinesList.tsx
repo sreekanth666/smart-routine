@@ -149,6 +149,7 @@ function RoutinesList() {
         width="100%"
         layout="vertical"
         direction="ltr"
+        className="overflow-scroll scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-corner-rounded-full scrollbar-thumb-slate-400 scrollbar-track-slate-300 hover:scrollbar-thumb-slate-500 active:scrollbar-thumb-slate-600"
       >
         {Row}
       </List>

@@ -13,15 +13,15 @@ type AiReplyParams = {
 function AiReply({ imageUrl, aiMessage }: AiReplyParams) {
   return (
     <>
-      <AiReplyActions />
-      <div className="mb-4 flex rounded-xl bg-slate-50 px-2 py-6 sm:px-4">
-        <AiChatAvatar imageUrl={imageUrl} />
+      <div className="flex flex-row-reverse items-start">
+        <AiChatAvatar imageUrl={imageUrl} isUser={false} />
 
-        <div className="flex max-w-3xl items-center rounded-xl">
+        <div className="flex min-h-[85px] rounded-b-xl rounded-tl-xl bg-slate-50 p-4 sm:min-h-0 sm:max-w-md md:max-w-2xl">
           <Markdown rehypePlugins={[rehypeRaw, rehypeSanitize]}>
             {aiMessage}
           </Markdown>
         </div>
+        <AiReplyActions />
       </div>
     </>
   );

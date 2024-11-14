@@ -7,17 +7,15 @@ import AiReplyActionsContainer from "./AiReplyActionsContainer";
 function AiReplyActions() {
   return (
     <AiReplyActionsContainer>
-      <>
-        <AiReplyActionButton>
-          <IconLike />
-        </AiReplyActionButton>
-        <AiReplyActionButton>
-          <IconUnlike />
-        </AiReplyActionButton>
-        <AiReplyActionButton>
-          <IconCopy />
-        </AiReplyActionButton>
-      </>
+      <AiReplyActionButton>
+        <IconLike />
+      </AiReplyActionButton>
+      <AiReplyActionButton>
+        <IconUnlike />
+      </AiReplyActionButton>
+      <AiReplyActionButton>
+        <IconCopy />
+      </AiReplyActionButton>
     </AiReplyActionsContainer>
   );
 }

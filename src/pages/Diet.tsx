@@ -1,7 +1,7 @@
-import { Text } from "@mantine/core";
+import AiChatContainer from "../components/ai-based-components/AiChatContainer";
 
 function Diet() {
-  return <Text>Diet</Text>;
+  return <AiChatContainer />;
 }
 
 export default Diet;

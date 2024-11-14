@@ -7,10 +7,10 @@ type UserQueryProps = {
 
 function UserQuery({ imageUrl, query }: UserQueryProps) {
   return (
-    <div className="flex flex-row px-2 py-4 sm:px-4">
-      <AiChatAvatar imageUrl={imageUrl} />
+    <div className="flex items-start">
+      <AiChatAvatar imageUrl={imageUrl} isUser />
 
-      <div className="flex max-w-3xl items-center">
+      <div className="flex rounded-b-xl rounded-tr-xl bg-slate-50 p-4 sm:max-w-md md:max-w-2xl">
         <p>{query}</p>
       </div>
     </div>
