@@ -44,6 +44,7 @@ function TravelEstimation() {
       });
       return newTravelRoutine;
     });
+    close();
   };
 
   const categorizedTravelRoutine =
