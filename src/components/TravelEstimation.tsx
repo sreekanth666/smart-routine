@@ -1,18 +1,20 @@
 import {
   ActionIcon,
   Card,
+  Container,
   Group,
   Modal,
   Stack,
   Text,
   Title,
+  Tooltip,
 } from "@mantine/core";
-import { SAMPLE_TRAVEL_ROUTINE } from "./SampleData";
+import { SAMPLE_TRAVEL_ROUTINE } from "../sample-data/SampleData";
 import { useState } from "react";
 import {
   CommutationMethod,
   TravelRoutineType,
-} from "../types/TravelRotineType";
+} from "../types/TravelRoutineType";
 import IconMotrobike from "./icons/IconMotrobike";
 import IconCar from "./icons/IconCar";
 import IconWalk from "./icons/IconWalk";
@@ -52,43 +54,51 @@ function TravelEstimation() {
       switch (routine.method) {
         case "bike":
           return (
-            <Stack>
-              <Group>
-                <IconMotrobike size="3rem" stroke={1.5} />
-                <Text fz={20}>Bike</Text>
-              </Group>
-              <Text ta="center">{routine.distance} KM</Text>
-            </Stack>
+            <Container className="border-r-2 border-gray-500">
+              <Stack>
+                <Group>
+                  <IconMotrobike size="3rem" stroke={1.5} />
+                  <Text fz={20}>Bike</Text>
+                </Group>
+                <Text ta="center">{routine.distance} KM</Text>
+              </Stack>
+            </Container>
           );
         case "car":
           return (
-            <Stack>
-              <Group>
-                <IconCar size="3rem" stroke={1.5} />
-                <Text fz={20}>Car</Text>
-              </Group>
-              <Text ta="center">{routine.distance} KM</Text>
-            </Stack>
+            <Container className="border-r-2 border-gray-500">
+              <Stack>
+                <Group>
+                  <IconCar size="3rem" stroke={1.5} />
+                  <Text fz={20}>Car</Text>
+                </Group>
+                <Text ta="center">{routine.distance} KM</Text>
+              </Stack>
+            </Container>
           );
         case "walking":
           return (
-            <Stack>
-              <Group>
-                <IconWalk size="3rem" stroke={1.5} />
-                <Text fz={20}>Walking</Text>
-              </Group>
-              <Text ta="center">{routine.distance} KM</Text>
-            </Stack>
+            <Container>
+              <Stack>
+                <Group>
+                  <IconWalk size="3rem" stroke={1.5} />
+                  <Text fz={20}>Walking</Text>
+                </Group>
+                <Text ta="center">{routine.distance} KM</Text>
+              </Stack>
+            </Container>
           );
         case "public transport":
           return (
-            <Stack>
-              <Group>
-                <IconBus size="3rem" stroke={1.5} />
-                <Text fz={20}>Public Transport</Text>
-              </Group>
-              <Text ta="center">{routine.distance} KM</Text>
-            </Stack>
+            <Container className="border-r-2 border-gray-500">
+              <Stack>
+                <Group>
+                  <IconBus size="3rem" stroke={1.5} />
+                  <Text fz={20}>Public Transport</Text>
+                </Group>
+                <Text ta="center">{routine.distance} KM</Text>
+              </Stack>
+            </Container>
           );
       }
     });
@@ -128,9 +138,11 @@ function TravelEstimation() {
         <Card.Section p="md">
           <Group>
             <Title order={2}>Travel Estimation</Title>
-            <ActionIcon variant="default" onClick={open}>
-              <IconPlus size="3rem" stroke={1.5} />
-            </ActionIcon>
+            <Tooltip label="Add new travel details">
+              <ActionIcon variant="default" onClick={open}>
+                <IconPlus size="3rem" stroke={1.5} />
+              </ActionIcon>
+            </Tooltip>
           </Group>
           <Text fz={20}>
             Total Distance Covered: {travelRoutine.totalDistance} KM

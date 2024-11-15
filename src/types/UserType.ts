@@ -4,3 +4,5 @@ export type UserType = {
   email: string;
   phone: string;
 };
+
+export type UserWithoutIdType = Omit<UserType, "id">;

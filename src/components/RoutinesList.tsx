@@ -3,7 +3,7 @@ import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FixedSizeList as List, ListChildComponentProps } from "react-window";
 
-import { SAMPLE_ROUTINES } from "./SampleData";
+import { SAMPLE_ROUTINES } from "../sample-data/SampleData";
 
 import {
   RoutineType,

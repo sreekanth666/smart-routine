@@ -10,7 +10,7 @@ import IconTrash from "../components/icons/IconTrash";
 import ViewUserDetails from "../components/ViewUserDetails";
 import EditUserDetails from "../components/EditUserDetails";
 import { UserType } from "../types/UserType";
-import { UserWithoutIdType } from "../types/UserWithoutIdType";
+import { UserWithoutIdType } from "../types/UserType";
 import DeleteUserDetails from "../components/DeleteUserDetails";
 
 const DEMO_USERS: UserType[] = [

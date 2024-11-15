@@ -17,3 +17,7 @@ export function checkPassword(password: string): string | null {
     return "Password must contain at least 1 special character";
   return null;
 }
+
+export function generateRandomID(): string {
+  return "_" + Math.random().toString(36).substring(2, 9);
+}

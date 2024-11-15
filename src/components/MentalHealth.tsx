@@ -1,5 +1,5 @@
 import { Accordion, ScrollArea } from "@mantine/core";
-import { SAMPLE_MENTAL_HEALTH_SUGGESTIONS } from "./SampleData";
+import { SAMPLE_MENTAL_HEALTH_SUGGESTIONS } from "../sample-data/SampleData";
 import SuggestionItem from "./SuggestionItem";
 import SuggestionContainerCard from "./SuggestionContainerCard";
 

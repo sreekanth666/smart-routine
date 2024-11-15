@@ -6,7 +6,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { CommutationMethod } from "../types/TravelRotineType";
+import { CommutationMethod } from "../types/TravelRoutineType";
 import { ChangeEvent } from "react";
 
 type TravelDetailsForm = {
@@ -113,6 +113,7 @@ function AddTravelDetailsForm({
           onChange={selectTravelMethodHandler}
           withAsterisk
           data={["Bike", "Car", "Walking", "Public Transport"]}
+          required
         />
         <Button type="submit" fullWidth mt="xl">
           Add Travel Details

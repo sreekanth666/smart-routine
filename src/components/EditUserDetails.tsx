@@ -1,7 +1,7 @@
 import { Button, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { UserType } from "../types/UserType";
-import { UserWithoutIdType } from "../types/UserWithoutIdType";
+import { UserWithoutIdType } from "../types/UserType";
 
 type EditUserDetailsParams = {
   user: UserType;

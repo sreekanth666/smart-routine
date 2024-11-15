@@ -19,3 +19,15 @@ export type RoutineTypeWithoutIdAndImages = Omit<
   RoutineTypeWithoutId,
   "images"
 >;
+
+export type GoalType = {
+  id: string;
+  goal: string;
+  didAchieve: boolean;
+};
+
+export type DailyActivity = {
+  id: string;
+  title: string;
+  description: string;
+};

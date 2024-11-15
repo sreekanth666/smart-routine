@@ -1,5 +1,5 @@
 import { Accordion, ScrollArea } from "@mantine/core";
-import { SAMPLE_SUSTAINABILITY_INSIGHTS } from "./SampleData";
+import { SAMPLE_SUSTAINABILITY_INSIGHTS } from "../sample-data/SampleData";
 import SuggestionItem from "./SuggestionItem";
 import SuggestionContainerCard from "./SuggestionContainerCard";
 

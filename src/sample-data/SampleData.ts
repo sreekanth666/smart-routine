@@ -1,5 +1,10 @@
-import { RoutineType, SuggestionType } from "../types/SuggestionType";
-import { TravelRoutineType } from "../types/TravelRotineType";
+import {
+  DailyActivity,
+  GoalType,
+  RoutineType,
+  SuggestionType,
+} from "../types/SuggestionType";
+import { TravelRoutineType } from "../types/TravelRoutineType";
 
 export const SAMPLE_PERSONALISED_SUGGESTIONS: SuggestionType[] = [
   {
@@ -277,3 +282,42 @@ export const SAMPLE_TRAVEL_ROUTINE: TravelRoutineType = {
     },
   ],
 };
+
+export const SAMPLE_LIFE_GOALS: GoalType[] = [
+  {
+    id: "_3z7dcdefo",
+    goal: "drink at least 2 liters of water daily for the next 30 days.",
+    didAchieve: false,
+  },
+  {
+    id: "_f6s24e9n3",
+    goal: "walk 10,000 steps 5 days a week for the next month.",
+    didAchieve: false,
+  },
+  {
+    id: "_l3e92lnsi",
+    goal: "meditate for 5 minutes every morning for the next 2 weeks.",
+    didAchieve: false,
+  },
+];
+
+export const SAMPLE_DAILY_ACTIVITIES: DailyActivity[] = [
+  {
+    id: "_aew33bll4",
+    title: "Morning Stretch",
+    description:
+      "Start your day with a gentle 10-minute stretching routine to improve flexibility and blood flow. Focus on stretching your arms, legs, back, and neck to wake up your muscles and ease any overnight stiffness.",
+  },
+  {
+    id: "_f7pcehl06",
+    title: "Mindful Meditation",
+    description:
+      "Spend 5-10 minutes in quiet meditation or deep breathing exercises. This can help reduce stress, increase focus, and improve overall mental clarity. Sit comfortably, close your eyes, and focus on your breath or a positive affirmation.",
+  },
+  {
+    id: "_5tgt71sco",
+    title: "Hydrate with Water",
+    description:
+      "Drink a full glass of water right after waking up to kickstart your metabolism, flush out toxins, and rehydrate your body after hours of sleep. Aim to drink 8 glasses of water throughout the day.",
+  },
+];

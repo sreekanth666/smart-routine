@@ -1,5 +1,5 @@
 import { TextInput } from "@mantine/core";
-import { UserWithoutIdType } from "../types/UserWithoutIdType";
+import { UserWithoutIdType } from "../types/UserType";
 
 type ViewUserDetailsParams = {
   user: UserWithoutIdType;

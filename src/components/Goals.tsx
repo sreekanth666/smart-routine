@@ -1,5 +1,5 @@
 import { Carousel } from "@mantine/carousel";
-import { SAMPLE_GOALS } from "./SampleData";
+import { SAMPLE_GOALS } from "../sample-data/SampleData";
 import GoalCard from "./GoalCard";
 
 function Goals() {

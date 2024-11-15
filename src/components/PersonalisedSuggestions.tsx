@@ -1,4 +1,4 @@
-import { SAMPLE_PERSONALISED_SUGGESTIONS } from "./SampleData";
+import { SAMPLE_PERSONALISED_SUGGESTIONS } from "../sample-data/SampleData";
 import { Accordion, ScrollArea } from "@mantine/core";
 import SuggestionItem from "./SuggestionItem";
 import SuggestionContainerCard from "./SuggestionContainerCard";
