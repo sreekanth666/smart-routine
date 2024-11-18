@@ -46,6 +46,7 @@ function AddNewDailyActivityForm({
           onChange={(event) =>
             form.setFieldValue("description", event.currentTarget.value)
           }
+          required
         />
 
         <Button type="submit" fullWidth mt="xl">

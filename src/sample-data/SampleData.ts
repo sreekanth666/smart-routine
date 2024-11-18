@@ -1,3 +1,4 @@
+import { CommuntityPostType } from "../types/CommunityPostType";
 import {
   DailyActivity,
   GoalType,
@@ -319,5 +320,78 @@ export const SAMPLE_DAILY_ACTIVITIES: DailyActivity[] = [
     title: "Hydrate with Water",
     description:
       "Drink a full glass of water right after waking up to kickstart your metabolism, flush out toxins, and rehydrate your body after hours of sleep. Aim to drink 8 glasses of water throughout the day.",
+  },
+];
+
+export const SAMPLE_COMMUNITY_FEED: CommuntityPostType[] = [
+  {
+    id: 1,
+    userName: "@FitWithElla",
+    postContent:
+      "Started my day with a quick 5K run. The morning air really does wonders for the soul. Time to tackle this day with a clear mind and a positive attitude.",
+    postedDate: new Date("2024-11-04T06:44:17.816Z"),
+  },
+  {
+    id: 2,
+    userName: "@MindfulMornings",
+    postContent:
+      "Grateful for the small things today: a cup of hot coffee, a quiet moment to meditate, and the energy to embrace whatever comes my way. Let's make it a good one.",
+    postedDate: new Date("2024-11-18T06:44:19.443Z"),
+  },
+  {
+    id: 3,
+    userName: "@HealthyHabitsSam",
+    postContent:
+      "Swapped my usual snack for a handful of almonds and fruit today. Small changes, big impact. My body already feels more energized!",
+    postedDate: new Date("2024-10-20T06:44:51.559Z"),
+  },
+  {
+    id: 4,
+    userName: "@DailyDoseDavid",
+    postContent:
+      "Tried a new yoga flow this morning, and wow, my body feels refreshed. Sometimes stepping out of your comfort zone is the best way to discover new strengths.",
+    postedDate: new Date("2024-11-09T06:44:55.623Z"),
+  },
+  {
+    id: 5,
+    userName: "@BalanceWithBecca",
+    postContent:
+      "Meal-prepped for the week, and it's amazing how less stressed I feel already. Planning ahead is definitely my new favorite form of self-care.",
+    postedDate: new Date("2024-11-01T06:47:55.737Z"),
+  },
+  {
+    id: 6,
+    userName: "@WellnessByJade",
+    postContent:
+      "Got 8 hours of sleep for the first time in forever and I feel like a new person. Who knew rest was the real secret to productivity?",
+    postedDate: new Date("2024-10-30T06:48:38.468Z"),
+  },
+  {
+    id: 7,
+    userName: "@ActiveAmy",
+    postContent:
+      "Did a 20-minute HIIT workout, and now I'm ready to conquer my to-do list. Starting my day with movement always sets a positive tone.",
+    postedDate: new Date("2024-11-05T06:49:02.886Z"),
+  },
+  {
+    id: 8,
+    userName: "@CalmInChaos",
+    postContent:
+      "Spent 10 minutes just breathing deeply today. Sometimes, the best thing you can do for your mental health is simply to slow down and breathe.",
+    postedDate: new Date("2024-10-29T06:49:34.764Z"),
+  },
+  {
+    id: 9,
+    userName: "@NutritionNate",
+    postContent:
+      "Cutting down on sugar this week, and my energy levels are already so much better. It's crazy how much diet impacts mood and focus.",
+    postedDate: new Date("2024-10-27T06:49:58.164Z"),
+  },
+  {
+    id: 10,
+    userName: "@RoutineRich",
+    postContent:
+      "Decided to wake up an hour earlier this week, and it's been a game-changer. More time for myself before the day starts is the ultimate productivity hack.",
+    postedDate: new Date("2024-11-01T06:50:22.411Z"),
   },
 ];
