@@ -37,7 +37,7 @@ function AddNewGoalForm({ onAddingNewGoal }: AddNewGoalFormParams) {
           required
         />
 
-        <Button type="submit" fullWidth mt="xl">
+        <Button type="submit" color="green" fullWidth mt="xl">
           Add New Goal
         </Button>
       </form>

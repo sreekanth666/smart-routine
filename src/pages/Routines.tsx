@@ -19,10 +19,16 @@ function Routines() {
           </Grid.Col>
           <Grid.Col style={{ justifyContent: "end" }} span={6}>
             <Flex justify="end">
-              <Button mr={2} onClick={handleAddRoutineButtonClick}>
+              <Button
+                mr={2}
+                color="green"
+                onClick={handleAddRoutineButtonClick}
+              >
                 Add Routine
               </Button>
-              <Button ml={2}>Plan Routine</Button>
+              <Button color="green" ml={2}>
+                Plan Routine
+              </Button>
             </Flex>
           </Grid.Col>
         </Grid>

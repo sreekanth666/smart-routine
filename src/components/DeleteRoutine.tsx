@@ -21,7 +21,13 @@ function DeleteRoutine({
       <Title order={4}>Do you really wanted to delete {routine.title}?</Title>
       <Grid>
         <Grid.Col span={6}>
-          <Button onClick={onCloseModal} fullWidth mt="xl" color="green">
+          <Button
+            onClick={onCloseModal}
+            c="green"
+            fullWidth
+            mt="xl"
+            color="green"
+          >
             Cancel
           </Button>
         </Grid.Col>

@@ -44,6 +44,9 @@ importers:
       react-router-dom:
         specifier: ^6.27.0
         version: 6.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-webcam:
+        specifier: ^7.2.0
+        version: 7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-window:
         specifier: ^1.8.10
         version: 1.8.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1522,6 +1525,12 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  react-webcam@7.2.0:
+    resolution: {integrity: sha512-xkrzYPqa1ag2DP+2Q/kLKBmCIfEx49bVdgCCCcZf88oF+0NPEbkwYk3/s/C7Zy0mhM8k+hpdNkBLzxg8H0aWcg==}
+    peerDependencies:
+      react: '>=16.2.0'
+      react-dom: '>=16.2.0'
 
   react-window@1.8.10:
     resolution: {integrity: sha512-Y0Cx+dnU6NLa5/EvoHukUD0BklJ8qITCtVEPY1C/nL8wwoZ0b5aEw8Ff1dOVHw7fCzMt55XfJDd8S8W8LCaUCg==}
@@ -3342,6 +3351,11 @@ snapshots:
       use-latest: 1.2.1(@types/react@18.3.12)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
+
+  react-webcam@7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-window@1.8.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:

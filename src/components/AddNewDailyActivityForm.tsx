@@ -6,13 +6,13 @@ type DailyActivityForm = {
   description: string;
 };
 
-type AddNewDailyActivityParams = {
+type AddNewDailyActivityFormParams = {
   onAddingNewDailyActivity: (title: string, description: string) => void;
 };
 
 function AddNewDailyActivityForm({
   onAddingNewDailyActivity,
-}: AddNewDailyActivityParams) {
+}: AddNewDailyActivityFormParams) {
   const form = useForm<DailyActivityForm>({
     initialValues: { title: "", description: "" },
     validate: {},
@@ -49,7 +49,7 @@ function AddNewDailyActivityForm({
           required
         />
 
-        <Button type="submit" fullWidth mt="xl">
+        <Button type="submit" color="green" fullWidth mt="xl">
           Add New Daily Activity
         </Button>
       </form>

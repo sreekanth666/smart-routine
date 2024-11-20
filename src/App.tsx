@@ -12,6 +12,7 @@ import Activity from "./pages/Activity";
 import Diet from "./pages/Diet";
 import Community from "./pages/Community";
 import AddRoutine from "./pages/AddRoutine";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="diet" element={<Diet />} />
           <Route path="community" element={<Community />} />
           <Route path="routine/:action/:id" element={<AddRoutine />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="app/*" element={<Dashboard />} />
         </Route>
         <Route path="login" element={<Login />} />

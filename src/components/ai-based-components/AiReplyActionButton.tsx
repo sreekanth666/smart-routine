@@ -6,7 +6,7 @@ type AiReplyActionButtonProps = {
 
 function AiReplyActionButton({ children }: AiReplyActionButtonProps) {
   return (
-    <button className="hover:text-blue-600" type="button">
+    <button className="hover:text-green-600" type="button">
       {children}
     </button>
   );

@@ -7,7 +7,7 @@ type SuggestionItemProps = {
 
 function SuggestionItem({ item }: SuggestionItemProps) {
   return (
-    <Accordion.Item value={item.title} bg={"var(--mantine-color-gray-4)"}>
+    <Accordion.Item value={item.title} bg={"var(--mantine-color-gray-3)"}>
       <Accordion.Control>{item.title}</Accordion.Control>
       <Accordion.Panel>{item.description}</Accordion.Panel>
     </Accordion.Item>

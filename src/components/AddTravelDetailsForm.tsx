@@ -115,7 +115,7 @@ function AddTravelDetailsForm({
           data={["Bike", "Car", "Walking", "Public Transport"]}
           required
         />
-        <Button type="submit" fullWidth mt="xl">
+        <Button type="submit" color="green" fullWidth mt="xl">
           Add Travel Details
         </Button>
       </form>

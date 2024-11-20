@@ -139,7 +139,11 @@ function TravelEstimation() {
           <Group>
             <Title order={2}>Travel Estimation</Title>
             <Tooltip label="Add new travel details">
-              <ActionIcon variant="default" onClick={open}>
+              <ActionIcon
+                variant="default"
+                onClick={open}
+                styles={{ icon: {} }}
+              >
                 <IconPlus size="3rem" stroke={1.5} />
               </ActionIcon>
             </Tooltip>
