@@ -2,38 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-.lato-regular {
-    font-family: "Lato", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+.anek-latin-thin {
+  font-family: "Anek Latin", serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings: "wdth" 87.5;
 }
 
-.lato-bold {
-    font-family: "Lato", sans-serif;
-    font-weight: 700;
-    font-style: normal;
+.anek-latin-light {
+  font-family: "Anek Latin", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings: "wdth" 87.5;
 }
 
-.lato-black {
-    font-family: "Lato", sans-serif;
-    font-weight: 900;
-    font-style: normal;
+.anek-latin-regular {
+  font-family: "Anek Latin", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 87.5;
 }
 
-.lato-regular-italic {
-    font-family: "Lato", sans-serif;
-    font-weight: 400;
-    font-style: italic;
+.anek-latin-bold {
+  font-family: "Anek Latin", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-variation-settings: "wdth" 87.5;
 }
 
-.lato-bold-italic {
-    font-family: "Lato", sans-serif;
-    font-weight: 700;
-    font-style: italic;
+.anek-latin-black {
+  font-family: "Anek Latin", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+  font-variation-settings: "wdth" 87.5;
 }
 
-.lato-black-italic {
-    font-family: "Lato", sans-serif;
-    font-weight: 900;
-    font-style: italic;
+.anek-latin-thin-italic {
+  font-family: "Anek Latin", serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: italic;
+  font-variation-settings: "wdth" 87.5;
+}
+
+.anek-latin-light-italic {
+  font-family: "Anek Latin", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: "wdth" 87.5;
+}
+
+.anek-latin-regular-italic {
+  font-family: "Anek Latin", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: italic;
+  font-variation-settings: "wdth" 87.5;
+}
+
+.anek-latin-bold-italic {
+  font-family: "Anek Latin", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: italic;
+  font-variation-settings: "wdth" 87.5;
+}
+
+.anek-latin-black-italic {
+  font-family: "Anek Latin", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: italic;
+  font-variation-settings: "wdth" 87.5;
 }

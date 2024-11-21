@@ -11,9 +11,9 @@ import "@mantine/carousel/styles.css";
 import { createTheme, MantineProvider } from "@mantine/core";
 
 const theme = createTheme({
-  fontFamily: "Lato, sans-serif",
+  fontFamily: "Anek Latin, serif",
   fontFamilyMonospace: "Monaco, Courier, monospace",
-  headings: { fontFamily: "Lato, sans-serif" },
+  headings: { fontFamily: "Anek Latin, serif" },
 });
 
 createRoot(document.getElementById("root")!).render(

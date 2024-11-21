@@ -86,7 +86,7 @@ function DashboardLayout() {
           <LogoutSection />
         </AppShell.Section>
       </AppShell.Navbar>
-      <AppShell.Main bg="var(--mantine-color-gray-1)">
+      <AppShell.Main bg="var(--mantine-color-gray-2)">
         <Outlet />
         <Modal.Root opened={opened} onClose={close}>
           <Modal.Overlay />
@@ -115,7 +115,7 @@ function DashboardLayout() {
               color="green"
               radius="xl"
               size={60}
-              onClick={open}
+              onDoubleClick={open}
             >
               <IconCamera size="2rem" stroke={1.5} />
             </ActionIcon>

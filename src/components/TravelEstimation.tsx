@@ -1,7 +1,7 @@
 import {
   ActionIcon,
   Card,
-  Container,
+  Grid,
   Group,
   Modal,
   Stack,
@@ -54,51 +54,63 @@ function TravelEstimation() {
       switch (routine.method) {
         case "bike":
           return (
-            <Container className="border-r-2 border-gray-500">
+            <Grid.Col
+              key={routine.method}
+              span={3}
+              className="border-r-2 border-gray-500"
+            >
               <Stack>
-                <Group>
+                <Group justify="space-evenly">
                   <IconMotrobike size="3rem" stroke={1.5} />
                   <Text fz={20}>Bike</Text>
                 </Group>
                 <Text ta="center">{routine.distance} KM</Text>
               </Stack>
-            </Container>
+            </Grid.Col>
           );
         case "car":
           return (
-            <Container className="border-r-2 border-gray-500">
+            <Grid.Col
+              key={routine.method}
+              span={3}
+              className="border-r-2 border-gray-500"
+            >
               <Stack>
-                <Group>
+                <Group justify="space-evenly">
                   <IconCar size="3rem" stroke={1.5} />
                   <Text fz={20}>Car</Text>
                 </Group>
                 <Text ta="center">{routine.distance} KM</Text>
               </Stack>
-            </Container>
+            </Grid.Col>
           );
         case "walking":
           return (
-            <Container>
+            <Grid.Col key={routine.method} span={3}>
               <Stack>
-                <Group>
+                <Group justify="space-evenly">
                   <IconWalk size="3rem" stroke={1.5} />
                   <Text fz={20}>Walking</Text>
                 </Group>
                 <Text ta="center">{routine.distance} KM</Text>
               </Stack>
-            </Container>
+            </Grid.Col>
           );
         case "public transport":
           return (
-            <Container className="border-r-2 border-gray-500">
+            <Grid.Col
+              key={routine.method}
+              span={3}
+              className="border-r-2 border-gray-500"
+            >
               <Stack>
-                <Group>
+                <Group justify="space-evenly">
                   <IconBus size="3rem" stroke={1.5} />
                   <Text fz={20}>Public Transport</Text>
                 </Group>
                 <Text ta="center">{routine.distance} KM</Text>
               </Stack>
-            </Container>
+            </Grid.Col>
           );
       }
     });
@@ -153,7 +165,7 @@ function TravelEstimation() {
           </Text>
         </Card.Section>
         <Card.Section p="md">
-          <Group>{categorizedTravelRoutine}</Group>
+          <Grid>{categorizedTravelRoutine}</Grid>
         </Card.Section>
       </Card>
     </>

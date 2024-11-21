@@ -141,7 +141,6 @@ function RoutinesList() {
         </Modal.Content>
       </Modal.Root>
 
-      {/* <ScrollableContainer height={600}> */}
       <List
         height={700}
         itemCount={routineList.length}
@@ -153,7 +152,6 @@ function RoutinesList() {
       >
         {Row}
       </List>
-      {/* </ScrollableContainer> */}
     </>
   );
 }
