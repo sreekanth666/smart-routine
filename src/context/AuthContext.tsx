@@ -1,12 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
 import { readLocalStorageValue, useLocalStorage } from "@mantine/hooks";
 import { createContext, ReactElement, useContext, useState } from "react";
-import { LoginServerDataType } from "../types/LoginServerDataType";
+import {
+  LoginServerDataType,
+  UserAuthDataType,
+} from "../types/LoginServerDataType";
 
 interface AuthContextType {
   isLoggedIn: boolean;
   isAdmin: boolean;
-  login: (accessToken: string, isAdmin: boolean) => void;
+  login: (accessToken: string, user: UserAuthDataType) => void;
   logout: () => void;
 }
 
@@ -33,10 +36,10 @@ function AuthProvider({ children }: AuthProviderProps) {
     ? JSON.parse(authStorageValue)
     : null;
 
-  const isAdmin = isLoggedIn && authValue !== null && authValue?.isAdmin;
+  const isAdmin = isLoggedIn && authValue !== null && authValue?.user?.isAdmin;
 
-  const login = (accessToken: string, isAdmin: boolean) => {
-    setValue(JSON.stringify({ accessToken, isAdmin }));
+  const login = (accessToken: string, user: UserAuthDataType) => {
+    setValue(JSON.stringify({ accessToken, user }));
     setIsLoggedIn(true);
   };
 

@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useState } from "react";
 import { CommuntityPostType } from "../types/CommunityPostType";
-import IconMessagePlus from "../components/icons/IconMessagePlus";
+import IconMessagePlus from "../components/UI/icons/IconMessagePlus";
 import { useDisclosure } from "@mantine/hooks";
 import AddNewPostForm from "../components/AddNewPostForm";
 

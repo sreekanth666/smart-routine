@@ -8,7 +8,7 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
-import IconFile from "../components/icons/IconFile";
+import IconFile from "../components/UI/icons/IconFile";
 import { useNavigate, useParams } from "react-router-dom";
 import ValueComponent from "../components/ValueComponent";
 import PreviewComponent from "../components/PreviewComponent";

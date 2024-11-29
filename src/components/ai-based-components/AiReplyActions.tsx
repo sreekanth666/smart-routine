@@ -1,6 +1,6 @@
-import IconCopy from "../icons/ai-based-icons/IconCopy";
-import IconLike from "../icons/ai-based-icons/IconLike";
-import IconUnlike from "../icons/ai-based-icons/IconUnlike";
+import IconCopy from "../UI/icons/ai-based-icons/IconCopy";
+import IconLike from "../UI/icons/ai-based-icons/IconLike";
+import IconUnlike from "../UI/icons/ai-based-icons/IconUnlike";
 import AiReplyActionButton from "./AiReplyActionButton";
 import AiReplyActionsContainer from "./AiReplyActionsContainer";
 

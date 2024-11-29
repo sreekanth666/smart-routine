@@ -1,6 +1,6 @@
 import { ActionIcon, Card, Flex, Image } from "@mantine/core";
 import { FC } from "react";
-import IconX from "./icons/IconX";
+import IconX from "./UI/icons/IconX";
 
 interface PreviewComponentProps {
   files: File[];

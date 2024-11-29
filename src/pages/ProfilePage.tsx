@@ -13,8 +13,8 @@ import {
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useState } from "react";
-import IconEye from "../components/icons/IconEye";
-import IconEyeOff from "../components/icons/IconEyeOff";
+import IconEye from "../components/UI/icons/IconEye";
+import IconEyeOff from "../components/UI/icons/IconEyeOff";
 import ResetPasswordForm from "../components/ResetPasswordForm";
 import { useDisclosure } from "@mantine/hooks";
 

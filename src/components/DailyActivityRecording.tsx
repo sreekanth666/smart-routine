@@ -8,7 +8,7 @@ import {
   Title,
   Tooltip,
 } from "@mantine/core";
-import IconPlus from "./icons/IconPlus";
+import IconPlus from "./UI/icons/IconPlus";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { SAMPLE_DAILY_ACTIVITIES } from "../sample-data/SampleData";

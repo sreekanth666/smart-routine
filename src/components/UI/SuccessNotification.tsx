@@ -1,12 +1,17 @@
 import { Notification } from "@mantine/core";
-import IconCheck from "../icons/IconCheck";
+import IconCheck from "./icons/IconCheck";
 
-function SuccessNotification() {
+type SuccessNotificationProps = {
+  title: string;
+  message: string;
+};
+
+function SuccessNotification({ title, message }: SuccessNotificationProps) {
   const checkIcon = <IconCheck size="1rem" stroke={1.5} />;
 
   return (
-    <Notification icon={checkIcon} color="teal" title="All good!" mt="md">
-      Password has been reset.
+    <Notification icon={checkIcon} color="teal" title={title} mt="md">
+      {message}
     </Notification>
   );
 }

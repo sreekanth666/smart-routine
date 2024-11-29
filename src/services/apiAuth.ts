@@ -1,4 +1,6 @@
-import { LoginServerDataType } from "../types/LoginServerDataType";
+import axios from "axios";
+
+import { BASE_URL } from "../utils/constants";
 
 type RegisterParams = {
   fullName: string;
@@ -12,33 +14,32 @@ type LoginParams = {
   password: string;
 };
 
+const axiosInstance = axios.create({
+  baseURL: BASE_URL,
+});
+
 export async function register({
   fullName,
   email,
   phone,
   password,
-}: RegisterParams): Promise<LoginServerDataType> {
-  setTimeout(() => {
-    console.log({ fullName, email, phone, password });
-  }, 2000);
+}: RegisterParams) {
+  const response = await axiosInstance.post("/register", {
+    fullName,
+    email,
+    phone,
+    password,
+    isAdmin: false,
+  });
 
-  return { accessToken: "xxxx.xxxx.xxxx", isAdmin: false };
+  return response;
 }
 
-export async function login({
-  email,
-  password,
-}: LoginParams): Promise<LoginServerDataType> {
-  let isAdmin: boolean;
-  setTimeout(() => {
-    console.log({ email, password });
-  }, 2000);
+export async function login({ email, password }: LoginParams) {
+  const response = await axiosInstance.post("/login", {
+    email,
+    password,
+  });
 
-  if (email === "admin@email.com") {
-    isAdmin = true;
-  } else {
-    isAdmin = false;
-  }
-
-  return { accessToken: "xxxx.xxxx.xxxx", isAdmin: isAdmin };
+  return response;
 }

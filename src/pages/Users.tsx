@@ -4,9 +4,9 @@ import { Button, Modal, Table } from "@mantine/core";
 // import classes from "./Users.module.css";
 
 import { useDisclosure } from "@mantine/hooks";
-import IconEye from "../components/icons/IconEye";
-import IconEdit from "../components/icons/IconEdit";
-import IconTrash from "../components/icons/IconTrash";
+import IconEye from "../components/UI/icons/IconEye";
+import IconEdit from "../components/UI/icons/IconEdit";
+import IconTrash from "../components/UI/icons/IconTrash";
 import ViewUserDetails from "../components/ViewUserDetails";
 import EditUserDetails from "../components/EditUserDetails";
 import { UserType } from "../types/UserType";

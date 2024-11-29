@@ -1,11 +1,11 @@
 import { ActionIcon, Card, Grid, Menu, Text, Title } from "@mantine/core";
 import { RoutineType } from "../types/SuggestionType";
-import IconMenu2 from "./icons/IconMenu2";
-import IconEye from "./icons/IconEye";
-import IconEdit from "./icons/IconEdit";
-import IconTrash from "./icons/IconTrash";
-import IconAnalyze from "./icons/IconAnalyze";
-import IconZoomScan from "./icons/IconZoomScan";
+import IconMenu2 from "./UI/icons/IconMenu2";
+import IconEye from "./UI/icons/IconEye";
+import IconEdit from "./UI/icons/IconEdit";
+import IconTrash from "./UI/icons/IconTrash";
+import IconAnalyze from "./UI/icons/IconAnalyze";
+import IconZoomScan from "./UI/icons/IconZoomScan";
 
 import ImageGrid from "./ImageGrid";
 

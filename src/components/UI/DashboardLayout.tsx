@@ -16,8 +16,8 @@ import Navbar from "./Navbar";
 import LogoutSection from "../LogoutSection";
 import { useAuth } from "../../context/AuthContext";
 import NavbarClient from "./NavbarClient";
-import IconUser from "../icons/IconUser";
-import IconCamera from "../icons/IconCamera";
+import IconUser from "./icons/IconUser";
+import IconCamera from "./icons/IconCamera";
 import AddNewImage from "../AddNewImage";
 
 function DashboardLayout() {

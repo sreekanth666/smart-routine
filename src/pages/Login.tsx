@@ -15,6 +15,7 @@ import classes from "./Authentication.module.css";
 import { checkPassword } from "../utils/helpers";
 import { useAuth } from "../context/AuthContext";
 import { login as userLogin } from "../services/apiAuth";
+import { useState } from "react";
 
 type LoginForm = {
   email: string;
@@ -35,26 +36,35 @@ function Login() {
   const { login } = useAuth();
 
   const navigate = useNavigate();
-  // const
+  const [isFormSubmitting, setIsFormSubmitting] = useState<boolean>(false);
 
   const loginFormSubmitHandler = async () => {
     if (Object.keys(form.errors).length == 0) {
-      console.log("Logged in");
-      const { accessToken, isAdmin } = await userLogin({
-        email: form.values.email,
-        password: form.values.password,
-      });
+      console.log("Logging in");
+      setIsFormSubmitting(true);
 
-      login(accessToken, isAdmin);
+      try {
+        const response = await userLogin({
+          email: form.values.email,
+          password: form.values.password,
+        });
+        console.log(response.data);
 
-      if (isAdmin) {
-        console.log("Logged in as admin");
-        navigate("/app");
-      } else {
-        console.log("Go to client page");
-        navigate("/");
+        login(response.data.accessToken, response.data.user);
+
+        if (response.data.user.isAdmin) {
+          console.log("Logged in as admin");
+          navigate("/app");
+        } else {
+          console.log("Go to client page");
+          navigate("/");
+        }
+        form.reset();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsFormSubmitting(false);
       }
-      form.reset();
     } else {
       console.log("error");
       console.log(form.errors);
@@ -81,6 +91,7 @@ function Login() {
               form.setFieldValue("email", event.currentTarget.value)
             }
             error={form.errors.email}
+            disabled={isFormSubmitting}
             required
           />
           <PasswordInput
@@ -92,10 +103,11 @@ function Login() {
             }
             error={form.errors.password}
             required
+            disabled={isFormSubmitting}
             mt="md"
           />
           <Button type="submit" fullWidth mt="xl">
-            Sign in
+            {isFormSubmitting ? "Loading..." : "Sign in"}
           </Button>
           <Group justify="center" mt="lg">
             <Text c="dimmed" size="xs" ta="center" mt={5}>

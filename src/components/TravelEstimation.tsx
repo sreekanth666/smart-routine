@@ -15,11 +15,11 @@ import {
   CommutationMethod,
   TravelRoutineType,
 } from "../types/TravelRoutineType";
-import IconMotrobike from "./icons/IconMotrobike";
-import IconCar from "./icons/IconCar";
-import IconWalk from "./icons/IconWalk";
-import IconBus from "./icons/IconBus";
-import IconPlus from "./icons/IconPlus";
+import IconMotrobike from "./UI/icons/IconMotrobike";
+import IconCar from "./UI/icons/IconCar";
+import IconWalk from "./UI/icons/IconWalk";
+import IconBus from "./UI/icons/IconBus";
+import IconPlus from "./UI/icons/IconPlus";
 import { useDisclosure } from "@mantine/hooks";
 import AddTravelDetailsForm from "./AddTravelDetailsForm";
 

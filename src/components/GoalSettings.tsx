@@ -12,7 +12,7 @@ import { useState } from "react";
 import { SAMPLE_LIFE_GOALS } from "../sample-data/SampleData";
 import { GoalType } from "../types/SuggestionType";
 import { useDisclosure } from "@mantine/hooks";
-import IconPlus from "./icons/IconPlus";
+import IconPlus from "./UI/icons/IconPlus";
 import { generateRandomID } from "../utils/helpers";
 import AddNewGoalForm from "./AddNewGoalForm";
 

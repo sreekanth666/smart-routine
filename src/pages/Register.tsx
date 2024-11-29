@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import classes from "./Authentication.module.css";
 import { checkPassword } from "../utils/helpers";
 import { register } from "../services/apiAuth";
+import { useState } from "react";
 
 type RegisterForm = {
   fullName: string;
@@ -45,22 +46,28 @@ function Register() {
         val !== values.password ? "Passwords do not match" : null,
     },
   });
-
+  const [isFormSubmitting, setIsFormSubmitting] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const registerFormSubmitHandler = async () => {
     if (Object.keys(form.errors).length == 0) {
-      console.log("Registered");
-
-      const { accessToken, isAdmin } = await register({
-        fullName: form.values.fullName,
-        email: form.values.email,
-        phone: form.values.phone,
-        password: form.values.password,
-      });
-      console.log(accessToken, isAdmin);
-      form.reset();
-      navigate("/login");
+      console.log("Registering");
+      setIsFormSubmitting(true);
+      try {
+        const response = await register({
+          fullName: form.values.fullName,
+          email: form.values.email,
+          phone: form.values.phone,
+          password: form.values.password,
+        });
+        console.log(response);
+        form.reset();
+        navigate("/login");
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsFormSubmitting(false);
+      }
     } else {
       console.log("error");
       console.log(form.errors);
@@ -87,6 +94,7 @@ function Register() {
               form.setFieldValue("fullName", event.currentTarget.value)
             }
             required
+            disabled={isFormSubmitting}
           />
           <TextInput
             label="Email"
@@ -97,6 +105,7 @@ function Register() {
             }
             error={form.errors.email}
             required
+            disabled={isFormSubmitting}
           />
           <TextInput
             label="Phone Number"
@@ -107,6 +116,7 @@ function Register() {
             }
             error={form.errors.phone}
             required
+            disabled={isFormSubmitting}
           />
           <PasswordInput
             label="Password"
@@ -117,6 +127,7 @@ function Register() {
             }
             error={form.errors.password}
             required
+            disabled={isFormSubmitting}
             mt="md"
           />
           <PasswordInput
@@ -128,10 +139,11 @@ function Register() {
             }
             error={form.errors.reenterPassword}
             required
+            disabled={isFormSubmitting}
             mt="md"
           />
           <Button type="submit" fullWidth mt="xl">
-            Sign in
+            {isFormSubmitting ? "Loading..." : "Sign in"}
           </Button>
           <Group justify="center" mt="lg">
             <Text c="dimmed" size="xs" ta="center" mt={5}>
