@@ -15,6 +15,9 @@ import classes from "./Authentication.module.css";
 import { checkPassword } from "../utils/helpers";
 import { register } from "../services/apiAuth";
 import { useState } from "react";
+import { notifications } from "@mantine/notifications";
+import IconCheck from "../components/UI/icons/IconCheck";
+import IconX from "../components/UI/icons/IconX";
 
 type RegisterForm = {
   fullName: string;
@@ -60,12 +63,35 @@ function Register() {
           phone: form.values.phone,
           password: form.values.password,
         });
+        notifications.show({
+          id: "user-register-notification",
+          title: "Congratulations 🎆",
+          message: "Your account have been registered",
+          icon: <IconCheck size="1rem" stroke={1.5} />,
+        });
         console.log(response);
-        form.reset();
         navigate("/login");
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        if (error instanceof Error) {
+          notifications.show({
+            id: "user-register-error-notification",
+            title: "SORRY 🛑",
+            message: `ERROR: ${error.message}`,
+            color: "red",
+            icon: <IconX size="1rem" stroke={1.5} />,
+          });
+        } else {
+          notifications.show({
+            id: "user-register-error-notification",
+            title: "SORRY 🛑",
+            message: "An unknown error occurred",
+            color: "red",
+            icon: <IconX size="1rem" stroke={1.5} />,
+          });
+        }
       } finally {
+        form.reset();
         setIsFormSubmitting(false);
       }
     } else {

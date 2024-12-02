@@ -19,14 +19,31 @@ import NavbarClient from "./NavbarClient";
 import IconUser from "./icons/IconUser";
 import IconCamera from "./icons/IconCamera";
 import AddNewImage from "../AddNewImage";
+import { useState } from "react";
 
 function DashboardLayout() {
   const [opened, { toggle, open, close }] = useDisclosure();
+  const [cameraOn, setCameraOn] = useState<boolean>(false);
   const navigate = useNavigate();
   const { isAdmin } = useAuth();
 
   const handleProfileNavigation = () => {
     navigate("/profile");
+  };
+
+  const handleCameraOn = () => {
+    if (!isAdmin) {
+      setCameraOn(true);
+      open();
+      toggle();
+    }
+  };
+
+  const handleCameraOff = () => {
+    if (!isAdmin) {
+      setCameraOn(false);
+      close();
+    }
   };
 
   return (
@@ -88,7 +105,7 @@ function DashboardLayout() {
       </AppShell.Navbar>
       <AppShell.Main bg="var(--mantine-color-gray-2)">
         <Outlet />
-        <Modal.Root opened={opened} onClose={close}>
+        <Modal.Root opened={cameraOn} onClose={handleCameraOff}>
           <Modal.Overlay />
           <Modal.Content>
             <Modal.Header style={{ justifyContent: "center" }}>
@@ -115,7 +132,7 @@ function DashboardLayout() {
               color="green"
               radius="xl"
               size={60}
-              onDoubleClick={open}
+              onClick={handleCameraOn}
             >
               <IconCamera size="2rem" stroke={1.5} />
             </ActionIcon>
