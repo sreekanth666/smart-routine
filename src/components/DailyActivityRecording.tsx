@@ -31,7 +31,11 @@ function DailyActivityRecording() {
   };
 
   const activities = dailyActivities.map((activity) => (
-    <Accordion.Item value={activity.title} bg={"var(--mantine-color-gray-4)"}>
+    <Accordion.Item
+      key={activity.id}
+      value={activity.title}
+      bg={"var(--mantine-color-gray-4)"}
+    >
       <Accordion.Control>{activity.title}</Accordion.Control>
       <Accordion.Panel>{activity.description}</Accordion.Panel>
     </Accordion.Item>

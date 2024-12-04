@@ -19,11 +19,10 @@ import NavbarClient from "./NavbarClient";
 import IconUser from "./icons/IconUser";
 import IconCamera from "./icons/IconCamera";
 import AddNewImage from "../AddNewImage";
-import { useState } from "react";
 
 function DashboardLayout() {
-  const [opened, { toggle, open, close }] = useDisclosure();
-  const [cameraOn, setCameraOn] = useState<boolean>(false);
+  const [burgerMenuOpened, { toggle: burgerMenuToggle }] = useDisclosure();
+  const [modalOpened, { open: modalOpen, close: modalClose }] = useDisclosure();
   const navigate = useNavigate();
   const { isAdmin } = useAuth();
 
@@ -33,16 +32,13 @@ function DashboardLayout() {
 
   const handleCameraOn = () => {
     if (!isAdmin) {
-      setCameraOn(true);
-      open();
-      toggle();
+      modalOpen();
     }
   };
 
   const handleCameraOff = () => {
     if (!isAdmin) {
-      setCameraOn(false);
-      close();
+      modalClose();
     }
   };
 
@@ -52,7 +48,7 @@ function DashboardLayout() {
       navbar={{
         width: 300,
         breakpoint: "sm",
-        collapsed: { mobile: !opened },
+        collapsed: { mobile: !burgerMenuOpened },
       }}
       padding="md"
     >
@@ -61,8 +57,8 @@ function DashboardLayout() {
           <Grid.Col span={11}>
             <Group h="100%" px="md">
               <Burger
-                opened={opened}
-                onClick={toggle}
+                opened={burgerMenuOpened}
+                onClick={burgerMenuToggle}
                 hiddenFrom="sm"
                 size="sm"
               />
@@ -105,7 +101,7 @@ function DashboardLayout() {
       </AppShell.Navbar>
       <AppShell.Main bg="var(--mantine-color-gray-2)">
         <Outlet />
-        <Modal.Root opened={cameraOn} onClose={handleCameraOff}>
+        <Modal.Root opened={modalOpened} onClose={handleCameraOff}>
           <Modal.Overlay />
           <Modal.Content>
             <Modal.Header style={{ justifyContent: "center" }}>

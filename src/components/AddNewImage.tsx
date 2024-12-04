@@ -13,7 +13,7 @@ function AddNewImage() {
   const handleScreenshot = (getScreenshot: () => string | null) => {
     const imageSrc = getScreenshot();
     if (imageSrc) {
-      console.log("Captured image source:", imageSrc);
+      // console.log("Captured image source:", imageSrc);
       setImage(imageSrc);
     }
   };

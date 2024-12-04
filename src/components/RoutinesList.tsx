@@ -96,7 +96,6 @@ function RoutinesList() {
   };
 
   const Row = ({ index, style }: ListChildComponentProps) => {
-    console.log(style);
     const routine = routineList[index];
     return (
       <div
