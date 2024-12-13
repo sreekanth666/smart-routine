@@ -39,16 +39,16 @@ function AddTravelDetailsForm({
 
   const selectTravelMethodHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     switch (event.target.value) {
-      case "Bike":
+      case "bike":
         form.setFieldValue("commutationMethod", "bike");
         break;
-      case "Car":
+      case "car":
         form.setFieldValue("commutationMethod", "car");
         break;
-      case "Walking":
+      case "walking":
         form.setFieldValue("commutationMethod", "walking");
         break;
-      case "Public Transport":
+      case "public transport":
         form.setFieldValue("commutationMethod", "public transport");
         break;
     }
@@ -102,7 +102,7 @@ function AddTravelDetailsForm({
           placeholder="Total Time Taken by the Journey"
           value={form.values.totalTimeTaken}
           onChange={(value) =>
-            form.setFieldValue("totalDistance", Number(value))
+            form.setFieldValue("totalTimeTaken", Number(value))
           }
           min={0}
           required
@@ -112,7 +112,12 @@ function AddTravelDetailsForm({
           value={form.values.commutationMethod}
           onChange={selectTravelMethodHandler}
           withAsterisk
-          data={["Bike", "Car", "Walking", "Public Transport"]}
+          data={[
+            { label: "Bike", value: "bike" },
+            { label: "Car", value: "car" },
+            { label: "Walking", value: "walking" },
+            { label: "Public Transport", value: "public transport" },
+          ]}
           required
         />
         <Button type="submit" color="green" fullWidth mt="xl">

@@ -62,7 +62,7 @@ function Login() {
             title: "Congratulations 🎆",
             message: "Your have been logged in as ADMIN",
             icon: <IconCheck size="1rem" stroke={1.5} />,
-            position: "top-right",
+            position: "bottom-right",
           });
           navigate("/app");
         } else {
@@ -73,7 +73,7 @@ function Login() {
             message: "Your have been logged in",
             color: "green",
             icon: <IconCheck size="1rem" stroke={1.5} />,
-            position: "top-right",
+            position: "bottom-right",
           });
           navigate("/");
         }
@@ -86,7 +86,7 @@ function Login() {
             message: `ERROR: ${error.message}`,
             color: "red",
             icon: <IconX size="1rem" stroke={1.5} />,
-            position: "top-right",
+            position: "bottom-right",
           });
         } else {
           notifications.show({
@@ -95,7 +95,7 @@ function Login() {
             message: "An unknown error occurred",
             color: "red",
             icon: <IconX size="1rem" stroke={1.5} />,
-            position: "top-right",
+            position: "bottom-right",
           });
         }
       } finally {

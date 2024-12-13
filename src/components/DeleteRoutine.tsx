@@ -23,7 +23,7 @@ function DeleteRoutine({
         <Grid.Col span={6}>
           <Button
             onClick={onCloseModal}
-            c="green"
+            c="white"
             fullWidth
             mt="xl"
             color="green"

@@ -48,7 +48,7 @@ function EditRoutine({ routine, editRoutine }: EditRoutineParams) {
         required
       />
 
-      <Button type="submit" c="green" fullWidth mt="xl">
+      <Button type="submit" bg="green" fullWidth mt="xl">
         Update
       </Button>
     </form>
