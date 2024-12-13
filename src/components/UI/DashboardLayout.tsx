@@ -122,7 +122,7 @@ function DashboardLayout() {
           </Modal.Content>
         </Modal.Root>
         {!isAdmin && (
-          <Affix position={{ bottom: 40, right: 40 }}>
+          <Affix position={{ bottom: 40, right: 100 }}>
             <ActionIcon
               variant="filled"
               color="green"
