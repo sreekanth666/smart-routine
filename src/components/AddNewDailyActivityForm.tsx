@@ -8,10 +8,12 @@ type DailyActivityForm = {
 
 type AddNewDailyActivityFormParams = {
   onAddingNewDailyActivity: (title: string, description: string) => void;
+  isFormSubmitting: boolean;
 };
 
 function AddNewDailyActivityForm({
   onAddingNewDailyActivity,
+  isFormSubmitting,
 }: AddNewDailyActivityFormParams) {
   const form = useForm<DailyActivityForm>({
     initialValues: { title: "", description: "" },
@@ -38,6 +40,7 @@ function AddNewDailyActivityForm({
             form.setFieldValue("title", event.currentTarget.value)
           }
           required
+          disabled={isFormSubmitting}
         />
         <Textarea
           label="Description"
@@ -47,10 +50,11 @@ function AddNewDailyActivityForm({
             form.setFieldValue("description", event.currentTarget.value)
           }
           required
+          disabled={isFormSubmitting}
         />
 
         <Button type="submit" color="green" fullWidth mt="xl">
-          Add New Daily Activity
+          {isFormSubmitting ? "Loading" : "Add New Daily Activity"}
         </Button>
       </form>
     </Paper>

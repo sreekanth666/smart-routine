@@ -29,14 +29,7 @@ import {
 
 type UserTravelEstimationType = {
   commutation: CommutationMethod;
-  createdAt: string;
-  destination: string;
   distance: string;
-  duration: string;
-  starting: string;
-  updatedAt: string;
-  userId: string;
-  _id: string;
 };
 
 const TRAVEL_ROUTINE: TravelRoutineType = {
@@ -216,7 +209,7 @@ function TravelEstimation() {
         </Card.Section>
         <Card.Section p="md">
           <Title order={4} c="red">
-            Error: Something bad happened
+            Error: Something bad happened at retrieving user travel estimation
           </Title>
         </Card.Section>
       </Card>
@@ -238,6 +231,7 @@ function TravelEstimation() {
       duration: duration.toString(),
       commutation: method,
     });
+    setIsFormSubmitted(false);
     close();
   };
 

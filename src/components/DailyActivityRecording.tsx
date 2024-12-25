@@ -5,30 +5,126 @@ import {
   Group,
   Modal,
   ScrollArea,
+  Skeleton,
   Title,
   Tooltip,
 } from "@mantine/core";
 import IconPlus from "./UI/icons/IconPlus";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
-import { SAMPLE_DAILY_ACTIVITIES } from "../sample-data/SampleData";
+import { useEffect, useState } from "react";
 import { DailyActivity } from "../types/SuggestionType";
-import { generateRandomID } from "../utils/helpers";
 import AddNewDailyActivityForm from "./AddNewDailyActivityForm";
+import {
+  useAddDailyActivity,
+  useGetUserDailyActivities,
+} from "../hooks/dailyActivityHooks";
+
+type UserDailyActivityType = {
+  title: string;
+  description: string;
+  _id: string;
+};
 
 function DailyActivityRecording() {
-  const [dailyActivities, setDailyActivities] = useState<DailyActivity[]>(
-    SAMPLE_DAILY_ACTIVITIES
-  );
+  const [dailyActivities, setDailyActivities] = useState<DailyActivity[]>([]);
+  const [isFormSubmitting, setIsFormSubmitting] = useState<boolean>(false);
+
+  const {
+    isGetUserDailyActivities,
+    userDailyActivities,
+    userDailyActivitiesError,
+  } = useGetUserDailyActivities();
+
+  const {
+    isCreatingDailyActivity,
+    addDailyActivity,
+    createDailyActivityError,
+  } = useAddDailyActivity();
+
   const [opened, { open, close }] = useDisclosure();
 
+  useEffect(
+    function () {
+      if (!isGetUserDailyActivities && !userDailyActivitiesError) {
+        const userActivities: UserDailyActivityType[] =
+          userDailyActivities?.data;
+
+        setDailyActivities(
+          userActivities.map((activity) => {
+            return {
+              title: activity.title,
+              description: activity.description,
+              id: activity._id,
+            };
+          })
+        );
+      }
+    },
+    [isGetUserDailyActivities, userDailyActivitiesError, userDailyActivities]
+  );
+
+  if (isGetUserDailyActivities) {
+    return (
+      <Card
+        shadow="sm"
+        padding="lg"
+        miw={"15rem"}
+        radius="md"
+        withBorder
+        mx="sm"
+        h="50dvh"
+      >
+        <Card.Section p="md">
+          <Group>
+            <Skeleton height={12} width="30%" radius="xl" />
+            <Skeleton height={8} width="40%" radius="xl" />
+          </Group>
+        </Card.Section>
+        <Card.Section p="sm">
+          <Skeleton height={8} radius="xl" />
+          <Skeleton height={8} radius="xl" />
+          <Skeleton height={8} radius="xl" />
+          <Skeleton height={8} radius="xl" />
+        </Card.Section>
+      </Card>
+    );
+  }
+
+  if (userDailyActivitiesError) {
+    return (
+      <Card
+        shadow="sm"
+        padding="lg"
+        miw={"15rem"}
+        radius="md"
+        withBorder
+        mx="sm"
+        h="50dvh"
+      >
+        <Card.Section p="md">
+          <Title order={2}>Daily Activity Recording</Title>
+        </Card.Section>
+        <Card.Section p="sm">
+          <Title order={4} c="red">
+            Error: Something bad happened at retrieving user daily activity
+            recordings
+          </Title>
+        </Card.Section>
+      </Card>
+    );
+  }
+
   const handleNewDailyActivity = (title: string, description: string) => {
-    setDailyActivities((prevActivities) => [
-      ...prevActivities,
-      { title, description, id: generateRandomID() },
-    ]);
+    setIsFormSubmitting(true);
+    addDailyActivity({ title, description });
+    setIsFormSubmitting(false);
     close();
   };
+
+  function handleCloseModal() {
+    setIsFormSubmitting(false);
+    close();
+  }
 
   const activities = dailyActivities.map((activity) => (
     <Accordion.Item
@@ -43,7 +139,7 @@ function DailyActivityRecording() {
 
   return (
     <>
-      <Modal.Root opened={opened} onClose={close}>
+      <Modal.Root opened={opened} onClose={handleCloseModal}>
         <Modal.Overlay />
         <Modal.Content>
           <Modal.Header style={{ justifyContent: "center" }}>
@@ -59,9 +155,16 @@ function DailyActivityRecording() {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <AddNewDailyActivityForm
-              onAddingNewDailyActivity={handleNewDailyActivity}
-            />
+            {isFormSubmitting && createDailyActivityError !== null ? (
+              <Title order={4} c="red">
+                Error: Something bad happened while adding daily activity
+              </Title>
+            ) : (
+              <AddNewDailyActivityForm
+                onAddingNewDailyActivity={handleNewDailyActivity}
+                isFormSubmitting={isCreatingDailyActivity}
+              />
+            )}
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>
@@ -85,7 +188,7 @@ function DailyActivityRecording() {
           </Group>
         </Card.Section>
         <Card.Section p="sm">
-          <ScrollArea h={250}>
+          <ScrollArea h={250} pb="md">
             <Accordion variant="separated">{activities}</Accordion>
           </ScrollArea>
         </Card.Section>

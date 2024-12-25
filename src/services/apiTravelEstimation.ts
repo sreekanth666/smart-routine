@@ -24,11 +24,9 @@ const axiosInstance = axios.create({
 });
 
 export async function getTravelEstimation(id: string) {
-  const response = await axiosInstance.get(
-    `${BASE_URL}/travel-estimation/${id}`
-  );
+  const response = await axiosInstance.get(`/travel-estimation/${id}`);
 
-  return response;
+  return response.data;
 }
 
 export async function getUserTravelEstimation() {
@@ -49,7 +47,7 @@ export async function getUserTravelEstimation() {
   };
 
   const response = await axiosInstance.get(
-    `${BASE_URL}/travel-estimation/user/all`,
+    "/travel-estimation/user/all",
     config
   );
 
@@ -57,9 +55,9 @@ export async function getUserTravelEstimation() {
 }
 
 export async function getAllTravelEstimation() {
-  const response = await axiosInstance.get(`${BASE_URL}/travel-estimation`);
+  const response = await axiosInstance.get("/travel-estimation");
 
-  return response;
+  return response.data;
 }
 
 export async function createTravelEstimation({
@@ -86,7 +84,7 @@ export async function createTravelEstimation({
   };
 
   const response = await axiosInstance.post(
-    `${BASE_URL}/travel-estimation`,
+    "/travel-estimation",
     {
       starting,
       destination,
@@ -108,24 +106,19 @@ export async function updateTravelEstimation({
   duration,
   commutation,
 }: UpdateTravelEstimationParams) {
-  const response = await axiosInstance.patch(
-    `${BASE_URL}/travel-estimation/${id}`,
-    {
-      starting,
-      destination,
-      distance,
-      duration,
-      commutation,
-    }
-  );
+  const response = await axiosInstance.patch(`/travel-estimation/${id}`, {
+    starting,
+    destination,
+    distance,
+    duration,
+    commutation,
+  });
 
   return response;
 }
 
 export async function deleteTravelEstimation(id: string) {
-  const response = await axiosInstance.delete(
-    `${BASE_URL}/travel-estimation/${id}`
-  );
+  const response = await axiosInstance.delete(`/travel-estimation/${id}`);
 
   return response;
 }
