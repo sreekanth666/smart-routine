@@ -1,14 +1,12 @@
 export type UserAuthDataType = {
   email: string;
-  fullName: string;
-  phone: string;
+  name: string;
   isAdmin: boolean;
-  id: number | string;
+  id: string;
 };
 
 export type LoginServerDataType = {
-  accessToken: string;
-  user: UserAuthDataType;
-};
+  token: string;
+} & UserAuthDataType;
 
 export type LoginContextData = LoginServerDataType | null;

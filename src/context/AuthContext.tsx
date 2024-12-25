@@ -1,15 +1,18 @@
 /* eslint-disable react-refresh/only-export-components */
 import { readLocalStorageValue, useLocalStorage } from "@mantine/hooks";
 import { createContext, ReactElement, useContext, useState } from "react";
-import {
-  LoginServerDataType,
-  UserAuthDataType,
-} from "../types/LoginServerDataType";
+import { LoginServerDataType } from "../types/LoginServerDataType";
 
 interface AuthContextType {
   isLoggedIn: boolean;
   isAdmin: boolean;
-  login: (accessToken: string, user: UserAuthDataType) => void;
+  login: (
+    token: string,
+    email: string,
+    id: string,
+    name: string,
+    isAdmin: boolean
+  ) => void;
   logout: () => void;
 }
 
@@ -21,7 +24,7 @@ type AuthProviderProps = {
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [value, setValue, removeValue] = useLocalStorage<string | null>({
-    key: "loginData",
+    key: "smart-routine-auth-data",
     defaultValue: null,
     getInitialValueInEffect: false,
   });
@@ -29,17 +32,28 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => value !== null);
 
   const authStorageValue: string | undefined = readLocalStorageValue({
-    key: "loginData",
+    key: "smart-routine-auth-data",
   });
 
   const authValue: LoginServerDataType | null = authStorageValue
     ? JSON.parse(authStorageValue)
     : null;
 
-  const isAdmin = isLoggedIn && authValue !== null && authValue?.user?.isAdmin;
+  const isAdmin = isLoggedIn && authValue !== null && authValue?.isAdmin;
 
-  const login = (accessToken: string, user: UserAuthDataType) => {
-    setValue(JSON.stringify({ accessToken, user }));
+  const login = (
+    token: string,
+    email: string,
+    id: string,
+    name: string,
+    isAdmin: boolean
+  ) => {
+    console.log("accessToken", token);
+    console.log("email", email);
+    console.log("id", id);
+    console.log("name", name);
+    console.log("isAdmin", isAdmin);
+    setValue(JSON.stringify({ token, email, id, name, isAdmin }));
     setIsLoggedIn(true);
   };
 

@@ -24,22 +24,21 @@ export async function register({
   phone,
   password,
 }: RegisterParams) {
-  const response = await axiosInstance.post("/register", {
-    fullName,
+  const response = await axiosInstance.post("/user/register", {
+    name: fullName,
     email,
     phone,
     password,
-    isAdmin: false,
   });
 
-  return response;
+  return response.data;
 }
 
 export async function login({ email, password }: LoginParams) {
-  const response = await axiosInstance.post("/login", {
+  const response = await axiosInstance.post("/auth/login", {
     email,
     password,
   });
 
-  return response;
+  return response.data;
 }

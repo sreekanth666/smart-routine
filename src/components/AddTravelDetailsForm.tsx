@@ -26,11 +26,19 @@ const TRAVEL_DETAILS_INIT_VALUES: TravelDetailsForm = {
 };
 
 type AddTravelDetailsFormParams = {
-  onAddingTravelDetails: (method: CommutationMethod, distance: number) => void;
+  onAddingTravelDetails: (
+    startingPoint: string,
+    endingPoint: string,
+    distance: number,
+    duration: number,
+    method: CommutationMethod
+  ) => void;
+  isFormSubmitting: boolean;
 };
 
 function AddTravelDetailsForm({
   onAddingTravelDetails,
+  isFormSubmitting,
 }: AddTravelDetailsFormParams) {
   const form = useForm<TravelDetailsForm>({
     initialValues: TRAVEL_DETAILS_INIT_VALUES,
@@ -56,8 +64,11 @@ function AddTravelDetailsForm({
 
   const addTravelRoutineHandler = () => {
     onAddingTravelDetails(
-      form.values.commutationMethod,
-      form.values.totalDistance
+      form.values.startingPoint,
+      form.values.endingPoint,
+      form.values.totalDistance,
+      form.values.totalTimeTaken,
+      form.values.commutationMethod
     );
     form.reset();
   };
@@ -77,6 +88,7 @@ function AddTravelDetailsForm({
             form.setFieldValue("startingPoint", event.currentTarget.value)
           }
           required
+          disabled={isFormSubmitting}
         />
         <TextInput
           label="Ending Point"
@@ -86,6 +98,7 @@ function AddTravelDetailsForm({
             form.setFieldValue("endingPoint", event.currentTarget.value)
           }
           required
+          disabled={isFormSubmitting}
         />
         <NumberInput
           label="Total Distance"
@@ -96,6 +109,7 @@ function AddTravelDetailsForm({
           }
           min={0}
           required
+          disabled={isFormSubmitting}
         />
         <NumberInput
           label="Total Time Taken"
@@ -106,6 +120,7 @@ function AddTravelDetailsForm({
           }
           min={0}
           required
+          disabled={isFormSubmitting}
         />
         <NativeSelect
           label="Commutation Method"
@@ -119,9 +134,10 @@ function AddTravelDetailsForm({
             { label: "Public Transport", value: "public transport" },
           ]}
           required
+          disabled={isFormSubmitting}
         />
         <Button type="submit" color="green" fullWidth mt="xl">
-          Add Travel Details
+          {isFormSubmitting ? "Loading" : "Add Travel Details"}
         </Button>
       </form>
     </Paper>

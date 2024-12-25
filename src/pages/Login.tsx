@@ -53,9 +53,15 @@ function Login() {
         });
         console.log(response.data);
 
-        login(response.data.accessToken, response.data.user);
+        login(
+          response?.data?.token,
+          response?.data?.email,
+          response?.data?.id,
+          response?.data?.name,
+          response?.data?.isAdmin
+        );
 
-        if (response.data.user.isAdmin) {
+        if (response?.data?.isAdmin) {
           console.log("Logged in as admin");
           notifications.show({
             id: "admin-user-login-notification",
