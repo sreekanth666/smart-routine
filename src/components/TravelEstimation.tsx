@@ -231,8 +231,7 @@ function TravelEstimation() {
       duration: duration.toString(),
       commutation: method,
     });
-    setIsFormSubmitted(false);
-    close();
+    handleModalClose();
   };
 
   const handleModalClose = () => {

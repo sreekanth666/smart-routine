@@ -9,6 +9,10 @@ export type CreateDailyActivityParams = {
   description: string;
 };
 
+export type UpdateDailyActivityParams = CreateDailyActivityParams & {
+  id: string;
+};
+
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
 });
@@ -74,4 +78,23 @@ export async function createDailyActivity({
   );
 
   return response.data;
+}
+
+export async function updateDailyActivity({
+  id,
+  title,
+  description,
+}: UpdateDailyActivityParams) {
+  const response = await axiosInstance.patch(`/daily-activity/${id}`, {
+    title,
+    description,
+  });
+
+  return response;
+}
+
+export async function deleteDailyActivity(id: string) {
+  const response = await axiosInstance.delete(`/daily-activity/${id}`);
+
+  return response;
 }

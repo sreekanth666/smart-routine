@@ -7,9 +7,13 @@ type GoalForm = {
 
 type AddNewGoalFormParams = {
   onAddingNewGoal: (goal: string) => void;
+  isFormSubmitting: boolean;
 };
 
-function AddNewGoalForm({ onAddingNewGoal }: AddNewGoalFormParams) {
+function AddNewGoalForm({
+  onAddingNewGoal,
+  isFormSubmitting,
+}: AddNewGoalFormParams) {
   const form = useForm<GoalForm>({
     initialValues: { newGoal: "" },
     validate: {},
@@ -35,10 +39,11 @@ function AddNewGoalForm({ onAddingNewGoal }: AddNewGoalFormParams) {
             form.setFieldValue("newGoal", event.currentTarget.value)
           }
           required
+          disabled={isFormSubmitting}
         />
 
         <Button type="submit" color="green" fullWidth mt="xl">
-          Add New Goal
+          {isFormSubmitting ? "Loading..." : "Add New Goal"}
         </Button>
       </form>
     </Paper>

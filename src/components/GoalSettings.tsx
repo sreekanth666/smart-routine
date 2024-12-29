@@ -3,52 +3,131 @@ import {
   Card,
   Checkbox,
   Group,
+  LoadingOverlay,
   Modal,
   ScrollArea,
+  Skeleton,
+  Stack,
   Title,
   Tooltip,
 } from "@mantine/core";
-import { useState } from "react";
-import { SAMPLE_LIFE_GOALS } from "../sample-data/SampleData";
+import { useEffect, useState } from "react";
 import { GoalType } from "../types/SuggestionType";
 import { useDisclosure } from "@mantine/hooks";
 import IconPlus from "./UI/icons/IconPlus";
-import { generateRandomID } from "../utils/helpers";
 import AddNewGoalForm from "./AddNewGoalForm";
+import {
+  useAchieveGoal,
+  useAddNewGoal,
+  useGetUserGoals,
+} from "../hooks/goalsHooks";
+
+type UserGoalType = {
+  _id: string;
+  goal: string;
+  isAchieved: boolean;
+};
 
 function GoalSettings() {
-  const [goals, setGoals] = useState<GoalType[]>(SAMPLE_LIFE_GOALS);
+  const [goals, setGoals] = useState<GoalType[]>([]);
+  const [isFormSubmitting, setIsFormSubmitting] = useState<boolean>(false);
   const [opened, { open, close }] = useDisclosure();
+  // const [loaderOpened, { toggle: loaderToggle }] = useDisclosure();
+  const { isUserGoalsLoading, userGoals, userGoalsError } = useGetUserGoals();
+  const { isAddingNewGoal, addGoal, addGoalError } = useAddNewGoal();
+  const { isAchievingGoal, achieveUserGoal } = useAchieveGoal();
+
+  useEffect(
+    function () {
+      if (!isUserGoalsLoading && !userGoalsError) {
+        const receivedUserGoals: UserGoalType[] = userGoals?.data;
+        setGoals(
+          receivedUserGoals.map((goalItem) => {
+            return {
+              id: goalItem._id,
+              goal: goalItem.goal,
+              didAchieve: goalItem.isAchieved,
+            };
+          })
+        );
+      }
+    },
+    [isUserGoalsLoading, userGoalsError, userGoals]
+  );
+
+  if (isUserGoalsLoading) {
+    return (
+      <Card
+        shadow="sm"
+        padding="lg"
+        miw={"15rem"}
+        radius="md"
+        withBorder
+        mx="sm"
+        h="50dvh"
+      >
+        <Card.Section p="md">
+          <Skeleton height={12} width="30%" radius="xl" />
+        </Card.Section>
+        <Card.Section p="md">
+          <Stack>
+            <Skeleton height={8} radius="xl" />
+            <Skeleton height={8} radius="xl" />
+            <Skeleton height={8} radius="xl" />
+            <Skeleton height={8} radius="xl" />
+          </Stack>
+        </Card.Section>
+      </Card>
+    );
+  }
+
+  if (userGoalsError !== null) {
+    return (
+      <Card
+        shadow="sm"
+        padding="lg"
+        miw={"15rem"}
+        radius="md"
+        withBorder
+        mx="sm"
+        h="50dvh"
+      >
+        <Card.Section p="md">
+          <Title order={2}>Goal Settings</Title>
+        </Card.Section>
+        <Card.Section p="md">
+          <Title order={4} c="red">
+            Error: Something bad happened at retrieving user goals
+          </Title>
+        </Card.Section>
+      </Card>
+    );
+  }
 
   const handleGoalAchievement = (id: string) => {
-    setGoals((prevGoals) => {
-      return prevGoals.map((goal: GoalType): GoalType => {
-        if (goal.id === id) {
-          return { ...goal, didAchieve: !goal.didAchieve };
-        } else {
-          return goal;
-        }
-      });
-    });
+    achieveUserGoal(id);
   };
 
   const handleNewGoal = (newGoal: string) => {
-    setGoals((prevGoals) => [
-      ...prevGoals,
-      { goal: newGoal, didAchieve: false, id: generateRandomID() },
-    ]);
+    setIsFormSubmitting(true);
+    addGoal(newGoal);
+    handleModalClose();
+  };
+
+  const handleModalClose = () => {
+    setIsFormSubmitting(false);
     close();
   };
 
-  const lifeGoals = goals.map((goal) => {
+  const lifeGoals = goals.map((goalItem) => {
     return (
       <Checkbox
         color="green"
-        key={goal.id}
-        checked={goal.didAchieve}
-        label={goal.goal}
-        disabled={goal.didAchieve}
-        onChange={() => handleGoalAchievement(goal.id)}
+        key={goalItem.id}
+        checked={goalItem.didAchieve}
+        label={goalItem.goal}
+        disabled={goalItem.didAchieve}
+        onChange={() => handleGoalAchievement(goalItem.id)}
         p="sm"
         styles={{
           label: {
@@ -78,7 +157,16 @@ function GoalSettings() {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <AddNewGoalForm onAddingNewGoal={handleNewGoal} />
+            {isFormSubmitting && addGoalError !== null ? (
+              <Title order={4} c="red">
+                Error: Something bad happened while adding new goal
+              </Title>
+            ) : (
+              <AddNewGoalForm
+                onAddingNewGoal={handleNewGoal}
+                isFormSubmitting={isAddingNewGoal}
+              />
+            )}
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>
@@ -101,7 +189,12 @@ function GoalSettings() {
             </Tooltip>
           </Group>
         </Card.Section>
-        <Card.Section p="xs">
+        <Card.Section p="xs" pos="relative">
+          <LoadingOverlay
+            visible={isAchievingGoal}
+            zIndex={1000}
+            overlayProps={{ radius: "sm", blur: 2 }}
+          />
           <ScrollArea h={240}>{lifeGoals}</ScrollArea>
         </Card.Section>
       </Card>

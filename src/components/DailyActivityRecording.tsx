@@ -117,8 +117,7 @@ function DailyActivityRecording() {
   const handleNewDailyActivity = (title: string, description: string) => {
     setIsFormSubmitting(true);
     addDailyActivity({ title, description });
-    setIsFormSubmitting(false);
-    close();
+    handleCloseModal();
   };
 
   function handleCloseModal() {
