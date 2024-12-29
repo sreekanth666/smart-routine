@@ -119,25 +119,32 @@ function GoalSettings() {
     close();
   };
 
-  const lifeGoals = goals.map((goalItem) => {
-    return (
-      <Checkbox
-        color="green"
-        key={goalItem.id}
-        checked={goalItem.didAchieve}
-        label={goalItem.goal}
-        disabled={goalItem.didAchieve}
-        onChange={() => handleGoalAchievement(goalItem.id)}
-        p="sm"
-        styles={{
-          label: {
-            fontSize: 15,
-            fontWeight: "bold",
-          },
-        }}
-      />
-    );
-  });
+  const lifeGoals = goals
+    .sort((a, b) => {
+      if (a.didAchieve === b.didAchieve) {
+        return 0;
+      }
+      return a.didAchieve ? 1 : -1;
+    })
+    .map((goalItem) => {
+      return (
+        <Checkbox
+          color="green"
+          key={goalItem.id}
+          checked={goalItem.didAchieve}
+          label={goalItem.goal}
+          disabled={goalItem.didAchieve}
+          onChange={() => handleGoalAchievement(goalItem.id)}
+          p="sm"
+          styles={{
+            label: {
+              fontSize: 15,
+              fontWeight: "bold",
+            },
+          }}
+        />
+      );
+    });
 
   return (
     <>

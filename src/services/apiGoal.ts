@@ -90,7 +90,23 @@ export async function deleteGoal(id: string) {
 }
 
 export async function achieveGoal(id: string) {
-  const response = await axiosInstance.patch(`/achieve/${id}`);
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
+  });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+
+  const response = await axiosInstance.patch(`/achieve/${id}`, {}, config);
 
   return response;
 }
