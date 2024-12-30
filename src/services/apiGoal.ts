@@ -15,7 +15,23 @@ const axiosInstance = axios.create({
 });
 
 export async function getGoal(id: string) {
-  const response = await axiosInstance.get(`/${id}`);
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
+  });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+
+  const response = await axiosInstance.get(`/${id}`, config);
 
   return response.data;
 }
@@ -43,7 +59,22 @@ export async function getUserGoals() {
 }
 
 export async function getAllDailyAcitivities() {
-  const response = await axiosInstance.get("/");
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
+  });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+  const response = await axiosInstance.get("", config);
 
   return response.data;
 }
@@ -65,7 +96,7 @@ export async function addNewGoal(goal: string) {
     headers: { Authorization: `Bearer ${authToken}` },
   };
 
-  const response = await axiosInstance.post("/", { goal }, config);
+  const response = await axiosInstance.post("", { goal }, config);
 
   return response;
 }
@@ -75,16 +106,49 @@ export async function updateGoal({ id, goal, isAchieved }: UpdateGoalParams) {
     throw new Error("No valid data to update");
   }
 
-  let newGoal: Omit<UpdateGoalParams, "id"> = {};
-  if (goal) newGoal = { goal };
-  if (isAchieved) newGoal = { isAchieved };
-  const response = await axiosInstance.patch(`/${id}`, newGoal);
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
+  });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+
+  const newGoal: Omit<UpdateGoalParams, "id"> = {};
+  if (goal) newGoal.goal = goal;
+  if (isAchieved) newGoal.isAchieved = isAchieved;
+
+  const response = await axiosInstance.patch(`/${id}`, newGoal, config);
 
   return response;
 }
 
 export async function deleteGoal(id: string) {
-  const response = await axiosInstance.delete(`/${id}`);
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
+  });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+
+  const response = await axiosInstance.delete(`/${id}`, config);
 
   return response;
 }

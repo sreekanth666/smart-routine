@@ -323,7 +323,11 @@ export const SAMPLE_DAILY_ACTIVITIES: DailyActivity[] = [
   },
 ];
 
-export const SAMPLE_COMMUNITY_FEED: CommuntityPostType[] = [
+type SampleCommunityPostType = Omit<CommuntityPostType, "id"> & {
+  id: number;
+};
+
+export const SAMPLE_COMMUNITY_FEED: SampleCommunityPostType[] = [
   {
     id: 1,
     userName: "@FitWithElla",

@@ -1,5 +1,5 @@
 export type CommuntityPostType = {
-  id: number;
+  id: string;
   userName: string;
   postContent: string;
   postedDate: Date;

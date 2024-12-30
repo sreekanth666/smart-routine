@@ -12,19 +12,34 @@ export type CreateTravelEstimationParams = {
   commutation: string;
 };
 
-type UpdateTravelEstimationParams = Omit<
-  CreateTravelEstimationParams,
-  "authToken"
+type UpdateTravelEstimationParams = Partial<
+  Omit<CreateTravelEstimationParams, "authToken">
 > & {
   id: string;
 };
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: `${BASE_URL}/travel-estimation`,
 });
 
 export async function getTravelEstimation(id: string) {
-  const response = await axiosInstance.get(`/travel-estimation/${id}`);
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
+  });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+
+  const response = await axiosInstance.get(`/${id}`, config);
 
   return response.data;
 }
@@ -46,16 +61,29 @@ export async function getUserTravelEstimation() {
     headers: { Authorization: `Bearer ${authToken}` },
   };
 
-  const response = await axiosInstance.get(
-    "/travel-estimation/user/all",
-    config
-  );
+  const response = await axiosInstance.get("/user/all", config);
 
   return response.data;
 }
 
 export async function getAllTravelEstimation() {
-  const response = await axiosInstance.get("/travel-estimation");
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
+  });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+
+  const response = await axiosInstance.get("", config);
 
   return response.data;
 }
@@ -84,7 +112,7 @@ export async function createTravelEstimation({
   };
 
   const response = await axiosInstance.post(
-    "/travel-estimation",
+    "",
     {
       starting,
       destination,
@@ -106,19 +134,61 @@ export async function updateTravelEstimation({
   duration,
   commutation,
 }: UpdateTravelEstimationParams) {
-  const response = await axiosInstance.patch(`/travel-estimation/${id}`, {
-    starting,
-    destination,
-    distance,
-    duration,
-    commutation,
+  if (!starting && !destination && !distance && !duration && !commutation) {
+    throw new Error("No parameters specified.");
+  }
+
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
   });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+
+  const newTravelEstimation: Omit<UpdateTravelEstimationParams, "id"> = {};
+
+  if (starting !== undefined) newTravelEstimation.starting = starting;
+  if (destination !== undefined) newTravelEstimation.destination = destination;
+  if (distance !== undefined) newTravelEstimation.distance = distance;
+  if (duration !== undefined) newTravelEstimation.duration = duration;
+  if (commutation !== undefined) newTravelEstimation.commutation = commutation;
+
+  const response = await axiosInstance.patch(
+    `/${id}`,
+    newTravelEstimation,
+    config
+  );
 
   return response;
 }
 
 export async function deleteTravelEstimation(id: string) {
-  const response = await axiosInstance.delete(`/travel-estimation/${id}`);
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
+  });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+
+  const response = await axiosInstance.delete(`/${id}`, config);
 
   return response;
 }

@@ -7,9 +7,13 @@ type NewPostForm = {
 
 type AddNewPostFormParams = {
   onAddingNewPost: (content: string) => void;
+  isFormSubmitting: boolean;
 };
 
-function AddNewPostForm({ onAddingNewPost }: AddNewPostFormParams) {
+function AddNewPostForm({
+  onAddingNewPost,
+  isFormSubmitting,
+}: AddNewPostFormParams) {
   const form = useForm<NewPostForm>({
     initialValues: { content: "" },
     validate: {
@@ -47,6 +51,7 @@ function AddNewPostForm({ onAddingNewPost }: AddNewPostFormParams) {
           }}
           error={form.errors.content}
           required
+          disabled={isFormSubmitting}
         />
         <Progress
           mt="md"
@@ -55,7 +60,7 @@ function AddNewPostForm({ onAddingNewPost }: AddNewPostFormParams) {
         />
 
         <Button type="submit" color="green" fullWidth mt="xl">
-          Add New Post
+          {isFormSubmitting ? "Loading..." : "Add New Post"}
         </Button>
       </form>
     </Paper>

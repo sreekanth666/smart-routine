@@ -3,38 +3,123 @@ import {
   Group,
   Modal,
   Paper,
+  Skeleton,
   Stack,
   Text,
   Title,
   Tooltip,
 } from "@mantine/core";
-import { SAMPLE_COMMUNITY_FEED } from "../sample-data/SampleData";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CommuntityPostType } from "../types/CommunityPostType";
 import IconMessagePlus from "../components/UI/icons/IconMessagePlus";
 import { useDisclosure } from "@mantine/hooks";
 import AddNewPostForm from "../components/AddNewPostForm";
+import {
+  useCreateNewCommunityPost,
+  useGetAllCommunityPosts,
+} from "../hooks/communityHooks";
 
 dayjs.extend(relativeTime);
 
+type ServerCommunityPostType = {
+  _id: string;
+  post: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 function Community() {
-  const [posts, setPosts] = useState<CommuntityPostType[]>(
-    SAMPLE_COMMUNITY_FEED
-  );
+  const [posts, setPosts] = useState<CommuntityPostType[]>([]);
+  const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
   const [opened, { open, close }] = useDisclosure();
+  const {
+    isGettingAllCommunityPosts,
+    allCommunityPosts,
+    allCommunityPostsError,
+  } = useGetAllCommunityPosts();
+  const { isCreateNewPostPending, createNewPost, createNewPostError } =
+    useCreateNewCommunityPost();
+
+  useEffect(
+    function () {
+      if (!isGettingAllCommunityPosts && allCommunityPostsError === null) {
+        const serverCommunityPosts: ServerCommunityPostType[] =
+          allCommunityPosts?.data;
+        console.log(serverCommunityPosts);
+        setPosts(
+          serverCommunityPosts.map((post) => {
+            return {
+              id: post._id,
+              postContent: post.post,
+              userName: `@${post.userId}`,
+              postedDate: dayjs(post.createdAt).isSame(dayjs(post.updatedAt))
+                ? new Date(post.createdAt)
+                : new Date(post.updatedAt),
+            };
+          })
+        );
+      }
+    },
+    [isGettingAllCommunityPosts, allCommunityPostsError, allCommunityPosts]
+  );
+
+  if (isGettingAllCommunityPosts) {
+    return (
+      <Stack>
+        <Title>Community Posts</Title>
+        <Paper p="md">
+          <Skeleton height={12} width="30%" mb="md" radius="xl" />
+          <Skeleton height={8} radius="xl" mb="sm" />
+          <Skeleton height={8} radius="xl" />
+        </Paper>
+        <Paper p="md">
+          <Skeleton height={12} width="30%" mb="md" radius="xl" />
+          <Skeleton height={8} radius="xl" mb="sm" />
+          <Skeleton height={8} radius="xl" />
+        </Paper>
+        <Paper p="md">
+          <Skeleton height={12} width="30%" mb="md" radius="xl" />
+          <Skeleton height={8} radius="xl" mb="sm" />
+          <Skeleton height={8} radius="xl" />
+        </Paper>
+        <Paper p="md">
+          <Skeleton height={12} width="30%" mb="md" radius="xl" />
+          <Skeleton height={8} radius="xl" mb="sm" />
+          <Skeleton height={8} radius="xl" />
+        </Paper>
+        <Paper p="md">
+          <Skeleton height={12} width="30%" mb="md" radius="xl" />
+          <Skeleton height={8} radius="xl" mb="sm" />
+          <Skeleton height={8} radius="xl" />
+        </Paper>
+      </Stack>
+    );
+  }
+
+  if (allCommunityPostsError !== null) {
+    return (
+      <Stack>
+        <Title>Community Posts</Title>
+        <Paper p="md">
+          <Title order={4} c="red">
+            Error: Something bad happened at retrieving community posts
+          </Title>
+        </Paper>
+      </Stack>
+    );
+  }
 
   const handleNewPost = (content: string) => {
-    setPosts((prevPosts) => [
-      ...prevPosts,
-      {
-        id: prevPosts.length + 1,
-        userName: "@CurrentUser",
-        postContent: content,
-        postedDate: new Date(Date.now()),
-      },
-    ]);
+    setIsFormSubmitted(true);
+    createNewPost(content);
+    handleModalClose();
+  };
+
+  const handleModalClose = () => {
+    setIsFormSubmitted(false);
     close();
   };
 
@@ -50,7 +135,7 @@ function Community() {
 
   return (
     <>
-      <Modal.Root opened={opened} onClose={close}>
+      <Modal.Root opened={opened} onClose={handleModalClose}>
         <Modal.Overlay />
         <Modal.Content>
           <Modal.Header style={{ justifyContent: "center" }}>
@@ -66,7 +151,16 @@ function Community() {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <AddNewPostForm onAddingNewPost={handleNewPost} />
+            {isFormSubmitted && createNewPostError !== null ? (
+              <Title order={4} c="red">
+                Error: Something bad happened at creating new community post
+              </Title>
+            ) : (
+              <AddNewPostForm
+                onAddingNewPost={handleNewPost}
+                isFormSubmitting={isCreateNewPostPending}
+              />
+            )}
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>
