@@ -1,10 +1,51 @@
-import { Button, Flex, Grid, Title } from "@mantine/core";
+import { useEffect, useState } from "react";
+import { Button, Flex, Grid, LoadingOverlay, Title } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 import RoutineChat from "../components/RoutineChat";
 import RoutinesList from "../components/RoutinesList";
-import { useNavigate } from "react-router-dom";
+import { useGetRoutines } from "../hooks/routineHooks";
+import { Imagetype, RoutineType } from "../types/SuggestionType";
+import { BASE_URL } from "../utils/constants";
+
+type ServerRoutineDataType = {
+  _id: string;
+  name: string;
+  description: string;
+  image: string[];
+  time: string;
+};
 
 function Routines() {
+  const [routinesList, setRoutinesList] = useState<RoutineType[]>([]);
   const navigate = useNavigate();
+  const { isGettingRoutines, userRoutines, userRoutinesError } =
+    useGetRoutines();
+
+  useEffect(
+    function () {
+      if (!isGettingRoutines && userRoutinesError === null) {
+        const serverRoutineData: ServerRoutineDataType[] = userRoutines?.data;
+        setRoutinesList(
+          serverRoutineData.map((routineItem) => {
+            const images: Imagetype[] = routineItem.image.map((imageItem) => {
+              return {
+                image: `${BASE_URL}/file/routine/${imageItem}`,
+                altDescription: imageItem,
+              };
+            });
+            return {
+              id: routineItem._id,
+              title: routineItem.name,
+              description: routineItem.description,
+              images: images,
+              time: routineItem.time,
+            };
+          })
+        );
+      }
+    },
+    [isGettingRoutines, userRoutinesError, userRoutines]
+  );
 
   const handleAddRoutineButtonClick = () => {
     navigate(`/routine/add/new`);
@@ -33,8 +74,19 @@ function Routines() {
           </Grid.Col>
         </Grid>
       </Grid.Col>
-      <Grid.Col span={7}>
-        <RoutinesList />
+      <Grid.Col span={7} pos="relative">
+        <LoadingOverlay
+          visible={isGettingRoutines}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+        />
+        {userRoutinesError !== null ? (
+          <Title order={4} c="red">
+            Error: Something bad happened at retrieving user routines
+          </Title>
+        ) : (
+          <RoutinesList routinesList={routinesList} />
+        )}
       </Grid.Col>
       <Grid.Col span={5}>
         <RoutineChat />

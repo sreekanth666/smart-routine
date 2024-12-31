@@ -3,8 +3,6 @@ import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FixedSizeList as List, ListChildComponentProps } from "react-window";
 
-import { SAMPLE_ROUTINES } from "../sample-data/SampleData";
-
 import {
   RoutineType,
   RoutineTypeWithoutId,
@@ -14,10 +12,12 @@ import ViewRoutineDetails from "./ViewRoutineDetails";
 import RoutineCard from "./RoutineCard";
 import EditRoutine from "./EditRoutine";
 import DeleteRoutine from "./DeleteRoutine";
-// import ScrollableContainer from "./UI/ScrollableContainer";
 
-function RoutinesList() {
-  const [routineList, setRoutineList] = useState(SAMPLE_ROUTINES);
+type RoutinesListParams = {
+  routinesList: RoutineType[];
+};
+
+function RoutinesList({ routinesList }: RoutinesListParams) {
   const [modalContent, setModalContent] = useState<ReactElement | null>();
   const [modalTitle, setModalTitle] = useState<string | null>();
   const [opened, { open, close }] = useDisclosure();
@@ -32,71 +32,76 @@ function RoutinesList() {
     close();
   };
 
-  const handleViewButtonClick = (id: number) => {
-    const selectedRoutine: RoutineType[] = routineList.filter(
-      (routine) => routine.id === id
-    );
-    const routine: RoutineTypeWithoutId = {
-      title: selectedRoutine[0].title,
-      description: selectedRoutine[0].description,
-      images: selectedRoutine[0].images,
-    };
+  const handleViewButtonClick = (id: string) => {
+    console.log(id);
+    // const selectedRoutine: RoutineType[] = routineList.filter(
+    //   (routine) => routine.id === id
+    // );
+    // const routine: RoutineTypeWithoutId = {
+    //   title: selectedRoutine[0].title,
+    //   description: selectedRoutine[0].description,
+    //   images: selectedRoutine[0].images,
+    // };
 
-    setModalContent(<ViewRoutineDetails routine={routine} />);
-    setModalTitle(`View details`);
-    openModal();
+    // setModalContent(<ViewRoutineDetails routine={routine} />);
+    // setModalTitle(`View details`);
+    // openModal();
   };
 
-  const handleEditButtonClick = (id: number) => {
-    const selectedRoutine: RoutineType[] = routineList.filter(
-      (routine) => routine.id === id
-    );
+  const handleEditButtonClick = (id: string) => {
+    console.log(id);
+    // const selectedRoutine: RoutineType[] = routineList.filter(
+    //   (routine) => routine.id === id
+    // );
 
-    setModalContent(
-      <EditRoutine editRoutine={editRoutine} routine={selectedRoutine[0]} />
-    );
-    setModalTitle(`Edit routine`);
-    openModal();
+    // setModalContent(
+    //   <EditRoutine editRoutine={editRoutine} routine={selectedRoutine[0]} />
+    // );
+    // setModalTitle(`Edit routine`);
+    // openModal();
   };
 
   const editRoutine = (
-    id: number,
+    id: string,
     newRoutine: RoutineTypeWithoutIdAndImages
   ) => {
-    setRoutineList((prevRoutines) =>
-      prevRoutines.map((routine) =>
-        routine.id === id
-          ? {
-              ...routine,
-              ...newRoutine,
-            }
-          : routine
-      )
-    );
-    closeModal();
+    console.log(id, newRoutine);
+    // setRoutineList((prevRoutines) =>
+    //   prevRoutines.map((routine) =>
+    //     routine.id === id
+    //       ? {
+    //           ...routine,
+    //           ...newRoutine,
+    //         }
+    //       : routine
+    //   )
+    // );
+    // closeModal();
   };
 
-  const handleDeleteButtonClick = (id: number, title: string) => {
-    setModalContent(
-      <DeleteRoutine
-        routine={{ id, title }}
-        onCloseModal={close}
-        deleteRoutine={deleteUser}
-      />
-    );
-    setModalTitle(`Delete Routine`);
-    openModal();
+  const handleDeleteButtonClick = (id: string, title: string) => {
+    console.log(id, title);
+    // setModalContent(
+    //   <DeleteRoutine
+    //     routine={{ id, title }}
+    //     onCloseModal={close}
+    //     deleteRoutine={deleteUser}
+    //   />
+    // );
+    // setModalTitle(`Delete Routine`);
+    // openModal();
   };
 
-  const deleteUser = (id: number) => {
-    setRoutineList((prevRoutines) =>
-      prevRoutines.filter((routine) => routine.id !== id)
-    );
-    closeModal();
+  const deleteUser = (id: string) => {
+    console.log(id);
+    // setRoutineList((prevRoutines) =>
+    //   prevRoutines.filter((routine) => routine.id !== id)
+    // );
+    // closeModal();
   };
 
   const Row = ({ index, style }: ListChildComponentProps) => {
-    const routine = routineList[index];
+    const routine = routinesList[index];
     return (
       <div
         style={{
@@ -142,7 +147,7 @@ function RoutinesList() {
 
       <List
         height={700}
-        itemCount={routineList.length}
+        itemCount={routinesList.length}
         itemSize={700} // Adjust the item size as needed
         width="100%"
         layout="vertical"

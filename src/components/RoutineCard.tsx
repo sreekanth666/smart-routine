@@ -1,4 +1,13 @@
-import { ActionIcon, Card, Grid, Menu, Text, Title } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Card,
+  Grid,
+  Group,
+  Menu,
+  Text,
+  Title,
+} from "@mantine/core";
 import { RoutineType } from "../types/SuggestionType";
 import IconMenu2 from "./UI/icons/IconMenu2";
 import IconEye from "./UI/icons/IconEye";
@@ -11,9 +20,9 @@ import ImageGrid from "./ImageGrid";
 
 type RoutineCardProps = {
   routine: RoutineType;
-  viewRoutine: (id: number) => void;
-  editRoutine: (id: number) => void;
-  deleteRoutine: (id: number, title: string) => void;
+  viewRoutine: (id: string) => void;
+  editRoutine: (id: string) => void;
+  deleteRoutine: (id: string, title: string) => void;
 };
 
 function RoutineCard({
@@ -30,9 +39,23 @@ function RoutineCard({
       <Card.Section mt="xs" mb="xs" ml="xs">
         <Grid>
           <Grid.Col span={{ base: 6, md: 9 }}>
-            <Title mt="md" mb="xs" fw={500}>
-              {routine.title}
-            </Title>
+            <Group justify="space-between">
+              <Title mt="md" mb="xs" fw={500}>
+                {routine.title}
+              </Title>
+              <Badge
+                color={
+                  routine.time === "MORNING"
+                    ? "blue"
+                    : routine.time === "AFTERNOON"
+                    ? "yellow"
+                    : "red"
+                }
+                size="xl"
+              >
+                {routine.time}
+              </Badge>
+            </Group>
             <Text size="sm" c="dimmed" truncate="end">
               {routine.description}
             </Text>

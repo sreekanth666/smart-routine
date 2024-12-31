@@ -3,13 +3,17 @@ export type SuggestionType = {
   description: string;
 };
 
+type RoutineDataType = SuggestionType & {
+  time: string;
+};
+
 export type Imagetype = {
   image: string;
   altDescription: string;
 };
 
-export type RoutineType = SuggestionType & {
-  id: number;
+export type RoutineType = RoutineDataType & {
+  id: string;
   images: Imagetype[];
 };
 

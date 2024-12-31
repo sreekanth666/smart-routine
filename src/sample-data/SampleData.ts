@@ -115,7 +115,11 @@ export const SAMPLE_GOALS: SuggestionType[] = [
   },
 ];
 
-export const SAMPLE_ROUTINES: RoutineType[] = [
+type SampleRoutineType = Omit<RoutineType, "id" | "time"> & {
+  id: number;
+};
+
+export const SAMPLE_ROUTINES: SampleRoutineType[] = [
   {
     id: 1,
     title: "Morning Mindfulness",
