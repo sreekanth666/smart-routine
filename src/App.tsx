@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route
           element={
-            <ProtectedRoute>
+            <ProtectedRoute userOnly>
               <DashboardLayout />
             </ProtectedRoute>
           }
@@ -32,8 +32,19 @@ function App() {
           <Route path="community" element={<Community />} />
           <Route path="routine/:action/:id" element={<AddRoutine />} />
           <Route path="/profile" element={<ProfilePage />} />
+        </Route>
+
+        {/* Admin only route */}
+        <Route
+          element={
+            <ProtectedRoute adminOnly>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="app/*" element={<Dashboard />} />
         </Route>
+
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="*" element={<NotFoundPage />} />
