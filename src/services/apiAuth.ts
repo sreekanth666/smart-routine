@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { BASE_URL } from "../utils/constants";
 
-type RegisterParams = {
+export type RegisterParams = {
   fullName: string;
   email: string;
   phone: string;
