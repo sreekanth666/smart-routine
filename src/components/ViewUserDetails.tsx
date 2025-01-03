@@ -7,7 +7,10 @@ type ViewUserDetailsParams = {
   id: string;
 };
 
-type ServerUserDataTypeWithoutId = Omit<UserWithoutIdType, "fullName"> & {
+export type ServerUserDataTypeWithoutId = Omit<
+  UserWithoutIdType,
+  "fullName"
+> & {
   name: string;
 };
 

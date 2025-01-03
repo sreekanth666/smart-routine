@@ -2,8 +2,14 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { RegisterParams } from "./apiAuth";
 
-export type UpdateUserParams = Partial<RegisterParams> & {
+export type UpdateUserParams = Partial<Omit<RegisterParams, "password">> & {
   id: string;
+};
+
+type ServerUpdateUserType = Partial<
+  Omit<RegisterParams, "password" | "fullName">
+> & {
+  name?: string;
 };
 
 const axiosInstance = axios.create({
@@ -27,13 +33,11 @@ export async function updateUser({
   email,
   fullName,
   phone,
-  password,
 }: UpdateUserParams) {
-  const data: Partial<RegisterParams> = {};
+  const data: ServerUpdateUserType = {};
   if (email) data.email = email;
-  if (fullName) data.fullName = fullName;
+  if (fullName) data.name = fullName;
   if (phone) data.phone = phone;
-  if (password) data.password = password;
 
   const response = await axiosInstance.patch(`/${id}`, data);
 

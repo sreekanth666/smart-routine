@@ -18,7 +18,6 @@ import IconTrash from "../components/UI/icons/IconTrash";
 import ViewUserDetails from "../components/ViewUserDetails";
 import EditUserDetails from "../components/EditUserDetails";
 import { UserType } from "../types/UserType";
-import { UserWithoutIdType } from "../types/UserType";
 import DeleteUserDetails from "../components/DeleteUserDetails";
 import { useGetUsers } from "../hooks/userHooks";
 
@@ -124,35 +123,15 @@ function Users() {
   const handleEditButtonClick = (id: string) => {
     const selectedUser: UserType[] = users.filter((user) => user.id === id);
 
-    setModalContent(
-      <EditUserDetails user={selectedUser[0]} editUser={editUser} />
-    );
+    setModalContent(<EditUserDetails id={id} closeModal={close} />);
     setModalTitle(`Edit ${selectedUser[0].fullName} details`);
     openModal();
   };
 
-  const editUser = (id: string, updatedUser: UserWithoutIdType) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) => (user.id === id ? { id, ...updatedUser } : user))
-    );
-    closeModal();
-  };
-
   const handleDeleteButtonClick = (id: string, fullName: string) => {
-    setModalContent(
-      <DeleteUserDetails
-        user={{ id, fullName }}
-        onCloseModal={close}
-        deleteUser={deleteUser}
-      />
-    );
+    setModalContent(<DeleteUserDetails id={id} onCloseModal={close} />);
     setModalTitle(`Delete ${fullName} details`);
     openModal();
-  };
-
-  const deleteUser = (id: string) => {
-    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
-    closeModal();
   };
 
   const rows = users.map((user) => (

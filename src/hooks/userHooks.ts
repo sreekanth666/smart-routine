@@ -43,8 +43,8 @@ export function useUpdateUser() {
     error: updateUserDetailsError,
   } = useMutation({
     mutationKey: ["users"],
-    mutationFn: ({ id, email, fullName, phone, password }: UpdateUserParams) =>
-      updateUser({ id, email, fullName, phone, password }),
+    mutationFn: ({ id, email, fullName, phone }: UpdateUserParams) =>
+      updateUser({ id, email, fullName, phone }),
     onSuccess: () => {
       console.log("Success");
       notifications.show({

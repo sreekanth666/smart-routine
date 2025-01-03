@@ -1,19 +1,23 @@
-import { Button, TextInput } from "@mantine/core";
+import { Button, Skeleton, Stack, TextInput, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { UserType } from "../types/UserType";
 import { UserWithoutIdType } from "../types/UserType";
+import { useGetUser, useUpdateUser } from "../hooks/userHooks";
+import { useEffect } from "react";
+import { ServerUserDataTypeWithoutId } from "./ViewUserDetails";
 
 type EditUserDetailsParams = {
-  user: UserType;
-  editUser: (id: string, newUser: UserWithoutIdType) => void;
+  id: string;
+  closeModal: () => void;
 };
 
-function EditUserDetails({ user, editUser }: EditUserDetailsParams) {
+function EditUserDetails({ id, closeModal }: EditUserDetailsParams) {
+  const { isGettingUserData, userData, userDataError } = useGetUser(id);
+  const { updateUserDetails } = useUpdateUser();
   const form = useForm({
     initialValues: {
-      fullName: user.fullName,
-      email: user.email,
-      phone: user.phone,
+      fullName: "",
+      email: "",
+      phone: "",
     },
     validate: {
       email: (val) => (/^\S+@\S+\.\S{2,}$/.test(val) ? null : "Invalid email"),
@@ -26,6 +30,48 @@ function EditUserDetails({ user, editUser }: EditUserDetailsParams) {
     },
   });
 
+  useEffect(() => {
+    if (!isGettingUserData && userDataError === null && userData) {
+      const serverUserData: ServerUserDataTypeWithoutId = userData.data;
+
+      // Update form values only if they differ from the current values
+      form.setValues((currentValues) => ({
+        fullName:
+          currentValues.fullName === ""
+            ? serverUserData.name
+            : currentValues.fullName,
+        email:
+          currentValues.email === ""
+            ? serverUserData.email
+            : currentValues.email,
+        phone:
+          currentValues.phone === ""
+            ? serverUserData.phone
+            : currentValues.phone,
+      }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGettingUserData, userDataError, userData]);
+
+  if (isGettingUserData) {
+    return (
+      <Stack>
+        <Skeleton height={8} radius="xl" />
+        <Skeleton height={8} radius="xl" />
+        <Skeleton height={8} radius="xl" />
+        <Skeleton height={12} radius="xl" />
+      </Stack>
+    );
+  }
+
+  if (userDataError !== null) {
+    return (
+      <Title order={4} c="red" ta="center">
+        There was some error while retreiving the user details.
+      </Title>
+    );
+  }
+
   const editFormHandler = () => {
     const updatedUser: UserWithoutIdType = {
       fullName: form.values.fullName,
@@ -33,7 +79,8 @@ function EditUserDetails({ user, editUser }: EditUserDetailsParams) {
       phone: form.values.phone,
     };
 
-    editUser(user.id, updatedUser);
+    updateUserDetails({ id, ...updatedUser });
+    closeModal();
   };
 
   return (
