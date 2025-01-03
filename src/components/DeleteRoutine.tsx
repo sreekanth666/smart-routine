@@ -1,19 +1,17 @@
 import { Button, Grid, Title } from "@mantine/core";
 import { RoutineType } from "../types/SuggestionType";
+import { useDeleteRoutine } from "../hooks/routineHooks";
 
 type DeleteRoutineParams = {
   routine: Pick<RoutineType, "id" | "title">;
   onCloseModal: () => void;
-  deleteRoutine: (id: number) => void;
 };
 
-function DeleteRoutine({
-  routine,
-  onCloseModal,
-  deleteRoutine,
-}: DeleteRoutineParams) {
+function DeleteRoutine({ routine, onCloseModal }: DeleteRoutineParams) {
+  const { isDeletingUserRoutine, deleteUserRoutine } = useDeleteRoutine();
   const handleDelete = () => {
-    deleteRoutine(routine.id);
+    deleteUserRoutine(routine.id);
+    onCloseModal();
   };
 
   return (
@@ -28,12 +26,12 @@ function DeleteRoutine({
             mt="xl"
             color="green"
           >
-            Cancel
+            {isDeletingUserRoutine ? "Loading..." : "Cancel"}
           </Button>
         </Grid.Col>
         <Grid.Col span={6}>
           <Button onClick={handleDelete} fullWidth mt="xl" color="red">
-            Delete
+            {isDeletingUserRoutine ? "Loading..." : "Delete"}
           </Button>
         </Grid.Col>
       </Grid>

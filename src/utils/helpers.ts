@@ -1,3 +1,5 @@
+import { Imagetype } from "../types/SuggestionType";
+
 export function isCurrentPage(
   pathName: string,
   conditionString: string
@@ -21,3 +23,7 @@ export function checkPassword(password: string): string | null {
 export function generateRandomID(): string {
   return "_" + Math.random().toString(36).substring(2, 9);
 }
+
+export const isFile = (file: File | Imagetype): file is File => {
+  return file instanceof File;
+};

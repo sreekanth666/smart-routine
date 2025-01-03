@@ -4,6 +4,7 @@ import {
   Grid,
   NativeSelect,
   Paper,
+  Skeleton,
   Stack,
   Textarea,
   TextInput,
@@ -14,21 +15,35 @@ import { useNavigate, useParams } from "react-router-dom";
 import ValueComponent from "../components/ValueComponent";
 import PreviewComponent from "../components/PreviewComponent";
 import { useForm } from "@mantine/form";
-import { ChangeEvent, useState } from "react";
-import { useCreateRoutine } from "../hooks/routineHooks";
+import { ChangeEvent, useEffect, useState } from "react";
+import {
+  useCreateRoutine,
+  useGetRoutine,
+  useUpdateRoutine,
+} from "../hooks/routineHooks";
+import { ServerRoutineDataType } from "../components/ViewRoutineDetails";
+import { Imagetype } from "../types/SuggestionType";
+import { BASE_URL } from "../utils/constants";
+import { isFile } from "../utils/helpers";
 
 type AddRoutineForm = {
   title: string;
   description: string;
   time: "MORNING" | "AFTERNOON" | "NIGHT";
-  images: File[];
+  images: File[] | Imagetype[];
 };
 
 function AddRoutine() {
   const [isFormSubmitting, setIsFormSubmitting] = useState<boolean>(false);
   const params = useParams();
-  // console.log(params);
   const navigate = useNavigate();
+  const action = params["action"];
+  const id = action === "edit" ? params["id"] : "";
+  const { isGettingRoutine, userRoutine, userRoutineError } = useGetRoutine(
+    id || ""
+  );
+  const { createRoutine } = useCreateRoutine();
+  const { editRoutine } = useUpdateRoutine();
   const form = useForm<AddRoutineForm>({
     validateInputOnChange: true,
     clearInputErrorOnChange: true,
@@ -37,7 +52,7 @@ function AddRoutine() {
       title: "",
       description: "",
       time: "MORNING",
-      images: [],
+      images: [] as File[],
     },
     validate: {
       title: (value) => (value ? null : "Title required"),
@@ -48,39 +63,61 @@ function AddRoutine() {
         } else if (value.length > 7) {
           return "You can upload up to 7 images only";
         } else {
-          let status = false,
-            index = 0;
-          while (index < value.length) {
-            if (value[index].size > 512000) {
-              status = true;
-              break;
-            }
-            index++;
+          const invalidFile = value.find(
+            (item) => isFile(item) && (item as File).size > 512000
+          );
+          if (invalidFile) {
+            return "Only images up to 500kb are allowed.";
           }
-          if (status) {
-            return "Only images upto 500kb are allowed.";
-          } else {
-            return null;
-          }
+          return null;
         }
       },
     },
   });
-  const { createRoutine } = useCreateRoutine();
 
-  const buttonText: string = (() => {
-    if (isFormSubmitting) return "Submitting...";
+  useEffect(
+    function () {
+      if (action === "edit" && userRoutineError === null && !isGettingRoutine) {
+        const serverRoutine: ServerRoutineDataType = userRoutine?.data;
 
-    switch (params["action"]) {
-      case "add":
-        return "Add Routine";
-      case "edit":
-        return "Edit Routine";
+        // Avoid redundant updates
+        if (serverRoutine) {
+          const time: "MORNING" | "AFTERNOON" | "NIGHT" =
+            serverRoutine.time === "MORNING"
+              ? "MORNING"
+              : serverRoutine.time === "AFTERNOON"
+              ? "AFTERNOON"
+              : "NIGHT";
 
-      default:
-        return "View Routine";
-    }
-  })();
+          const images: Imagetype[] = serverRoutine.image.map((item) => ({
+            image: `${BASE_URL}/file/routine/${item}`,
+            altDescription: item,
+          }));
+
+          if (
+            form.values.title !== serverRoutine.name ||
+            form.values.description !== serverRoutine.description ||
+            form.values.time !== time ||
+            JSON.stringify(form.values.images) !== JSON.stringify(images)
+          ) {
+            form.setValues({
+              title: serverRoutine.name,
+              description: serverRoutine.description,
+              time,
+              images,
+            });
+          }
+        }
+      }
+    },
+    [action, userRoutine, isGettingRoutine, userRoutineError, form]
+  );
+
+  const buttonText: string = isFormSubmitting
+    ? "Submitting..."
+    : action === "add"
+    ? "Add Routine"
+    : "Edit Routine";
 
   const removeFileHandler = (index: number) => {
     const updatedFiles = form.getValues().images;
@@ -100,12 +137,23 @@ function AddRoutine() {
 
   const routineSubmitHandler = () => {
     setIsFormSubmitting(true);
-    createRoutine({
-      name: form.values.title,
-      description: form.values.description,
-      images: form.values.images,
-      time: form.values.time,
-    });
+    const images = form.values.images.filter(isFile) as File[]; // Filter out non-File items
+    if (action === "add") {
+      createRoutine({
+        name: form.values.title,
+        description: form.values.description,
+        images,
+        time: form.values.time,
+      });
+    } else {
+      editRoutine({
+        id: id ? id : "",
+        name: form.values.title,
+        description: form.values.description,
+        images,
+        time: form.values.time,
+      });
+    }
     setIsFormSubmitting(false);
     navigate("/routines");
   };
@@ -124,12 +172,40 @@ function AddRoutine() {
     }
   }
 
+  if (action === "edit" && isGettingRoutine) {
+    return (
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        <Title order={2} ta="center">
+          Edit Routine
+        </Title>
+        <Stack>
+          <Skeleton height={8} radius="xl" />
+          <Skeleton height={8} radius="xl" />
+          <Skeleton height={8} radius="xl" />
+          <Skeleton height={8} radius="xl" />
+        </Stack>
+      </Paper>
+    );
+  }
+
+  if (action === "edit" && userRoutineError !== null) {
+    return (
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        <Title order={2} ta="center">
+          Edit Routine
+        </Title>
+        <Title order={4} c="red" ta="center">
+          There was some error while retreiving the routine details.
+        </Title>
+      </Paper>
+    );
+  }
+
   return (
     <Paper withBorder shadow="md" p={30} mt={30} radius="md">
       <Title order={2} ta="center">
-        {params["action"] === "add" && "Add Routine"}
-        {params["action"] === "edit" && "Edit Routine"}
-        {params["action"] === "view" && "View Routine"}
+        {action === "add" && "Add Routine"}
+        {action === "edit" && "Edit Routine"}
       </Title>
       <form
         onSubmit={form.onSubmit(() => {

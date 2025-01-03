@@ -51,6 +51,10 @@ function Routines() {
     navigate(`/routine/add/new`);
   };
 
+  const handleUpdateRoutineButtonClick = (id: string) => {
+    navigate(`/routine/edit/${id}`);
+  };
+
   return (
     <Grid>
       <Grid.Col span={12}>
@@ -85,7 +89,10 @@ function Routines() {
             Error: Something bad happened at retrieving user routines
           </Title>
         ) : (
-          <RoutinesList routinesList={routinesList} />
+          <RoutinesList
+            routinesList={routinesList}
+            onUpdateRoutineClick={handleUpdateRoutineButtonClick}
+          />
         )}
       </Grid.Col>
       <Grid.Col span={5}>

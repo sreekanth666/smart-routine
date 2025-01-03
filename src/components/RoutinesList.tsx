@@ -3,21 +3,20 @@ import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { FixedSizeList as List, ListChildComponentProps } from "react-window";
 
-import {
-  RoutineType,
-  RoutineTypeWithoutId,
-  RoutineTypeWithoutIdAndImages,
-} from "../types/SuggestionType";
+import { RoutineType } from "../types/SuggestionType";
 import ViewRoutineDetails from "./ViewRoutineDetails";
 import RoutineCard from "./RoutineCard";
-import EditRoutine from "./EditRoutine";
 import DeleteRoutine from "./DeleteRoutine";
 
 type RoutinesListParams = {
   routinesList: RoutineType[];
+  onUpdateRoutineClick: (id: string) => void;
 };
 
-function RoutinesList({ routinesList }: RoutinesListParams) {
+function RoutinesList({
+  routinesList,
+  onUpdateRoutineClick,
+}: RoutinesListParams) {
   const [modalContent, setModalContent] = useState<ReactElement | null>();
   const [modalTitle, setModalTitle] = useState<string | null>();
   const [opened, { open, close }] = useDisclosure();
@@ -33,71 +32,21 @@ function RoutinesList({ routinesList }: RoutinesListParams) {
   };
 
   const handleViewButtonClick = (id: string) => {
-    console.log(id);
-    // const selectedRoutine: RoutineType[] = routineList.filter(
-    //   (routine) => routine.id === id
-    // );
-    // const routine: RoutineTypeWithoutId = {
-    //   title: selectedRoutine[0].title,
-    //   description: selectedRoutine[0].description,
-    //   images: selectedRoutine[0].images,
-    // };
-
-    // setModalContent(<ViewRoutineDetails routine={routine} />);
-    // setModalTitle(`View details`);
-    // openModal();
+    setModalTitle(`View details`);
+    setModalContent(<ViewRoutineDetails id={id} />);
+    openModal();
   };
 
   const handleEditButtonClick = (id: string) => {
-    console.log(id);
-    // const selectedRoutine: RoutineType[] = routineList.filter(
-    //   (routine) => routine.id === id
-    // );
-
-    // setModalContent(
-    //   <EditRoutine editRoutine={editRoutine} routine={selectedRoutine[0]} />
-    // );
-    // setModalTitle(`Edit routine`);
-    // openModal();
-  };
-
-  const editRoutine = (
-    id: string,
-    newRoutine: RoutineTypeWithoutIdAndImages
-  ) => {
-    console.log(id, newRoutine);
-    // setRoutineList((prevRoutines) =>
-    //   prevRoutines.map((routine) =>
-    //     routine.id === id
-    //       ? {
-    //           ...routine,
-    //           ...newRoutine,
-    //         }
-    //       : routine
-    //   )
-    // );
-    // closeModal();
+    onUpdateRoutineClick(id);
   };
 
   const handleDeleteButtonClick = (id: string, title: string) => {
-    console.log(id, title);
-    // setModalContent(
-    //   <DeleteRoutine
-    //     routine={{ id, title }}
-    //     onCloseModal={close}
-    //     deleteRoutine={deleteUser}
-    //   />
-    // );
-    // setModalTitle(`Delete Routine`);
-    // openModal();
-  };
-
-  const deleteUser = (id: string) => {
-    console.log(id);
-    // setRoutineList((prevRoutines) =>
-    //   prevRoutines.filter((routine) => routine.id !== id)
-    // );
-    // closeModal();
+    setModalTitle(`Delete Routine`);
+    setModalContent(
+      <DeleteRoutine routine={{ id, title }} onCloseModal={closeModal} />
+    );
+    openModal();
   };
 
   const Row = ({ index, style }: ListChildComponentProps) => {

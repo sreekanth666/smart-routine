@@ -1,9 +1,11 @@
 import { ActionIcon, Card, Flex, Image } from "@mantine/core";
 import { FC } from "react";
 import IconX from "./UI/icons/IconX";
+import { Imagetype } from "../types/SuggestionType";
+import { isFile } from "../utils/helpers";
 
 interface PreviewComponentProps {
-  files: File[];
+  files: (File | Imagetype)[];
   onRemove: (index: number) => void;
 }
 
@@ -26,8 +28,8 @@ const PreviewComponent: FC<PreviewComponentProps> = ({ files, onRemove }) => {
           <Image
             w="100%"
             h="100%"
-            src={URL.createObjectURL(file)}
-            alt={file.name}
+            src={isFile(file) ? URL.createObjectURL(file) : file.image}
+            alt={isFile(file) ? file.name : "Routine Image"}
           />
 
           <ActionIcon
