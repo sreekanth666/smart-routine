@@ -242,7 +242,6 @@ const Routines = () => {
   );
 
   const AnalysisPanel = () => {
-    // Hardcoded analysis data
     const analysisData: AnalysisData = {
       "routineAnalysis": [
         {
@@ -407,7 +406,6 @@ const Routines = () => {
           </Box>
         </Grid.Col>
       </Grid>
-
       <DetailModal />
     </div>
   );
