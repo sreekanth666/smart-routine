@@ -302,15 +302,15 @@ const Routines = () => {
             <Card withBorder>
               <Title order={4} mb="md">Overall Feedback</Title>
               <Stack >
-                <Group align="flex-start">
+                <Group align="flex-start" wrap="nowrap">
                   <CheckCircleIcon className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
                   <Text size="sm">{analysisData.overallFeedback.goodsSummary}</Text>
                 </Group>
-                <Group align="flex-start"  >
+                <Group align="flex-start" wrap="nowrap">
                   <XCircleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" />
                   <Text size="sm">{analysisData.overallFeedback.badsSummary}</Text>
                 </Group>
-                <Group align="flex-start" >
+                <Group align="flex-start" wrap="nowrap">
                   <LightBulbIcon className="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" />
                   <Text size="sm">{analysisData.overallFeedback.generalRecommendations}</Text>
                 </Group>
@@ -328,15 +328,15 @@ const Routines = () => {
                     </Accordion.Control>
                     <Accordion.Panel>
                       <Stack >
-                        <Group align="flex-start" >
+                        <Group align="flex-start" wrap="nowrap">
                           <CheckCircleIcon className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                           <Text size="sm">{product.good}</Text>
                         </Group>
-                        <Group align="flex-start" >
+                        <Group align="flex-start" wrap="nowrap">
                           <XCircleIcon className="w-4 h-4 text-red-500 mt-1 flex-shrink-0" />
                           <Text size="sm">{product.bad}</Text>
                         </Group>
-                        <Group align="flex-start" >
+                        <Group align="flex-start" wrap="nowrap">
                           <LightBulbIcon className="w-4 h-4 text-yellow-500 mt-1 flex-shrink-0" />
                           <Text size="sm">{product.recommendation}</Text>
                         </Group>
