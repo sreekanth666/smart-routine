@@ -11,15 +11,20 @@ type AiReplyParams = {
 };
 
 function AiReply({ imageUrl, aiMessage }: AiReplyParams) {
+  console.log(aiMessage);
   return (
     <>
       <div className="flex flex-row-reverse items-start">
         <AiChatAvatar imageUrl={imageUrl} isUser={false} />
 
-        <div className="flex min-h-[85px] rounded-b-xl rounded-tl-xl bg-slate-50 p-4 sm:min-h-0 sm:max-w-md md:max-w-2xl">
-          <Markdown rehypePlugins={[rehypeRaw, rehypeSanitize]}>
-            {aiMessage}
-          </Markdown>
+        <div className="flex min-h-[85px] overflow-x-auto rounded-b-xl rounded-tl-xl bg-slate-50 p-4 sm:min-h-0 sm:max-w-md md:max-w-2xl">
+          <Markdown
+            children={aiMessage}
+            rehypePlugins={[
+              [rehypeRaw, { singleTilde: false }],
+              [rehypeSanitize],
+            ]}
+          ></Markdown>
         </div>
         <AiReplyActions />
       </div>

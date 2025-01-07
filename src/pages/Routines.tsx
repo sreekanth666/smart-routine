@@ -17,6 +17,7 @@ type ServerRoutineDataType = {
 
 function Routines() {
   const [routinesList, setRoutinesList] = useState<RoutineType[]>([]);
+  const [selectedRoutineId, setSelectedRoutineId] = useState<string>("");
   const navigate = useNavigate();
   const { isGettingRoutines, userRoutines, userRoutinesError } =
     useGetRoutines();
@@ -53,6 +54,10 @@ function Routines() {
 
   const handleUpdateRoutineButtonClick = (id: string) => {
     navigate(`/routine/edit/${id}`);
+  };
+
+  const handleAnalyseRoutineButtonClick = (id: string) => {
+    setSelectedRoutineId(id);
   };
 
   return (
@@ -92,11 +97,12 @@ function Routines() {
           <RoutinesList
             routinesList={routinesList}
             onUpdateRoutineClick={handleUpdateRoutineButtonClick}
+            onAnalyzeRoutineClick={handleAnalyseRoutineButtonClick}
           />
         )}
       </Grid.Col>
-      <Grid.Col span={5}>
-        <RoutineChat />
+      <Grid.Col span={12}>
+        <RoutineChat routineId={selectedRoutineId ?? ""} />
       </Grid.Col>
     </Grid>
   );

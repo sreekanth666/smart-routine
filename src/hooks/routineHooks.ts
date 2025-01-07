@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  analyseRoutine,
   createNewRoutine,
   CreateNewRoutineParams,
   deleteRoutine,
@@ -206,4 +207,17 @@ export function useDeleteRoutine() {
     deleteUserRoutine,
     deleteUserRoutineError,
   };
+}
+
+export function useAnalyseRoutine(routineId: string) {
+  const {
+    isLoading: isAnalysingRoutine,
+    data: routineAnalysis,
+    error: routineAnalysisError,
+  } = useQuery({
+    queryKey: ["routines", routineId],
+    queryFn: () => analyseRoutine(routineId),
+  });
+
+  return { isAnalysingRoutine, routineAnalysis, routineAnalysisError };
 }

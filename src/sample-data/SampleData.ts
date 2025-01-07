@@ -1,3 +1,4 @@
+import { AIMessageType } from "../components/ai-based-components/AiChatContainer";
 import { CommuntityPostType } from "../types/CommunityPostType";
 import {
   DailyActivity,
@@ -264,6 +265,46 @@ export const SAMPLE_ROUTINES: SampleRoutineType[] = [
       },
     ],
   },*/
+];
+
+export const SAMPLE_MESSAGES: AIMessageType[] = [
+  {
+    senderType: "user",
+    imageUrl: "https://dummyimage.com/256x256/363536/ffffff&text=U",
+    messageContent: `Explain quantum computing in simple terms`,
+  },
+  {
+    senderType: "AI",
+    imageUrl: "https://dummyimage.com/256x256/354ea1/ffffff&text=G",
+    messageContent: `<p>
+                Certainly! Quantum computing is a new type of computing that
+                relies on the principles of quantum physics. Traditional
+                computers, like the one you might be using right now, use bits
+                to store and process information. These bits can represent
+                either a 0 or a 1. In contrast, quantum computers use quantum
+                bits, or qubits.
+                <br />
+                <br />
+                Unlike bits, qubits can represent not only a 0 or a 1 but also a
+                superposition of both states simultaneously. This means that a
+                qubit can be in multiple states at once, which allows quantum
+                computers to perform certain calculations much faster and more
+                efficiently
+              </p>`,
+  },
+  {
+    senderType: "user",
+    imageUrl: "https://dummyimage.com/256x256/363536/ffffff&text=U",
+    messageContent: `What are three great applications of quantum computing?`,
+  },
+  {
+    senderType: "AI",
+    imageUrl: "https://dummyimage.com/256x256/354ea1/ffffff&text=G",
+    messageContent: `<p>
+                Three great applications of quantum computing are: Optimization
+                of complex problems, Drug Discovery and Cryptography.
+              </p>`,
+  },
 ];
 
 export const SAMPLE_TRAVEL_ROUTINE: TravelRoutineType = {

@@ -3,9 +3,10 @@ import IconMike from "../UI/icons/ai-based-icons/IconMike";
 
 type PromptInputFormProps = {
   onSendMessage: (message: string) => void;
+  isHidden: boolean;
 };
 
-function PromptInputForm({ onSendMessage }: PromptInputFormProps) {
+function PromptInputForm({ onSendMessage, isHidden }: PromptInputFormProps) {
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleSubmit = (e: FormEvent) => {
@@ -18,7 +19,7 @@ function PromptInputForm({ onSendMessage }: PromptInputFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-2 pb-1 px-1">
+    <form onSubmit={handleSubmit} className="mt-2 pb-1 px-1" hidden={isHidden}>
       <label htmlFor="chat-input" className="sr-only">
         Enter your prompt
       </label>

@@ -11,11 +11,13 @@ import DeleteRoutine from "./DeleteRoutine";
 type RoutinesListParams = {
   routinesList: RoutineType[];
   onUpdateRoutineClick: (id: string) => void;
+  onAnalyzeRoutineClick: (id: string) => void;
 };
 
 function RoutinesList({
   routinesList,
   onUpdateRoutineClick,
+  onAnalyzeRoutineClick,
 }: RoutinesListParams) {
   const [modalContent, setModalContent] = useState<ReactElement | null>();
   const [modalTitle, setModalTitle] = useState<string | null>();
@@ -49,6 +51,10 @@ function RoutinesList({
     openModal();
   };
 
+  const handleAnalyzeButtonClick = (id: string) => {
+    onAnalyzeRoutineClick(id);
+  };
+
   const Row = ({ index, style }: ListChildComponentProps) => {
     const routine = routinesList[index];
     return (
@@ -68,6 +74,7 @@ function RoutinesList({
           viewRoutine={handleViewButtonClick}
           editRoutine={handleEditButtonClick}
           deleteRoutine={handleDeleteButtonClick}
+          analyzeRoutine={handleAnalyzeButtonClick}
         />
       </div>
     );

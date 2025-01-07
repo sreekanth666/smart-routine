@@ -23,6 +23,7 @@ type RoutineCardProps = {
   viewRoutine: (id: string) => void;
   editRoutine: (id: string) => void;
   deleteRoutine: (id: string, title: string) => void;
+  analyzeRoutine: (id: string) => void;
 };
 
 function RoutineCard({
@@ -30,6 +31,7 @@ function RoutineCard({
   viewRoutine,
   editRoutine,
   deleteRoutine,
+  analyzeRoutine,
 }: RoutineCardProps) {
   return (
     <Card mb="md">
@@ -95,6 +97,7 @@ function RoutineCard({
                 <Menu.Item
                   color="grape"
                   leftSection={<IconAnalyze size="1rem" stroke={1.5} />}
+                  onClick={() => analyzeRoutine(routine.id)}
                 >
                   Analyze Routine
                 </Menu.Item>

@@ -78,7 +78,7 @@ export async function createNewRoutine({
 
   const response = await axiosMultipartInstance.post("", formData, config);
 
-  return response.data;
+  return response;
 }
 
 export async function getRoutine(id: string) {
@@ -144,7 +144,7 @@ export async function updateRoutine({
     config
   );
 
-  return response.data;
+  return response;
 }
 
 export async function deleteRoutine(id: string) {
@@ -165,6 +165,32 @@ export async function deleteRoutine(id: string) {
   };
 
   const response = await axiosInstance.delete(`/${id}`, config);
+
+  return response;
+}
+
+export async function analyseRoutine(routineid: string) {
+  if (routineid === "") {
+    throw new Error("No routine selected");
+  }
+
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
+  });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+
+  const response = await axiosInstance.get(`/analyse/${routineid}`, config);
 
   return response.data;
 }

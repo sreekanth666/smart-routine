@@ -1,3 +1,4 @@
+import { ServerRoutineAnalysisData } from "../components/RoutineChat";
 import { Imagetype } from "../types/SuggestionType";
 
 export function isCurrentPage(
@@ -26,4 +27,27 @@ export function generateRandomID(): string {
 
 export const isFile = (file: File | Imagetype): file is File => {
   return file instanceof File;
+};
+
+export const convertAnalysisData = (
+  serverData: ServerRoutineAnalysisData
+): string => {
+  const productAnalysis = serverData.routineAnalysis[0].products
+    .map((productItem) => {
+      return `<div><strong>Product:</strong> ${productItem.product}</div><br>
+<div><strong>Category:</strong> ${productItem.category}</div><br>
+<div><strong>Good:</strong> ${productItem.good}</div><br>
+<div><strong>Bad:</strong> ${productItem.bad}</div><br>
+<div><strong>Recommendation:</strong> ${productItem.recommendation}</div><br>
+<hr>`;
+    })
+    .join("");
+  console.log(productAnalysis);
+  const message: string = `<strong>Time:</strong> ${serverData.routineAnalysis[0].time}</strong><br>
+${productAnalysis}<br>
+<strong>Overall Feedback</strong><br>
+<div><strong>Good Summary:</strong> ${serverData.overallFeedback.goodsSummary}</div><br>
+<div><strong>Bad Summary:</strong> ${serverData.overallFeedback.badsSummary}</div><br>
+<div><strong>General Recommendations:</strong> ${serverData.overallFeedback.generalRecommendations}</div><br>`;
+  return message;
 };
