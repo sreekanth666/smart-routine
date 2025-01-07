@@ -24,13 +24,6 @@ function PromptInputForm({ onSendMessage, isHidden }: PromptInputFormProps) {
         Enter your prompt
       </label>
       <div className="relative">
-        <button
-          type="button"
-          className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 hover:text-green-500"
-        >
-          <IconMike />
-          <span className="sr-only">Use voice input</span>
-        </button>
         <textarea
           id="chat-input"
           className="block w-full mb-2 resize-none rounded-xl border-none bg-slate-200 py-4 pl-10 pr-20 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 sm:text-base"
