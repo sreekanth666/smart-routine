@@ -1,39 +1,127 @@
 import {
-  ActionIcon,
   Avatar,
   Button,
   Card,
   Grid,
   Group,
   Modal,
+  Skeleton,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import { useState } from "react";
-import IconEye from "../components/UI/icons/IconEye";
-import IconEyeOff from "../components/UI/icons/IconEyeOff";
+import { useEffect, useState } from "react";
 import ResetPasswordForm from "../components/ResetPasswordForm";
 import { useDisclosure } from "@mantine/hooks";
+import { useGetUser } from "../hooks/userHooks";
+import { useAuth } from "../context/AuthContext";
+import { UserType } from "../types/UserType";
+import { ServerUserDataTypeWithoutId } from "../components/ViewUserDetails";
+import { resetPassword } from "../services/apiUser";
+import { notifications } from "@mantine/notifications";
+import IconCheck from "../components/UI/icons/IconCheck";
+import IconX from "../components/UI/icons/IconX";
 
-dayjs.extend(customParseFormat);
+type ProfileDataType = Omit<UserType, "id">;
 
 function ProfilePage() {
-  const [password, setPassword] = useState("Pass@123");
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [profileData, setProfileData] = useState<ProfileDataType | null>(null);
+  const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
   const [opened, { open, close }] = useDisclosure();
-  const birthDate = dayjs("01-01-1987").format("MMMM DD, YYYY");
+  const { userName, userId } = useAuth();
+  const { isGettingUserData, userData, userDataError } = useGetUser(userId);
 
-  const handlePasswordDisplay = () => {
-    setShowPassword((prevValue) => !prevValue);
+  useEffect(() => {
+    if (!isGettingUserData && userDataError === null) {
+      const serverUserData: ServerUserDataTypeWithoutId = userData?.data;
+      setProfileData({
+        email: serverUserData.email,
+        fullName: serverUserData.name,
+        phone: serverUserData.phone,
+      });
+    }
+  }, [isGettingUserData, userData, userDataError]);
+
+  const handlePasswordReset = (oldPassword: string, newPassword: string) => {
+    setIsFormSubmitted(true);
+    try {
+      resetPassword({ oldPassword, newPassword });
+      console.log("Password changed");
+      notifications.show({
+        id: "reset-password-success-notification",
+        title: "Congratulations 🎆",
+        message: "Your have reset your password successfully",
+        icon: <IconCheck size="1rem" stroke={1.5} />,
+        position: "bottom-right",
+        color: "green",
+      });
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        notifications.show({
+          id: "reset-password-error-notification",
+          title: "SORRY 🛑",
+          message: `ERROR: ${error.message}`,
+          color: "red",
+          icon: <IconX size="1rem" stroke={1.5} />,
+          position: "bottom-right",
+        });
+      } else {
+        notifications.show({
+          id: "reset-password-error-notification",
+          title: "SORRY 🛑",
+          message: "An unknown error occurred",
+          color: "red",
+          icon: <IconX size="1rem" stroke={1.5} />,
+          position: "bottom-right",
+        });
+      }
+    } finally {
+      setIsFormSubmitted(false);
+      close();
+    }
   };
 
-  const handlePasswordReset = (newPassword: string) => {
-    setPassword(newPassword);
-    close();
-  };
+  if (isGettingUserData) {
+    return (
+      <Card h="85dvh">
+        <Group justify="center">
+          <Skeleton height={50} circle mb="xl" />
+        </Group>
+        <Stack h={300} align="flex-start" justify="flex-start" gap="md">
+          <Title order={3}>Personal Information</Title>
+          <Grid>
+            <Grid.Col span={6}>
+              <Text c="gray">Full Name:</Text>
+              <br />
+              <Text c="gray">Email:</Text>
+              <br />
+              <Text c="gray">Phone:</Text>
+              <br />
+            </Grid.Col>
+            <Grid.Col span={6}>
+              <Skeleton height={8} mt={6} radius="xl" />
+              <br />
+              <Skeleton height={8} mt={6} radius="xl" />
+              <br />
+              <Skeleton height={8} mt={6} radius="xl" />
+            </Grid.Col>
+          </Grid>
+          <Skeleton height={30} mt={6} radius="xl" />
+        </Stack>
+      </Card>
+    );
+  }
+
+  if (userDataError !== null) {
+    return (
+      <Card h="85dvh">
+        <Title order={3} c="red">
+          Error: Something bad happened at retrieving user profile data
+        </Title>
+      </Card>
+    );
+  }
 
   return (
     <>
@@ -53,78 +141,40 @@ function ProfilePage() {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ResetPasswordForm onResetPassword={handlePasswordReset} />
+            <ResetPasswordForm
+              isFormDisabled={isFormSubmitted}
+              onResetPassword={handlePasswordReset}
+            />
           </Modal.Body>
         </Modal.Content>
       </Modal.Root>
       <Card h="85dvh">
         <Group justify="center">
-          <Avatar name="John Doe" color="initials" alt="John Doe" size="xl" />
+          <Avatar name={userName} color="initials" alt={userName} size="xl" />
         </Group>
-        <Group justify="space-around">
-          <Stack h={300} align="flex-start" justify="flex-start" gap="md">
-            <Title order={3}>Personal Information</Title>
-            <Grid>
-              <Grid.Col span={5}>
-                <Text c="gray">Full Name:</Text>
-                <br />
-                <Text c="gray">Date of Birth:</Text>
-                <br />
-                <Text c="gray">Sex:</Text>
-                <br />
-                <Text c="gray">Native Place:</Text>
-                <br />
-                <Text c="gray">Zip Code:</Text>
-              </Grid.Col>
-              <Grid.Col span={6}>
-                <Text>John Doe</Text>
-                <br />
-                <Text>{birthDate}</Text>
-                <br />
-                <Text>Male</Text>
-                <br />
-                <Text>Las Vegas, Nevada</Text>
-                <br />
-                <Text>89044</Text>
-              </Grid.Col>
-            </Grid>
-          </Stack>
-          <Stack h={300} align="flex-start" justify="flex-start" gap="md">
-            <Title order={3}>Account Information</Title>
-            <Grid>
-              <Grid.Col span={5}>
-                <Text c="gray">Email:</Text>
-                <br />
-                <Text c="gray">Phone Number:</Text>
-                <br />
-                <Text c="gray">Password:</Text>
-              </Grid.Col>
-              <Grid.Col span={6}>
-                <Text>johndoe@email.com</Text>
-                <br />
-                <Text>(555) 555-1234</Text>
-                <br />
-                <br />
-                <Group justify="space-between">
-                  <Text>
-                    {showPassword ? password : "*".repeat(password.length)}
-                  </Text>
-                  <ActionIcon color="green" onClick={handlePasswordDisplay}>
-                    {showPassword ? (
-                      <IconEyeOff size="1rem" stroke={1.5} />
-                    ) : (
-                      <IconEye size="1rem" stroke={1.5} />
-                    )}
-                  </ActionIcon>
-                  <br />
-                  <Button variant="outline" color="green" onClick={open}>
-                    Reset Password
-                  </Button>
-                </Group>
-              </Grid.Col>
-            </Grid>
-          </Stack>
-        </Group>
+        <Stack h={300} align="center" justify="center" gap="md">
+          <Title order={3}>Account Information</Title>
+          <Grid>
+            <Grid.Col span={6}>
+              <Text c="gray">Full Name:</Text>
+              <br />
+              <Text c="gray">Email:</Text>
+              <br />
+              <Text c="gray">Phone:</Text>
+              <br />
+            </Grid.Col>
+            <Grid.Col span={6}>
+              <Text>{profileData?.fullName}</Text>
+              <br />
+              <Text>{profileData?.email}</Text>
+              <br />
+              <Text>{profileData?.phone}</Text>
+            </Grid.Col>
+          </Grid>
+          <Button variant="filled" color="green" onClick={open}>
+            Reset Password
+          </Button>
+        </Stack>
       </Card>
     </>
   );

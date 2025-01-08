@@ -14,6 +14,11 @@ type ServerUpdateUserType = Partial<
   name?: string;
 };
 
+export type ResetPasswordParams = {
+  oldPassword: string;
+  newPassword: string;
+};
+
 const axiosInstance = axios.create({
   baseURL: `${BASE_URL}/user`,
 });
@@ -113,6 +118,35 @@ export async function deleteUser(id: string) {
   };
 
   const response = await axiosInstance.delete(`${id}`, config);
+
+  return response;
+}
+
+export async function resetPassword({
+  oldPassword,
+  newPassword,
+}: ResetPasswordParams) {
+  const authStorageValue: string | undefined = readLocalStorageValue({
+    key: "smart-routine-auth-data",
+  });
+
+  const authValue: LoginServerDataType | null = authStorageValue
+    ? JSON.parse(authStorageValue)
+    : null;
+
+  const authToken = authValue !== null ? authValue?.token : "";
+
+  if (authToken.length === 0) throw new Error("Auth token not found");
+
+  const config = {
+    headers: { Authorization: `Bearer ${authToken}` },
+  };
+
+  const response = await axiosInstance.patch(
+    "/reset/password",
+    { oldPassword, newPassword },
+    config
+  );
 
   return response;
 }

@@ -9,10 +9,14 @@ type ResetPassword = {
 };
 
 type ResetPasswordFormParams = {
-  onResetPassword: (newPassword: string) => void;
+  isFormDisabled: boolean;
+  onResetPassword: (oldPassword: string, newPassword: string) => void;
 };
 
-function ResetPasswordForm({ onResetPassword }: ResetPasswordFormParams) {
+function ResetPasswordForm({
+  isFormDisabled,
+  onResetPassword,
+}: ResetPasswordFormParams) {
   const form = useForm<ResetPassword>({
     initialValues: { oldPassword: "", newPassword: "", retypeNewPassword: "" },
     validate: {
@@ -26,7 +30,7 @@ function ResetPasswordForm({ onResetPassword }: ResetPasswordFormParams) {
   });
 
   const resetPasswordHandler = () => {
-    onResetPassword(form.values.newPassword);
+    onResetPassword(form.values.oldPassword, form.values.newPassword);
     form.reset();
   };
 
@@ -45,6 +49,7 @@ function ResetPasswordForm({ onResetPassword }: ResetPasswordFormParams) {
             form.setFieldValue("oldPassword", event.currentTarget.value)
           }
           required
+          disabled={isFormDisabled}
           mt="md"
         />
         <PasswordInput
@@ -56,6 +61,7 @@ function ResetPasswordForm({ onResetPassword }: ResetPasswordFormParams) {
           }
           error={form.errors.newPassword}
           required
+          disabled={isFormDisabled}
           mt="md"
         />
         <PasswordInput
@@ -67,11 +73,18 @@ function ResetPasswordForm({ onResetPassword }: ResetPasswordFormParams) {
           }
           error={form.errors.retypeNewPassword}
           required
+          disabled={isFormDisabled}
           mt="md"
         />
 
-        <Button type="submit" color="green" fullWidth mt="xl">
-          Reset Password
+        <Button
+          disabled={isFormDisabled}
+          type="submit"
+          color="green"
+          fullWidth
+          mt="xl"
+        >
+          {isFormDisabled ? "Loading..." : "Reset Password"}
         </Button>
       </form>
     </Paper>

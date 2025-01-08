@@ -7,6 +7,7 @@ interface AuthContextType {
   isLoggedIn: boolean;
   isAdmin: boolean;
   userName: string;
+  userId: string;
   login: (
     token: string,
     email: string,
@@ -43,6 +44,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   const isAdmin = isLoggedIn && authValue !== null && authValue?.isAdmin;
   const userName: string =
     isLoggedIn && authValue !== null ? authValue?.name : "";
+  const userId: string = isLoggedIn && authValue !== null ? authValue?.id : "";
 
   const login = (
     token: string,
@@ -51,11 +53,6 @@ function AuthProvider({ children }: AuthProviderProps) {
     name: string,
     isAdmin: boolean
   ) => {
-    // console.log("accessToken", token);
-    // console.log("email", email);
-    // console.log("id", id);
-    // console.log("name", name);
-    // console.log("isAdmin", isAdmin);
     setValue(JSON.stringify({ token, email, id, name, isAdmin }));
     setIsLoggedIn(true);
   };
@@ -67,7 +64,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, isAdmin, userName, login, logout }}
+      value={{ isLoggedIn, isAdmin, userName, login, logout, userId }}
     >
       {children}
     </AuthContext.Provider>

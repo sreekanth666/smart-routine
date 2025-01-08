@@ -27,7 +27,7 @@ type ServerUserDataType = Omit<UserType, "id" | "fullName"> & {
   isAdmin: boolean;
 };
 
-type UsersDataType = UserType & {
+export type UsersDataType = UserType & {
   isAdmin: boolean;
 };
 
