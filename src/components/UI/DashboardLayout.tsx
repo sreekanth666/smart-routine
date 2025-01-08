@@ -113,7 +113,7 @@ function DashboardLayout() {
                   textAlign: "center",
                 }}
               >
-                Add Photo
+                Analyse Product
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
