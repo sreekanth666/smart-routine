@@ -114,6 +114,29 @@ function DailyActivityRecording() {
     );
   }
 
+  if (dailyActivities.length === 0) {
+    return (
+      <Card
+        shadow="sm"
+        padding="lg"
+        miw={"15rem"}
+        radius="md"
+        withBorder
+        mx="sm"
+        h="50dvh"
+      >
+        <Card.Section p="md">
+          <Title order={2}>Daily Activity Recording</Title>
+        </Card.Section>
+        <Card.Section p="sm">
+          <Title order={4}>
+            No Daily Activity available. Please add some activity.
+          </Title>
+        </Card.Section>
+      </Card>
+    );
+  }
+
   const handleNewDailyActivity = (title: string, description: string) => {
     setIsFormSubmitting(true);
     addDailyActivity({ title, description });

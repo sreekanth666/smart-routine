@@ -36,6 +36,7 @@ function GoalSettings() {
   const { isUserGoalsLoading, userGoals, userGoalsError } = useGetUserGoals();
   const { isAddingNewGoal, addGoal, addGoalError } = useAddNewGoal();
   const { isAchievingGoal, achieveUserGoal } = useAchieveGoal();
+  console.log(goals);
 
   useEffect(
     function () {
@@ -99,6 +100,27 @@ function GoalSettings() {
           <Title order={4} c="red">
             Error: Something bad happened at retrieving user goals
           </Title>
+        </Card.Section>
+      </Card>
+    );
+  }
+
+  if (goals.length === 0) {
+    return (
+      <Card
+        shadow="sm"
+        padding="lg"
+        miw={"15rem"}
+        radius="md"
+        withBorder
+        mx="sm"
+        h="50dvh"
+      >
+        <Card.Section p="md">
+          <Title order={2}>Goal Settings</Title>
+        </Card.Section>
+        <Card.Section p="md">
+          <Title order={4}>No goals available. Please add some goals</Title>
         </Card.Section>
       </Card>
     );

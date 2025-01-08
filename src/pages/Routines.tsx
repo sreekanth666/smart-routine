@@ -415,9 +415,17 @@ const Routines = () => {
       <Grid>
         <Grid.Col span={7}>
           <SimpleGrid cols={2} spacing="md">
-            {routinesList.map((routine) => (
-              <RoutineCard key={routine.id} routine={routine} />
-            ))}
+            {routinesList.length === 0 ? (
+              <Card shadow="sm" padding={0} radius="md" withBorder>
+                <Card.Section>
+                  <Title ta="center">No routines available</Title>
+                </Card.Section>
+              </Card>
+            ) : (
+              routinesList.map((routine) => (
+                <RoutineCard key={routine.id} routine={routine} />
+              ))
+            )}
           </SimpleGrid>
         </Grid.Col>
         <Grid.Col span={5}>

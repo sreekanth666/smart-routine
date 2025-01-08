@@ -91,10 +91,10 @@ function MentalHealth() {
     return (
       <SuggestionContainerCard title="Mental Health Suggestions">
         <>
-          <Skeleton height={15}></Skeleton>
-          <Skeleton height={15}></Skeleton>
-          <Skeleton height={15}></Skeleton>
-          <Skeleton height={15}></Skeleton>
+          <Skeleton height={50} my="md"></Skeleton>
+          <Skeleton height={50} my="md"></Skeleton>
+          <Skeleton height={50} my="md"></Skeleton>
+          <Skeleton height={50} my="md"></Skeleton>
         </>
       </SuggestionContainerCard>
     );

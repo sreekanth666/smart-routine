@@ -26,7 +26,11 @@ dayjs.extend(relativeTime);
 type ServerCommunityPostType = {
   _id: string;
   post: string;
-  userId: string;
+  userId: {
+    _id: string;
+    name: string;
+    email: string;
+  };
   createdAt: string;
   updatedAt: string;
 };
@@ -54,7 +58,7 @@ function Community() {
             return {
               id: post._id,
               postContent: post.post,
-              userName: `@${post.userId}`,
+              userName: `@${post.userId.name}`,
               postedDate: dayjs(post.createdAt).isSame(dayjs(post.updatedAt))
                 ? new Date(post.createdAt)
                 : new Date(post.updatedAt),
@@ -132,6 +136,17 @@ function Community() {
         <Text c="gray">{dayjs(post.postedDate).fromNow()}</Text>
       </Paper>
     ));
+
+  if (posts.length === 0) {
+    return (
+      <Stack>
+        <Title>Community Posts</Title>
+        <Paper p="md">
+          <Title order={4}>No community posts available</Title>
+        </Paper>
+      </Stack>
+    );
+  }
 
   return (
     <>
