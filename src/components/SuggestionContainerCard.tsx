@@ -11,9 +11,17 @@ function SuggestionContainerCard({
   title,
 }: SuggestionContainerCardProps) {
   return (
-    <Card shadow="xs" withBorder p="sm" h={430} mih={430} w={314} radius="md">
+    <Card
+      shadow="xs"
+      withBorder
+      p="sm"
+      h={430}
+      mih={430}
+      w={"100%"}
+      radius="md"
+    >
       <Card.Section p="xs">
-        <Title order={4} ta="center">
+        <Title order={3} ta="center">
           {title}
         </Title>
       </Card.Section>

@@ -2,7 +2,6 @@ import { Grid } from "@mantine/core";
 import PersonalisedSuggestions from "../components/PersonalisedSuggestions";
 import MentalHealth from "../components/MentalHealth";
 import Goals from "../components/Goals";
-import SustainableInsights from "../components/SustainableInsights";
 
 function NormalClient() {
   return (
@@ -12,13 +11,10 @@ function NormalClient() {
       </Grid.Col>
       <Grid.Col span={12}>
         <Grid mt={20}>
-          <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
-            <SustainableInsights />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
+          <Grid.Col span={{ base: 12, md: 6 }}>
             <MentalHealth />
           </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
+          <Grid.Col span={{ base: 12, md: 6 }}>
             <PersonalisedSuggestions />
           </Grid.Col>
         </Grid>

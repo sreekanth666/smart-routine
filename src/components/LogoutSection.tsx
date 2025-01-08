@@ -6,7 +6,7 @@ import IconLogout from "./UI/icons/IconLogout";
 
 function LogoutSection() {
   const navigate = useNavigate();
-  const { logout, isAdmin } = useAuth();
+  const { logout, isAdmin, userName } = useAuth();
 
   const logoutHandler = () => {
     logout();
@@ -22,7 +22,7 @@ function LogoutSection() {
 
   return (
     <Flex direction="column" gap="md">
-      <Text>Hello USER</Text>
+      <Text>Hello, {userName}</Text>
       <Button onClick={logoutHandler} color={isAdmin ? "blue" : "green"}>
         Logout
       </Button>

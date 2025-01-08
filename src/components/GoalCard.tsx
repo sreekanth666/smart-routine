@@ -1,20 +1,16 @@
-import { Card, Text, Title } from "@mantine/core";
-import { SuggestionType } from "../types/SuggestionType";
+import { Card, Text } from "@mantine/core";
 
 type GoalCardProp = {
-  goal: SuggestionType;
+  goalText: string;
 };
 
-function GoalCard({ goal }: GoalCardProp) {
+function GoalCard({ goalText }: GoalCardProp) {
   return (
     <Card shadow="sm" padding="lg" miw={"15rem"} radius="md" withBorder mx="sm">
       <Card.Section p="sm">
-        <Title order={4} ta="center">
-          {goal.title}
-        </Title>
-      </Card.Section>
-      <Card.Section p="sm">
-        <Text>{goal.description}</Text>
+        <Text fz={20}>
+          <strong>Goal</strong>: {goalText}
+        </Text>
       </Card.Section>
     </Card>
   );

@@ -217,6 +217,7 @@ export function useAnalyseRoutine(routineId: string) {
   } = useQuery({
     queryKey: ["routines", routineId],
     queryFn: () => analyseRoutine(routineId),
+    enabled: routineId !== "",
   });
 
   return { isAnalysingRoutine, routineAnalysis, routineAnalysisError };

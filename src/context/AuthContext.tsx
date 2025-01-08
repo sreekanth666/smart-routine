@@ -6,6 +6,7 @@ import { LoginServerDataType } from "../types/LoginServerDataType";
 interface AuthContextType {
   isLoggedIn: boolean;
   isAdmin: boolean;
+  userName: string;
   login: (
     token: string,
     email: string,
@@ -40,6 +41,8 @@ function AuthProvider({ children }: AuthProviderProps) {
     : null;
 
   const isAdmin = isLoggedIn && authValue !== null && authValue?.isAdmin;
+  const userName: string =
+    isLoggedIn && authValue !== null ? authValue?.name : "";
 
   const login = (
     token: string,
@@ -48,11 +51,11 @@ function AuthProvider({ children }: AuthProviderProps) {
     name: string,
     isAdmin: boolean
   ) => {
-    console.log("accessToken", token);
-    console.log("email", email);
-    console.log("id", id);
-    console.log("name", name);
-    console.log("isAdmin", isAdmin);
+    // console.log("accessToken", token);
+    // console.log("email", email);
+    // console.log("id", id);
+    // console.log("name", name);
+    // console.log("isAdmin", isAdmin);
     setValue(JSON.stringify({ token, email, id, name, isAdmin }));
     setIsLoggedIn(true);
   };
@@ -63,7 +66,9 @@ function AuthProvider({ children }: AuthProviderProps) {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, isAdmin, login, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, isAdmin, userName, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

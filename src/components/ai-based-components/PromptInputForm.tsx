@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import IconMike from "../UI/icons/ai-based-icons/IconMike";
+// import IconMike from "../UI/icons/ai-based-icons/IconMike";
 
 type PromptInputFormProps = {
   onSendMessage: (message: string) => void;

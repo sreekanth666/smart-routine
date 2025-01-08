@@ -24,10 +24,15 @@ import { useGetUsers } from "../hooks/userHooks";
 type ServerUserDataType = Omit<UserType, "id" | "fullName"> & {
   _id: string;
   name: string;
+  isAdmin: boolean;
+};
+
+type UsersDataType = UserType & {
+  isAdmin: boolean;
 };
 
 function Users() {
-  const [users, setUsers] = useState<UserType[]>([]);
+  const [users, setUsers] = useState<UsersDataType[]>([]);
   const [modalContent, setModalContent] = useState<ReactElement | null>();
   const [modalTitle, setModalTitle] = useState<string | null>();
   const [opened, { open, close }] = useDisclosure();
@@ -36,6 +41,7 @@ function Users() {
   useEffect(
     function () {
       if (!isGettingUsers && usersDataError === null) {
+        console.log(usersData?.data);
         const serverUserData: ServerUserDataType[] = usersData?.data;
 
         setUsers(
@@ -45,6 +51,7 @@ function Users() {
               fullName: user.name,
               email: user.email,
               phone: user.phone,
+              isAdmin: user.isAdmin,
             };
           })
         );
@@ -147,22 +154,26 @@ function Users() {
         >
           <IconEye size="1rem" stroke={1.5} />
         </Button>
-        <Button
-          variant="filled"
-          color="green"
-          mx={5}
-          onClick={() => handleEditButtonClick(user.id)}
-        >
-          <IconEdit size="1rem" stroke={1.5} />
-        </Button>
-        <Button
-          variant="filled"
-          color="red"
-          mx={5}
-          onClick={() => handleDeleteButtonClick(user.id, user.fullName)}
-        >
-          <IconTrash size="1rem" stroke={1.5} />
-        </Button>
+        {!user.isAdmin && (
+          <>
+            <Button
+              variant="filled"
+              color="green"
+              mx={5}
+              onClick={() => handleEditButtonClick(user.id)}
+            >
+              <IconEdit size="1rem" stroke={1.5} />
+            </Button>
+            <Button
+              variant="filled"
+              color="red"
+              mx={5}
+              onClick={() => handleDeleteButtonClick(user.id, user.fullName)}
+            >
+              <IconTrash size="1rem" stroke={1.5} />
+            </Button>
+          </>
+        )}
       </Table.Td>
     </Table.Tr>
   ));

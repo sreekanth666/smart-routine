@@ -15,24 +15,29 @@ type AiChatContainerParams = {
 
 const Message = ({ message }: { message: AIMessageType }) => {
   const isUser = message.senderType === "user";
-  
+
   return (
-    <div className={`flex w-full ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
-      <div className={`flex max-w-[80%] ${isUser ? 'flex-row-reverse' : 'flex-row'} items-end gap-2`}>
+    <div
+      className={`flex w-full ${isUser ? "justify-end" : "justify-start"} mb-4`}
+    >
+      <div
+        className={`flex max-w-[80%] ${
+          isUser ? "flex-row-reverse" : "flex-row"
+        } items-end gap-2`}
+      >
         <img
           src={message.imageUrl}
           alt={`${message.senderType} avatar`}
           className="h-8 w-8 rounded-full object-cover"
         />
-        <div 
+        <div
           className={`rounded-2xl px-4 py-2 ${
-            isUser 
-              ? 'bg-blue-500 text-white rounded-br-none' 
-              : 'bg-gray-200 text-gray-900 rounded-bl-none'
+            isUser
+              ? "bg-blue-500 text-white rounded-br-none"
+              : "bg-gray-200 text-gray-900 rounded-bl-none"
           }`}
-        >
-          {message.messageContent}
-        </div>
+          dangerouslySetInnerHTML={{ __html: message.messageContent }}
+        ></div>
       </div>
     </div>
   );
@@ -64,7 +69,7 @@ function AiChatContainer({
           <div ref={messagesEndRef} />
         </div>
       </div>
-      
+
       {/* Fixed input container at the bottom */}
       {!isRoutinePage && (
         <div className="fixed bottom-0 w-[78%] left-[19.7rem] bg-white border-t shadow-lg">

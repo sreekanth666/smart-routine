@@ -22,7 +22,7 @@ import {
   useGetUserGoals,
 } from "../hooks/goalsHooks";
 
-type UserGoalType = {
+export type UserGoalType = {
   _id: string;
   goal: string;
   isAchieved: boolean;

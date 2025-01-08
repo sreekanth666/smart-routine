@@ -18,7 +18,8 @@ import {
   Divider,
   SimpleGrid,
   Box,
-  Accordion
+  Accordion,
+  Loader,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -32,8 +33,8 @@ import {
   LightBulbIcon,
   XCircleIcon,
   PhotoIcon,
-} from '@heroicons/react/24/outline';
-import { useGetRoutines } from "../hooks/routineHooks";
+} from "@heroicons/react/24/outline";
+import { useAnalyseRoutine, useGetRoutines } from "../hooks/routineHooks";
 import { RoutineType } from "../types/SuggestionType";
 import { BASE_URL } from "../utils/constants";
 
@@ -76,14 +77,30 @@ type AnalysisData = {
 
 const Routines = () => {
   const [routinesList, setRoutinesList] = useState<RoutineType[]>([]);
-  const [selectedRoutine, setSelectedRoutine] = useState<RoutineType | null>(null);
-  const [detailModalOpened, { open: openDetailModal, close: closeDetailModal }] = useDisclosure(false);
-  const [selectedDetailRoutine, setSelectedDetailRoutine] = useState<RoutineType | null>(null);
+  const [selectedRoutine, setSelectedRoutine] = useState<RoutineType | null>(
+    null
+  );
+  const [
+    detailModalOpened,
+    { open: openDetailModal, close: closeDetailModal },
+  ] = useDisclosure(false);
+  const [selectedDetailRoutine, setSelectedDetailRoutine] =
+    useState<RoutineType | null>(null);
   const navigate = useNavigate();
-  const { isGettingRoutines, userRoutines, userRoutinesError } = useGetRoutines();
+  const { isGettingRoutines, userRoutines, userRoutinesError } =
+    useGetRoutines();
+  const analysingRoutineId: string = selectedRoutine?.id ?? "";
+  const { isAnalysingRoutine, routineAnalysis, routineAnalysisError } =
+    useAnalyseRoutine(analysingRoutineId);
+
+  const [analysisData, setAnalysisData] = useState<AnalysisData | null>(null);
 
   useEffect(() => {
-    if (!isGettingRoutines && userRoutinesError === null && userRoutines?.data) {
+    if (
+      !isGettingRoutines &&
+      userRoutinesError === null &&
+      userRoutines?.data
+    ) {
       const response: ApiResponse = userRoutines;
       setRoutinesList(
         response.data.map((routineItem) => ({
@@ -101,6 +118,21 @@ const Routines = () => {
     }
   }, [isGettingRoutines, userRoutinesError, userRoutines]);
 
+  useEffect(() => {
+    if (
+      analysingRoutineId !== "" &&
+      !isAnalysingRoutine &&
+      routineAnalysisError === null
+    ) {
+      setAnalysisData(routineAnalysis?.data);
+    }
+  }, [
+    analysingRoutineId,
+    isAnalysingRoutine,
+    routineAnalysis,
+    routineAnalysisError,
+  ]);
+
   const handleViewDetails = (routine: RoutineType) => {
     setSelectedDetailRoutine(routine);
     openDetailModal();
@@ -108,22 +140,22 @@ const Routines = () => {
 
   const getTimeColor = (time: string) => {
     switch (time.toUpperCase()) {
-      case 'MORNING':
-        return 'yellow';
-      case 'AFTERNOON':
-        return 'orange';
-      case 'EVENING':
-        return 'blue';
-      case 'NIGHT':
-        return 'indigo';
+      case "MORNING":
+        return "yellow";
+      case "AFTERNOON":
+        return "orange";
+      case "EVENING":
+        return "blue";
+      case "NIGHT":
+        return "indigo";
       default:
-        return 'gray';
+        return "gray";
     }
   };
 
   const RoutineCard = ({ routine }: { routine: RoutineType }) => (
     <Card shadow="sm" padding={0} radius="md" withBorder>
-      <Card.Section style={{ position: 'relative' }}>
+      <Card.Section style={{ position: "relative" }}>
         <Image
           src={routine.images[0].image}
           height={200}
@@ -134,7 +166,7 @@ const Routines = () => {
             className="absolute top-2 right-2"
             size="lg"
             variant="filled"
-            style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
             leftSection={<PhotoIcon className="w-4 h-4" />}
           >
             +{routine.images.length - 1}
@@ -144,7 +176,9 @@ const Routines = () => {
 
       <Stack p="md">
         <Group mt="xs">
-          <Title order={4} lineClamp={1}>{routine.title}</Title>
+          <Title order={4} lineClamp={1}>
+            {routine.title}
+          </Title>
           <Badge
             color={getTimeColor(routine.time)}
             variant="light"
@@ -179,11 +213,7 @@ const Routines = () => {
             >
               <ChartBarIcon className="w-4 h-4" />
             </ActionIcon>
-            <ActionIcon
-              variant="light"
-              color="red"
-              size="sm"
-            >
+            <ActionIcon variant="light" color="red" size="sm">
               <TrashIcon className="w-4 h-4" />
             </ActionIcon>
           </Group>
@@ -210,7 +240,7 @@ const Routines = () => {
         <Group>
           <Title order={3}>{selectedDetailRoutine?.title}</Title>
           <Badge
-            color={getTimeColor(selectedDetailRoutine?.time || '')}
+            color={getTimeColor(selectedDetailRoutine?.time || "")}
             variant="light"
             size="lg"
             leftSection={<ClockIcon className="w-3.5 h-3.5" />}
@@ -234,7 +264,9 @@ const Routines = () => {
         </SimpleGrid>
 
         <Box>
-          <Title order={5} mb="xs">Description</Title>
+          <Title order={5} mb="xs">
+            Description
+          </Title>
           <Text>{selectedDetailRoutine?.description}</Text>
         </Box>
       </Stack>
@@ -242,57 +274,36 @@ const Routines = () => {
   );
 
   const AnalysisPanel = () => {
-    const analysisData: AnalysisData = {
-      "routineAnalysis": [
-        {
-          "time": "morning",
-          "products": [
-            {
-              "product": "Arm & Hammer Brilliant Sparkle Baking Soda Toothpaste",
-              "category": "oral hygiene",
-              "good": "Baking soda can help whiten teeth and remove plaque effectively.",
-              "bad": "Baking soda's abrasiveness may damage tooth enamel over time if used excessively.  Minty flavor might be too strong for some individuals.",
-              "recommendation": "Use a less abrasive toothpaste occasionally or alternate with a fluoride toothpaste to protect enamel. Consider trying different flavors or brands if the mint is too overpowering."
-            },
-            {
-              "product": "Colgate Gum Health 300% Better Gum Health Toothbrushes",
-              "category": "oral hygiene",
-              "good": "Soft bristles are gentle on gums, reducing the risk of irritation and bleeding.",
-              "bad": "Ultra-soft bristles may not be effective enough for removing plaque for some people.  May need replacement more frequently due to softer bristles.",
-              "recommendation": "Consider a toothbrush with a balance of softness and firmness, or use in conjunction with interdental cleaning aids (floss or interdental brushes) for optimal plaque removal."
-            },
-            {
-              "product": "Skippy Natural Creamy Peanut Butter",
-              "category": "food",
-              "good": "Provides protein and healthy fats for sustained energy.",
-              "bad": "High in calories and saturated fat; regular consumption may contribute to weight gain.  Can be high in sugar depending on the specific type of peanut butter.",
-              "recommendation": "Use in moderation. Opt for a natural peanut butter with minimal added sugar and salt. Consider portion control and incorporating it as part of a balanced breakfast."
-            },
-            {
-              "product": "Kellogg's Raisin Bran Cereal",
-              "category": "food",
-              "good": "Provides fiber, which is beneficial for digestion.",
-              "bad": "High in sugar content, potentially leading to blood sugar spikes.  May not be the most nutritious breakfast option in terms of overall nutrient profile.",
-              "recommendation": "Choose a lower-sugar cereal or opt for a breakfast with more whole grains and less added sugar.  Consider adding fresh fruit for added nutrients."
-            }
-          ]
-        }
-      ],
-      "overallFeedback": {
-        "goodsSummary": "The routine includes products that offer some benefits, such as plaque removal (toothpaste and toothbrush), protein and healthy fats (peanut butter), and fiber (raisin bran).",
-        "badsSummary": "The routine has some concerns regarding potential enamel damage from the abrasive toothpaste, inadequate plaque removal from the ultra-soft toothbrush, high sugar content in both the peanut butter and cereal which could impact blood sugar levels, high calories and saturated fat in the peanut butter contributing to potential weight gain.  The overall nutritional value is questionable.",
-        "generalRecommendations": "The morning routine could be significantly improved by focusing on a balanced breakfast with less added sugar, incorporating a broader range of nutrients, and considering the potential risks associated with the toothpaste and toothbrush choices. This might involve choosing a less abrasive toothpaste, a toothbrush with firmer bristles (but still gentle on gums), opting for a cereal lower in added sugar, and adding fruits and vegetables for increased micronutrients.  Consider consulting a dentist and/or nutritionist for personalized recommendations."
-      }
-    };
+    // console.log(selectedRoutine);
+
+    if (analysingRoutineId !== "" && isAnalysingRoutine) {
+      return (
+        <Paper shadow="sm" p="md" radius="md" withBorder h="100%">
+          <Loader color="green" type="dots" />
+        </Paper>
+      );
+    }
+
+    if (analysingRoutineId !== "" && routineAnalysisError !== null) {
+      return (
+        <Paper shadow="sm" p="md" radius="md" withBorder h="100%">
+          <Title order={4} c="red">
+            Error: Something bad happened at retrieving routine analysis data
+          </Title>
+        </Paper>
+      );
+    }
 
     return (
       <Paper shadow="sm" p="md" radius="md" withBorder h="100%">
-        {selectedRoutine ? (
-          <Stack >
+        {selectedRoutine !== null &&
+        analysingRoutineId !== "" &&
+        analysisData ? (
+          <Stack>
             <Group>
               <Title order={3}>Analysis Report</Title>
               <Badge
-                color={getTimeColor(selectedRoutine.time)}
+                color={getTimeColor(selectedRoutine?.time)}
                 variant="light"
               >
                 {selectedRoutine.time}
@@ -300,50 +311,64 @@ const Routines = () => {
             </Group>
 
             <Card withBorder>
-              <Title order={4} mb="md">Overall Feedback</Title>
-              <Stack >
+              <Title order={4} mb="md">
+                Overall Feedback
+              </Title>
+              <Stack>
                 <Group align="flex-start" wrap="nowrap">
                   <CheckCircleIcon className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
-                  <Text size="sm">{analysisData.overallFeedback.goodsSummary}</Text>
+                  <Text size="sm">
+                    {analysisData?.overallFeedback.goodsSummary}
+                  </Text>
                 </Group>
                 <Group align="flex-start" wrap="nowrap">
                   <XCircleIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" />
-                  <Text size="sm">{analysisData.overallFeedback.badsSummary}</Text>
+                  <Text size="sm">
+                    {analysisData?.overallFeedback.badsSummary}
+                  </Text>
                 </Group>
                 <Group align="flex-start" wrap="nowrap">
                   <LightBulbIcon className="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" />
-                  <Text size="sm">{analysisData.overallFeedback.generalRecommendations}</Text>
+                  <Text size="sm">
+                    {analysisData?.overallFeedback.generalRecommendations}
+                  </Text>
                 </Group>
               </Stack>
             </Card>
 
             <Card withBorder>
-              <Title order={4} mb="md">Product Analysis</Title>
+              <Title order={4} mb="md">
+                Product Analysis
+              </Title>
               <Accordion>
-                {analysisData.routineAnalysis[0].products.map((product, index) => (
-                  <Accordion.Item key={index} value={product.product}>
-                    <Accordion.Control>
-                      <Text fw={500}>{product.product}</Text>
-                      <Text size="xs" c="dimmed">{product.category}</Text>
-                    </Accordion.Control>
-                    <Accordion.Panel>
-                      <Stack >
-                        <Group align="flex-start" wrap="nowrap">
-                          <CheckCircleIcon className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                          <Text size="sm">{product.good}</Text>
-                        </Group>
-                        <Group align="flex-start" wrap="nowrap">
-                          <XCircleIcon className="w-4 h-4 text-red-500 mt-1 flex-shrink-0" />
-                          <Text size="sm">{product.bad}</Text>
-                        </Group>
-                        <Group align="flex-start" wrap="nowrap">
-                          <LightBulbIcon className="w-4 h-4 text-yellow-500 mt-1 flex-shrink-0" />
-                          <Text size="sm">{product.recommendation}</Text>
-                        </Group>
-                      </Stack>
-                    </Accordion.Panel>
-                  </Accordion.Item>
-                ))}
+                {analysisData?.routineAnalysis[0].products.map(
+                  (product, index) => (
+                    <Accordion.Item key={index} value={product.product}>
+                      <Accordion.Control>
+                        <Text fw={500}>{product.product}</Text>
+                        <Text size="xs" c="dimmed">
+                          {product.category}
+                        </Text>
+                      </Accordion.Control>
+                      <Accordion.Panel>
+                        <Stack>
+                          <Group align="flex-start" wrap="nowrap">
+                            <CheckCircleIcon className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
+                            <Text size="sm">{product.good}</Text>
+                          </Group>
+                          <Group align="flex-start" wrap="nowrap">
+                            <XCircleIcon className="w-4 h-4 text-red-500 mt-1 flex-shrink-0" />
+                            <Text size="sm">{product.bad}</Text>
+                          </Group>
+                          <Group align="flex-start" wrap="nowrap">
+                            <LightBulbIcon className="w-4 h-4 text-yellow-500 mt-1 flex-shrink-0" />
+                            <Text size="sm">{product.recommendation}</Text>
+                          </Group>
+                        </Stack>
+                      </Accordion.Panel>
+                    </Accordion.Item>
+                  )
+                )}
               </Accordion>
             </Card>
           </Stack>
@@ -360,7 +385,7 @@ const Routines = () => {
   };
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: "relative" }}>
       <LoadingOverlay
         visible={isGettingRoutines}
         zIndex={1000}
@@ -373,13 +398,11 @@ const Routines = () => {
           <Button
             variant="light"
             leftSection={<PlusIcon className="w-4 h-4" />}
-            onClick={() => navigate('/routine/add/new')}
+            onClick={() => navigate("/routine/add/new")}
           >
             Add Routine
           </Button>
-          <Button variant="filled">
-            Plan Routine
-          </Button>
+          <Button variant="filled">Plan Routine</Button>
         </Group>
       </Group>
 
@@ -391,17 +414,14 @@ const Routines = () => {
 
       <Grid>
         <Grid.Col span={7}>
-          <SimpleGrid
-            cols={2}
-            spacing="md"
-          >
+          <SimpleGrid cols={2} spacing="md">
             {routinesList.map((routine) => (
               <RoutineCard key={routine.id} routine={routine} />
             ))}
           </SimpleGrid>
         </Grid.Col>
         <Grid.Col span={5}>
-          <Box style={{ position: 'sticky', top: '1rem' }}>
+          <Box style={{ position: "sticky", top: "1rem" }}>
             <AnalysisPanel />
           </Box>
         </Grid.Col>
