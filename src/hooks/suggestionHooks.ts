@@ -12,6 +12,7 @@ export function useGetMentalHealthSuggestions() {
   } = useQuery({
     queryKey: ["mentalHealthSuggestions"],
     queryFn: () => getMentalHealthSuggestions(),
+    staleTime: 900000,
   });
 
   return {

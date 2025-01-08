@@ -14,6 +14,7 @@ export function useGetUserDailyActivities() {
   } = useQuery({
     queryKey: ["daily-activities"],
     queryFn: getUserDailyActivity,
+    staleTime: 900000,
   });
 
   return {

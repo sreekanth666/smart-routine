@@ -13,6 +13,7 @@ export function useGetAllCommunityPosts() {
   } = useQuery({
     queryKey: ["community-posts"],
     queryFn: () => getAllCommunityPosts(),
+    staleTime: 900000,
   });
 
   return {

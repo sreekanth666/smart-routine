@@ -16,6 +16,7 @@ export function useGetUsers() {
   } = useQuery({
     queryKey: ["users"],
     queryFn: getUsers,
+    staleTime: 900000,
   });
 
   return { isGettingUsers, usersData, usersDataError };

@@ -1,46 +1,47 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { achieveGoal, addNewGoal, getUserGoals } from "../services/apiGoal";
 import { notifications } from "@mantine/notifications";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { chatToAi, deleteChat, getChatMessages } from "../services/apiChat";
 
-export function useGetUserGoals() {
+export function useGetChats() {
   const {
-    isLoading: isUserGoalsLoading,
-    data: userGoals,
-    error: userGoalsError,
+    isLoading: isGettingChats,
+    data: chatData,
+    error: chatDataError,
   } = useQuery({
-    queryKey: ["goals"],
-    queryFn: getUserGoals,
+    queryKey: ["chats"],
+    queryFn: getChatMessages,
     staleTime: 900000,
   });
 
-  return { isUserGoalsLoading, userGoals, userGoalsError };
+  return { isGettingChats, chatData, chatDataError };
 }
 
-export function useAddNewGoal() {
+export function useChatWithAi() {
   const queryClient = useQueryClient();
   const {
-    isPending: isAddingNewGoal,
-    mutate: addGoal,
-    isError: addGoalError,
+    isPending: isChattingWithAi,
+    mutate: chatWithAi,
+    error: chatWithAiError,
   } = useMutation({
-    mutationFn: (goal: string) => addNewGoal(goal),
+    mutationKey: ["chat"],
+    mutationFn: (message: string) => chatToAi(message),
     onSuccess: () => {
       console.log("Success");
       notifications.show({
-        id: "create-new-goal-success-notification",
+        id: "chat-with-ai-success-notification",
         title: "Congratulations 👍",
-        message: "Your have added a new goal",
+        message: "Your have sent a message to AI",
         position: "bottom-right",
         color: "green",
       });
-      queryClient.invalidateQueries({ queryKey: ["goals"] });
+      queryClient.invalidateQueries({ queryKey: ["chat"] });
     },
     onError: (error) => {
       console.log(error.message);
       console.log("failed");
       if (error instanceof Error) {
         notifications.show({
-          id: "create-new-goal-error-notification",
+          id: "chat-with-ai-error-notification",
           title: "SORRY 🛑",
           message: `ERROR: ${error.message}`,
           color: "red",
@@ -48,7 +49,7 @@ export function useAddNewGoal() {
         });
       } else {
         notifications.show({
-          id: "create-new-goal-error-notification",
+          id: "chat-with-ai-error-notification",
           title: "SORRY 🛑",
           message: "An unknown error occurred",
           color: "red",
@@ -59,37 +60,38 @@ export function useAddNewGoal() {
   });
 
   return {
-    isAddingNewGoal,
-    addGoal,
-    addGoalError,
+    isChattingWithAi,
+    chatWithAi,
+    chatWithAiError,
   };
 }
 
-export function useAchieveGoal() {
+export function useDeleteChat() {
   const queryClient = useQueryClient();
   const {
-    isPending: isAchievingGoal,
-    mutate: achieveUserGoal,
-    isError: achieveUserGoalError,
+    isPending: isDeletingChat,
+    mutate: deleteAiChat,
+    error: deleteAiChatError,
   } = useMutation({
-    mutationFn: (id: string) => achieveGoal(id),
+    mutationKey: ["chat"],
+    mutationFn: deleteChat,
     onSuccess: () => {
       console.log("Success");
       notifications.show({
-        id: "achieve-goal-success-notification",
+        id: "delete-chat-success-notification",
         title: "Congratulations 👍",
-        message: "Your have achieved this goal",
+        message: "Your have deleted your chat",
         position: "bottom-right",
         color: "green",
       });
-      queryClient.invalidateQueries({ queryKey: ["goals"] });
+      queryClient.invalidateQueries({ queryKey: ["chat"] });
     },
     onError: (error) => {
       console.log(error.message);
       console.log("failed");
       if (error instanceof Error) {
         notifications.show({
-          id: "achieve-goal-error-notification",
+          id: "delete-chat-error-notification",
           title: "SORRY 🛑",
           message: `ERROR: ${error.message}`,
           color: "red",
@@ -97,7 +99,7 @@ export function useAchieveGoal() {
         });
       } else {
         notifications.show({
-          id: "achieve-goal-error-notification",
+          id: "delete-chat-error-notification",
           title: "SORRY 🛑",
           message: "An unknown error occurred",
           color: "red",
@@ -108,8 +110,8 @@ export function useAchieveGoal() {
   });
 
   return {
-    isAchievingGoal,
-    achieveUserGoal,
-    achieveUserGoalError,
+    isDeletingChat,
+    deleteAiChat,
+    deleteAiChatError,
   };
 }

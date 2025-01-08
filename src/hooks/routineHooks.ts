@@ -19,6 +19,7 @@ export function useGetRoutines() {
   } = useQuery({
     queryKey: ["routines"],
     queryFn: () => getUserRoutines(),
+    staleTime: 900000,
   });
 
   return { isGettingRoutines, userRoutines, userRoutinesError };

@@ -14,6 +14,7 @@ export function useGetUserTravelEstimation() {
   } = useQuery({
     queryKey: ["travel-estimation"],
     queryFn: () => getUserTravelEstimation(),
+    staleTime: 900000,
   });
 
   return {
