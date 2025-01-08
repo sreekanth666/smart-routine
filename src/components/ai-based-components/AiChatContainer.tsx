@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
 import PromptInputForm from "./PromptInputForm";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export type AIMessageType = {
-  senderType: "user" | "AI";
+  senderType: "user" | "model";
   imageUrl: string;
   messageContent: string;
 };
@@ -11,6 +13,7 @@ type AiChatContainerParams = {
   messages: AIMessageType[];
   onSendMessage: (userMessage: string) => void;
   isRoutinePage?: boolean;
+  isChatDisabled: boolean;
 };
 
 const Message = ({ message }: { message: AIMessageType }) => {
@@ -36,8 +39,11 @@ const Message = ({ message }: { message: AIMessageType }) => {
               ? "bg-blue-500 text-white rounded-br-none"
               : "bg-gray-200 text-gray-900 rounded-bl-none"
           }`}
-          dangerouslySetInnerHTML={{ __html: message.messageContent }}
-        ></div>
+        >
+          <Markdown remarkPlugins={[remarkGfm]}>
+            {message.messageContent}
+          </Markdown>
+        </div>
       </div>
     </div>
   );
@@ -47,6 +53,7 @@ function AiChatContainer({
   messages,
   onSendMessage,
   isRoutinePage = false,
+  isChatDisabled,
 }: AiChatContainerParams) {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -74,7 +81,11 @@ function AiChatContainer({
       {!isRoutinePage && (
         <div className="fixed bottom-0 w-[78%] left-[19.7rem] bg-white border-t shadow-lg">
           <div className="max-w-screen-xl mx-auto p-4">
-            <PromptInputForm onSendMessage={onSendMessage} isHidden={false} />
+            <PromptInputForm
+              onSendMessage={onSendMessage}
+              isHidden={false}
+              isChatDisabled={isChatDisabled}
+            />
           </div>
         </div>
       )}

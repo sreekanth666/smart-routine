@@ -4,9 +4,14 @@ import { FormEvent, useState } from "react";
 type PromptInputFormProps = {
   onSendMessage: (message: string) => void;
   isHidden: boolean;
+  isChatDisabled: boolean;
 };
 
-function PromptInputForm({ onSendMessage, isHidden }: PromptInputFormProps) {
+function PromptInputForm({
+  onSendMessage,
+  isHidden,
+  isChatDisabled,
+}: PromptInputFormProps) {
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleSubmit = (e: FormEvent) => {
@@ -36,6 +41,7 @@ function PromptInputForm({ onSendMessage, isHidden }: PromptInputFormProps) {
         <button
           type="submit"
           className="absolute bottom-2 right-2.5 rounded-lg bg-green-700 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 sm:text-base"
+          disabled={isChatDisabled}
         >
           Send <span className="sr-only">Send message</span>
         </button>
