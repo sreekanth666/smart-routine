@@ -107,7 +107,7 @@ function DashboardLayout() {
             <Modal.Header style={{ justifyContent: "center" }}>
               <Modal.Title
                 style={{
-                  color: "blue",
+                  color: "green",
                   fontWeight: 600,
                   fontSize: "xx-large",
                   textAlign: "center",
