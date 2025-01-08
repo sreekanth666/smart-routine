@@ -27,7 +27,11 @@ function DashboardLayout() {
   const { isAdmin } = useAuth();
 
   const handleProfileNavigation = () => {
-    navigate("/profile");
+    if (isAdmin) {
+      navigate("/app/profile");
+    } else {
+      navigate("/profile");
+    }
   };
 
   const handleCameraOn = () => {
