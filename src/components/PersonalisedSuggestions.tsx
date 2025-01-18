@@ -63,7 +63,7 @@ function PersonalisedSuggestions() {
     personalisedSuggestions,
   ]);
 
-  const goalOptimizations = userPersonalisedSuggestions?.goalOptimizations.map(
+  const goalOptimizations = userPersonalisedSuggestions?.goalOptimizations?.map(
     (optimizationItem) => (
       <SuggestionItemV2
         key={optimizationItem.goal}
@@ -79,7 +79,7 @@ function PersonalisedSuggestions() {
   );
 
   const activityImprovements =
-    userPersonalisedSuggestions?.activityImprovements.map((activityItem) => (
+    userPersonalisedSuggestions?.activityImprovements?.map((activityItem) => (
       <SuggestionItemV2
         key={activityItem.activity}
         title={activityItem.activity}
@@ -93,7 +93,7 @@ function PersonalisedSuggestions() {
     ));
 
   const lifestyleAdjustments =
-    userPersonalisedSuggestions?.lifestyleAdjustments.map((adjustmentItem) => (
+    userPersonalisedSuggestions?.lifestyleAdjustments?.map((adjustmentItem) => (
       <SuggestionItem
         key={adjustmentItem.adjustment}
         item={{
@@ -126,7 +126,7 @@ function PersonalisedSuggestions() {
     );
   }
 
-  if (userPersonalisedSuggestions === null) {
+  if (userPersonalisedSuggestions === null || userPersonalisedSuggestions === undefined || !userPersonalisedSuggestions.activityImprovements || !userPersonalisedSuggestions.goalOptimizations || !userPersonalisedSuggestions.lifestyleAdjustments) { 
     return (
       <SuggestionContainerCard title="Personalised Suggestions">
         <Title order={4}>

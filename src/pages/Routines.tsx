@@ -34,7 +34,7 @@ import {
   XCircleIcon,
   PhotoIcon,
 } from "@heroicons/react/24/outline";
-import { useAnalyseRoutine, useGetRoutines } from "../hooks/routineHooks";
+import { useAnalyseRoutine, useDeleteRoutine, useGetRoutines } from "../hooks/routineHooks";
 import { RoutineType } from "../types/SuggestionType";
 import { BASE_URL } from "../utils/constants";
 
@@ -138,6 +138,13 @@ const Routines = () => {
     openDetailModal();
   };
 
+  const { deleteUserRoutine } = useDeleteRoutine();
+
+  const deleteRoutine = (id: string, title: string) => {
+    deleteUserRoutine(id);
+  };
+
+
   const getTimeColor = (time: string) => {
     switch (time.toUpperCase()) {
       case "MORNING":
@@ -213,7 +220,7 @@ const Routines = () => {
             >
               <ChartBarIcon className="w-4 h-4" />
             </ActionIcon>
-            <ActionIcon variant="light" color="red" size="sm">
+            <ActionIcon variant="light" color="red" size="sm" onClick={() => deleteRoutine(routine.id, routine.title)}>
               <TrashIcon className="w-4 h-4" />
             </ActionIcon>
           </Group>
@@ -297,8 +304,8 @@ const Routines = () => {
     return (
       <Paper shadow="sm" p="md" radius="md" withBorder h="100%">
         {selectedRoutine !== null &&
-        analysingRoutineId !== "" &&
-        analysisData ? (
+          analysingRoutineId !== "" &&
+          analysisData ? (
           <Stack>
             <Group>
               <Title order={3}>Analysis Report</Title>

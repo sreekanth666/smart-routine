@@ -45,6 +45,7 @@ function RoutinesList({
 
   const handleDeleteButtonClick = (id: string, title: string) => {
     setModalTitle(`Delete Routine`);
+    alert("TEST")
     setModalContent(
       <DeleteRoutine routine={{ id, title }} onCloseModal={closeModal} />
     );

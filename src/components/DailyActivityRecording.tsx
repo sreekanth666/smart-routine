@@ -43,125 +43,87 @@ function DailyActivityRecording() {
 
   const [opened, { open, close }] = useDisclosure();
 
-  useEffect(
-    function () {
-      if (!isGetUserDailyActivities && !userDailyActivitiesError) {
-        const userActivities: UserDailyActivityType[] =
-          userDailyActivities?.data;
+  useEffect(() => {
+    if (!isGetUserDailyActivities && !userDailyActivitiesError) {
+      const userActivities: UserDailyActivityType[] =
+        userDailyActivities?.data || [];
 
-        setDailyActivities(
-          userActivities.map((activity) => {
-            return {
-              title: activity.title,
-              description: activity.description,
-              id: activity._id,
-            };
-          })
-        );
-      }
-    },
-    [isGetUserDailyActivities, userDailyActivitiesError, userDailyActivities]
-  );
+      setDailyActivities(
+        userActivities.map((activity) => ({
+          title: activity.title,
+          description: activity.description,
+          id: activity._id,
+        }))
+      );
+    }
+  }, [isGetUserDailyActivities, userDailyActivitiesError, userDailyActivities]);
 
-  if (isGetUserDailyActivities) {
-    return (
-      <Card
-        shadow="sm"
-        padding="lg"
-        miw={"15rem"}
-        radius="md"
-        withBorder
-        mx="sm"
-        h="50dvh"
-      >
+  const renderContent = () => {
+    if (isGetUserDailyActivities) {
+      return (
         <Card.Section p="md">
           <Group>
             <Skeleton height={12} width="30%" radius="xl" />
             <Skeleton height={8} width="40%" radius="xl" />
           </Group>
+          <Card.Section p="sm">
+            <Skeleton height={8} radius="xl" />
+            <Skeleton height={8} radius="xl" />
+            <Skeleton height={8} radius="xl" />
+            <Skeleton height={8} radius="xl" />
+          </Card.Section>
         </Card.Section>
-        <Card.Section p="sm">
-          <Skeleton height={8} radius="xl" />
-          <Skeleton height={8} radius="xl" />
-          <Skeleton height={8} radius="xl" />
-          <Skeleton height={8} radius="xl" />
-        </Card.Section>
-      </Card>
-    );
-  }
+      );
+    }
 
-  if (userDailyActivitiesError) {
-    return (
-      <Card
-        shadow="sm"
-        padding="lg"
-        miw={"15rem"}
-        radius="md"
-        withBorder
-        mx="sm"
-        h="50dvh"
-      >
-        <Card.Section p="md">
-          <Title order={2}>Daily Activity Recording</Title>
-        </Card.Section>
+    if (userDailyActivitiesError) {
+      return (
         <Card.Section p="sm">
           <Title order={4} c="red">
-            Error: Something bad happened at retrieving user daily activity
-            recordings
+            Error: Unable to fetch daily activities
           </Title>
         </Card.Section>
-      </Card>
-    );
-  }
+      );
+    }
 
-  if (dailyActivities.length === 0) {
-    return (
-      <Card
-        shadow="sm"
-        padding="lg"
-        miw={"15rem"}
-        radius="md"
-        withBorder
-        mx="sm"
-        h="50dvh"
-      >
-        <Card.Section p="md">
-          <Title order={2}>Daily Activity Recording</Title>
-        </Card.Section>
+    if (dailyActivities.length === 0) {
+      return (
         <Card.Section p="sm">
-          <Title order={4}>
-            No Daily Activity available. Please add some activity.
-          </Title>
+          <Title order={4}>No Daily Activities available. Please add some.</Title>
         </Card.Section>
-      </Card>
+      );
+    }
+
+    return (
+      <Card.Section p="sm">
+        <ScrollArea h={250} pb="md">
+          <Accordion variant="separated">
+            {dailyActivities.map((activity) => (
+              <Accordion.Item
+                key={activity.id}
+                value={activity.title}
+                bg={"var(--mantine-color-gray-4)"}
+              >
+                <Accordion.Control>{activity.title}</Accordion.Control>
+                <Accordion.Panel>{activity.description}</Accordion.Panel>
+              </Accordion.Item>
+            ))}
+          </Accordion>
+        </ScrollArea>
+      </Card.Section>
     );
-  }
+  };
 
   const handleNewDailyActivity = (title: string, description: string) => {
     setIsFormSubmitting(true);
     addDailyActivity({ title, description });
-    handleCloseModal();
-  };
-
-  function handleCloseModal() {
     setIsFormSubmitting(false);
     close();
-  }
-
-  const activities = dailyActivities.map((activity) => (
-    <Accordion.Item
-      key={activity.id}
-      value={activity.title}
-      bg={"var(--mantine-color-gray-4)"}
-    >
-      <Accordion.Control>{activity.title}</Accordion.Control>
-      <Accordion.Panel>{activity.description}</Accordion.Panel>
-    </Accordion.Item>
-  ));
+  };
 
   return (
     <>
-      <Modal.Root opened={opened} onClose={handleCloseModal}>
+      <Modal.Root opened={opened} onClose={() => { setIsFormSubmitting(false); close(); }}>
         <Modal.Overlay />
         <Modal.Content>
           <Modal.Header style={{ justifyContent: "center" }}>
@@ -177,9 +139,9 @@ function DailyActivityRecording() {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {isFormSubmitting && createDailyActivityError !== null ? (
+            {isFormSubmitting && createDailyActivityError ? (
               <Title order={4} c="red">
-                Error: Something bad happened while adding daily activity
+                Error: Unable to add daily activity
               </Title>
             ) : (
               <AddNewDailyActivityForm
@@ -209,11 +171,7 @@ function DailyActivityRecording() {
             </Tooltip>
           </Group>
         </Card.Section>
-        <Card.Section p="sm">
-          <ScrollArea h={250} pb="md">
-            <Accordion variant="separated">{activities}</Accordion>
-          </ScrollArea>
-        </Card.Section>
+        {renderContent()}
       </Card>
     </>
   );

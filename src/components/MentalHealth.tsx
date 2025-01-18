@@ -52,7 +52,7 @@ function MentalHealth() {
     mentalHealthSuggestionsError,
   ]);
 
-  const stressors = userMentalHealthSuggestions?.stressors.map(
+  const stressors = userMentalHealthSuggestions?.stressors?.map(
     (stressorItem) => (
       <SuggestionItem
         key={stressorItem.type}
@@ -64,7 +64,7 @@ function MentalHealth() {
     )
   );
 
-  const copingStrategies = userMentalHealthSuggestions?.copingStrategies.map(
+  const copingStrategies = userMentalHealthSuggestions?.copingStrategies?.map(
     (strategyItem) => (
       <SuggestionItem
         key={strategyItem.strategy}
@@ -77,7 +77,7 @@ function MentalHealth() {
   );
 
   const lifestyleAdjustments =
-    userMentalHealthSuggestions?.lifestyleAdjustments.map((adjustmentItem) => (
+    userMentalHealthSuggestions?.lifestyleAdjustments?.map((adjustmentItem) => (
       <SuggestionItem
         key={adjustmentItem.adjustment}
         item={{
@@ -110,7 +110,7 @@ function MentalHealth() {
     );
   }
 
-  if (userMentalHealthSuggestions === null) {
+  if (userMentalHealthSuggestions === null || userMentalHealthSuggestions === undefined || useGetMentalHealthSuggestions.length === 0) {
     return (
       <SuggestionContainerCard title="Mental Health Suggestions">
         <Title order={4}>

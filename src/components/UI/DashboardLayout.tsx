@@ -72,6 +72,17 @@ function DashboardLayout() {
             </Group>
           </Grid.Col>
           <Grid.Col span={1} ta="end" pr="md">
+            <ActionIcon
+              variant="filled"
+              color="green"
+              radius="xl"
+              size={30}
+              onClick={handleCameraOn}
+              p={5}
+              me={30}
+            >
+              <IconCamera size="2rem" stroke={1.5} />
+            </ActionIcon>
             <Menu>
               <Menu.Target>
                 <ActionIcon variant="transparent">
@@ -125,19 +136,6 @@ function DashboardLayout() {
             </Modal.Body>
           </Modal.Content>
         </Modal.Root>
-        {!isAdmin && (
-          <Affix position={{ bottom: 40, right: 100 }}>
-            <ActionIcon
-              variant="filled"
-              color="green"
-              radius="xl"
-              size={60}
-              onClick={handleCameraOn}
-            >
-              <IconCamera size="2rem" stroke={1.5} />
-            </ActionIcon>
-          </Affix>
-        )}
       </AppShell.Main>
     </AppShell>
   );

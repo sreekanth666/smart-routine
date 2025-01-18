@@ -161,7 +161,6 @@ export function useUpdateRoutine() {
 
 export function useDeleteRoutine() {
   const queryClient = useQueryClient();
-
   const {
     isPending: isDeletingUserRoutine,
     mutate: deleteUserRoutine,

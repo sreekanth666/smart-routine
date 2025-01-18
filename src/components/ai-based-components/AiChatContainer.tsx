@@ -66,7 +66,7 @@ function AiChatContainer({
   }, [messages]);
 
   return (
-    <div className="relative h-screen flex flex-col bg-white">
+    <div className="relative h-[calc(100svh-13svh)] flex flex-col bg-white">
       {/* Messages container with bottom padding to prevent messages from being hidden behind input */}
       <div className="flex-1 overflow-y-auto pb-24">
         <div className="p-4 space-y-4">
