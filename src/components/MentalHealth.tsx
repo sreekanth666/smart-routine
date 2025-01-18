@@ -40,6 +40,8 @@ function MentalHealth() {
       mentalHealthSuggestionsError === null
     ) {
       const serverData: MentalHealthSuggestions = mentalHealthSuggestions?.data;
+      console.log(serverData);
+      
       setUserMentalHealthSuggestions({
         stressors: serverData.stressors,
         copingStrategies: serverData.copingStrategies,
@@ -110,7 +112,7 @@ function MentalHealth() {
     );
   }
 
-  if (userMentalHealthSuggestions === null || userMentalHealthSuggestions === undefined || useGetMentalHealthSuggestions.length === 0) {
+  if (userMentalHealthSuggestions === null || userMentalHealthSuggestions === undefined) {
     return (
       <SuggestionContainerCard title="Mental Health Suggestions">
         <Title order={4}>
